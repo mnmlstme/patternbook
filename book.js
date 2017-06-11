@@ -1,9 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import Patternbook from './src/patternbook'
+import Patternbook from 'patternbook'
 
 ReactDOM.render(
-    React.createElement(Patternbook),
+    <Patternbook />,
     document.getElementById('pb-mountpoint')
 )

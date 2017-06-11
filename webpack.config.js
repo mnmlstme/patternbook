@@ -2,12 +2,12 @@ var path = require('path');
 
 module.exports = {
 
-    entry: './app.js',
+    entry: './book.js',
 
     module: {
         loaders: [
             {
-                test: /.js$/,
+                test: /.jsx?$/,
                 exclude: /node_modules/,
                 use: {
                     loader: 'babel-loader',
@@ -15,6 +15,22 @@ module.exports = {
                         presets: ['react', 'es2015']
                     }
                 }
+            },
+
+            {
+                test: /\.md$/,
+                exclude: /node_modules/,
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        query: {
+                            presets: ['react', 'es2015']
+                        }
+                    },
+                    {
+                        loader: 'react-markdown-loader'
+                    }
+                ]
             },
         ]
     },
@@ -28,14 +44,21 @@ module.exports = {
 
         extensions: [
             '.js',
+            '.jsx',
             '.html',
             '.css',
             '.md'
         ],
-
     },
+
     output: {
         filename: 'bundle.js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist'),
+        libraryTarget: 'umd'
+    },
+
+    devServer: {
+        port: 3000,
+        historyApiFallback: true
     }
 };
