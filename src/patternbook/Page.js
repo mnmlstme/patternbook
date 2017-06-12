@@ -4,13 +4,13 @@ function Page (props) {
     return (
         <article>
             <header>
-                <h1> Page </h1>
+                <h6> patternbook </h6>
             </header>
             <section>
                 {props.children}
             </section>
             <footer>
-                patternbook
+                presented by patternbook
             </footer>
         </article>
     )

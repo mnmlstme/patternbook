@@ -1,4 +1,6 @@
 var path = require('path');
+const webpack = require('webpack');
+
 
 module.exports = {
 
@@ -36,18 +38,17 @@ module.exports = {
     },
 
     resolve: {
+        alias: {
+            TARGET: path.resolve(__dirname, 'patterns')
+        },
+
         modules: [
             path.resolve(__dirname, 'src'),
-            path.resolve(__dirname, 'patterns'),
             'node_modules'
         ],
 
         extensions: [
-            '.js',
-            '.jsx',
-            '.html',
-            '.css',
-            '.md'
+            '.js'
         ],
     },
 
@@ -57,8 +58,13 @@ module.exports = {
         libraryTarget: 'umd'
     },
 
+    plugins: [
+        new webpack.HotModuleReplacementPlugin() // Enable HMR
+    ],
+
     devServer: {
         port: 3000,
-        historyApiFallback: true
+        historyApiFallback: true,
+        hot: true, // Tell the dev-server we're using HMR
     }
 };

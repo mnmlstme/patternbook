@@ -1,22 +1,13 @@
 import React from 'react'
+import {requireFromTarget} from './target'
 
 function Category (props) {
 
-    let content = getContent(props.params)
+    let {category} = props.params
+    let path = [category, 'index.md'].join('/')
+    let content = requireFromTarget(path)
 
     return content
-
-    function getContent (params) {
-        let category = params.category
-        let path = [category, 'index.md'].join('/')
-        // dynamic require
-        let content = require('../../patterns/' + path);
-        if ( typeof content !== 'function' ) {
-            // loader not upgraded to webpack 2 ?
-            content = content.default()
-        }
-        return content
-    }
 }
 
 module.exports = Category

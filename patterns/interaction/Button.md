@@ -1,6 +1,6 @@
 ---
 imports:
-    Button: 'interaction/button'
+    Button: './Button.jsx'
 ---
 
 Button

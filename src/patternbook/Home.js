@@ -1,21 +1,12 @@
 import React from 'react'
+import {requireFromTarget} from './target'
 
 function Home (props) {
 
-    let content = getContent()
+    let path = 'README.md'
+    let content = requireFromTarget(path)
 
     return content
-
-    function getContent () {
-        let path = 'README.md'
-        // dynamic require
-        let content = require('../../patterns/' + path);
-        if ( typeof content !== 'function' ) {
-            // loader not upgraded to webpack 2 ?
-            content = content.default()
-        }
-        return content
-    }
 }
 
 module.exports = Home
