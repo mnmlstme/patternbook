@@ -13,6 +13,15 @@ function loader (content) {
 }
 
 const fences = {
+    render: function (content, lang) {
+        let result =
+            '<Patternbook.Render>' +
+            content +
+            '</Patternbook.Render>'
+
+        return result
+    },
+
     show: function (content, lang) {
         let source = markupSource(content, lang)
 

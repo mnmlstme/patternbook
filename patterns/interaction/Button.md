@@ -8,7 +8,7 @@ Button
 
 The button component creates buttons.
 
-```html
+```render html
 <Button>An example button</Button>
 ```
 
