@@ -1,6 +1,9 @@
 ---
 imports:
     Button: './Button.jsx'
+
+context:
+    label: 'Click To Try It'
 ---
 
 Button
@@ -9,11 +12,11 @@ Button
 The button component creates buttons.
 
 ```render html
-<Button>An example button</Button>
+<Button>{label}</Button>
 ```
 
 Buttons look like this:
 
 ```show html
-<Button>An example button</Button>
+<Button>{label}</Button>
 ```

@@ -81,22 +81,30 @@ function highlight (code, lang) {
 
 function toModule(payload) {
     let {html, attributes} = payload
-    let output = [
-        "let React = require('react')",
-        "let Patternbook = require('patternbook')"
-    ]
     let imports = attributes.imports || {}
+    let context = attributes.context || {}
     let jsx = html.replace(/class=/g, 'className=')
 
-    output = output.concat(
-        Object.keys(imports)
-        .map( module =>
-            `let ${module} = require('${imports[module]}')` ))
-
-    output.push('module.exports = function () {',
-        'return (<section>',
-        jsx,
-        '</section>)}')
+    let output = [
+            "let React = require('react')",
+            "let Patternbook = require('patternbook')"
+        ]
+        .concat(
+            Object.keys(imports)
+            .map( module =>
+                `let ${module} = require('${imports[module]}')`
+        ))
+        .concat(
+            Object.keys(context)
+            .map( variable =>
+                `let ${variable} = ` + JSON.stringify(context[variable])
+        ))
+        .concat([
+            'module.exports = function () {',
+            'return (<section>',
+            jsx,
+            '</section>)}'
+        ])
 
     return output.join("\n")
 }
