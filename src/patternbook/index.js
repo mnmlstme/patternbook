@@ -1,13 +1,16 @@
-
 import React from 'react'
 import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 import { createBrowserHistory } from 'history'
 
 
-import Page from './Page'
-import Home from './Home'
-import Category from './Category'
-import Pattern from './Pattern'
+import Page from './layouts/Page'
+import Home from './layouts/Home'
+import Category from './layouts/Category'
+import Pattern from './layouts/Pattern'
+
+import Show from './components/Show'
+import Source from './components/Source'
+import Render from './components/Render'
 
 function NotFound (props) {
     let path = props.params.splat
@@ -36,5 +39,11 @@ function Patternbook (props) {
         </Router>
     )
 }
+
+Object.assign(Patternbook, {
+    Show,
+    Render,
+    Source
+})
 
 module.exports = Patternbook

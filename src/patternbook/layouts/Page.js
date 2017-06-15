@@ -6,9 +6,7 @@ function Page (props) {
             <header>
                 <h6> patternbook </h6>
             </header>
-            <section>
-                {props.children}
-            </section>
+            {props.children}
             <footer>
                 presented by patternbook
             </footer>

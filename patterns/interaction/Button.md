@@ -14,6 +14,6 @@ The button component creates buttons.
 
 Buttons look like this:
 
-```render html
+```show html
 <Button>An example button</Button>
 ```

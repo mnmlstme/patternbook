@@ -30,7 +30,7 @@ module.exports = {
                         }
                     },
                     {
-                        loader: 'react-markdown-loader'
+                        loader: 'patternbook/markdown-loader'
                     }
                 ]
             },
@@ -50,6 +50,15 @@ module.exports = {
         extensions: [
             '.js'
         ],
+    },
+
+    resolveLoader : {
+        modules: [
+            path.resolve(__dirname, 'src'),
+            'node_modules'
+        ],
+        extensions: [".js", ".json"],
+        mainFields: ["loader", "main"]
     },
 
     output: {

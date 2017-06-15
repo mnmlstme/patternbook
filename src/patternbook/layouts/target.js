@@ -2,14 +2,14 @@
 
 function requireFromTarget (path) {
     // dynamic require from 'target' alias
-    let content = require('TARGET/' + path);
+    let fn = require('TARGET/' + path);
 
-    if ( typeof content !== 'function' ) {
+    if ( typeof fn !== 'function' ) {
         // loader not upgraded to webpack 2 ?
-        content = content.default()
+        fn = fn.default()
     }
 
-    return content
+    return fn()
 }
 
 
