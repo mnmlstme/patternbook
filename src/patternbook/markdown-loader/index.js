@@ -71,6 +71,7 @@ function parse (content) {
 function markupSource (content, lang) {
     return highlight(content, lang)
         .replace(/[{}]/g, '{"$&"}')
+        .replace(/(\n)/g, '{"\\n"}')
         .replace(/class=/g, 'className=');
 }
 
@@ -82,7 +83,7 @@ function highlight (code, lang) {
 function toModule(payload) {
     let {html, attributes} = payload
     let imports = attributes.imports || {}
-    let context = attributes.context || {}
+    let scope = attributes.scope || {}
     let jsx = html.replace(/class=/g, 'className=')
 
     let output = [
@@ -91,20 +92,32 @@ function toModule(payload) {
         ]
         .concat(
             Object.keys(imports)
-            .map( module =>
-                `let ${module} = require('${imports[module]}')`
-        ))
-        .concat(
-            Object.keys(context)
-            .map( variable =>
-                `let ${variable} = ` + JSON.stringify(context[variable])
-        ))
-        .concat([
-            'module.exports = function () {',
-            'return (<section>',
-            jsx,
-            '</section>)}'
-        ])
+                .map( module =>
+                    `let ${module} = require('${imports[module]}')`),
+            [
+                'module.exports = function () {',
+                'let initial = {',
+            ],
+            Object.keys(scope)
+                .map( variable =>
+                    variable + ':' + JSON.stringify(scope[variable]) +','),
+            [
+                '}',
+                'let Component = function (props) {',
+                '  props = props || {}',
+                '  let { ',
+                Object.keys(scope).join(','),
+                '  } = props.scope || {}',
+                '  let dispatch = props.dispatch',
+                '  const {SET, RESET} = Patternbook.Scope.messageTypes',
+                '  return (<section>',
+                jsx,
+                '  </section>)',
+                '}',
+                '  return React.createElement(Patternbook.Scope, {component: Component, initial: initial}, [])',
+                '}'
+            ]
+        )
 
     return output.join("\n")
 }

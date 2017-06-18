@@ -11,6 +11,7 @@ import Pattern from './layouts/Pattern'
 import Show from './components/Show'
 import Source from './components/Source'
 import Render from './components/Render'
+import Scope from './components/Scope'
 
 function NotFound (props) {
     let path = props.params.splat
@@ -43,7 +44,8 @@ function Patternbook (props) {
 Object.assign(Patternbook, {
     Show,
     Render,
-    Source
+    Source,
+    Scope
 })
 
 module.exports = Patternbook

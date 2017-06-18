@@ -1,9 +1,10 @@
 import React from 'react'
 
 function Button (props) {
-    let {children} = props
+    let {children, onClick} = props
     return (
-        <button className="button">
+        <button className="button"
+            onClick={onClick}>
             {children}
         </button>
     )

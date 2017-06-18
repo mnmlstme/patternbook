@@ -2,8 +2,9 @@
 imports:
     Button: './Button.jsx'
 
-context:
-    label: 'Click To Try It'
+scope:
+    label: 'Hit me'
+    count: 0
 ---
 
 Button
@@ -12,11 +13,16 @@ Button
 The button component creates buttons.
 
 ```render html
-<Button>{label}</Button>
+<Button onClick={() => dispatch(RESET)}>
+    Reset
+</Button>
 ```
 
 Buttons look like this:
 
 ```show html
-<Button>{label}</Button>
+<Button onClick={() => dispatch(SET, {count: count + 1})}>
+    {label}
+</Button>
+<p>{count}</p>
 ```
