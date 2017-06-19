@@ -13,8 +13,6 @@ function Render (props) {
 
 const classes = StyleSheet.create({
     render: {
-        margin: '1em 4em',
-        padding: '.5em',
     }
 })
 

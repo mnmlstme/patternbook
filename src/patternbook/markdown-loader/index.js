@@ -15,9 +15,11 @@ function loader (content) {
 const fences = {
     render: function (content, lang) {
         let result =
+            '<Patternbook.Show>' +
             '<Patternbook.Render>' +
             content +
-            '</Patternbook.Render>'
+            '</Patternbook.Render>' +
+            '</Patternbook.Show>'
 
         return result
     },
@@ -30,6 +32,19 @@ const fences = {
             '<Patternbook.Render>' +
             content +
             '</Patternbook.Render>' +
+            '<Patternbook.Source lang="' + lang + '">' +
+            source +
+            '</Patternbook.Source>' +
+            '</Patternbook.Show>'
+
+        return result
+    },
+
+    source: function (content, lang) {
+        let source = markupSource(content, lang)
+
+        let result =
+            '<Patternbook.Show>' +
             '<Patternbook.Source lang="' + lang + '">' +
             source +
             '</Patternbook.Source>' +

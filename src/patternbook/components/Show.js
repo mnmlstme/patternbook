@@ -3,11 +3,11 @@ import { StyleSheet, css } from 'aphrodite/no-important';
 
 function Show (props) {
     let {children} = props
-    let styledChildren = children.map(
-        (child, key) =>
-            React.cloneElement(child, {
-                key, styles: classes.child
-            })
+    let styledChildren = React.Children.map(
+        children,
+        (child) => React.cloneElement(child, {
+            styles: classes.child
+        })
     );
 
     return (
