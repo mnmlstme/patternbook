@@ -13,6 +13,7 @@ function Button (props) {
 
 const styles = StyleSheet.create({
     button: {
+        fontFamily: 'inherit',
         fontSize: '100%',
         color: 'rgb(93, 47, 2)',
         backgroundColor: 'rgb(253, 245, 237)',

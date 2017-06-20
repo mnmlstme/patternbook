@@ -16,7 +16,7 @@ const fences = {
     render: function (content, lang) {
         let result =
             '<Patternbook.Show>' +
-            '<Patternbook.Render>' +
+            '<Patternbook.Render theme={Theme}>' +
             content +
             '</Patternbook.Render>' +
             '</Patternbook.Show>'
@@ -29,7 +29,7 @@ const fences = {
 
         let result =
             '<Patternbook.Show>' +
-            '<Patternbook.Render>' +
+            '<Patternbook.Render theme={Theme}>' +
             content +
             '</Patternbook.Render>' +
             '<Patternbook.Source lang="' + lang + '">' +
@@ -99,6 +99,7 @@ function toModule(payload) {
     let {html, attributes} = payload
     let imports = attributes.imports || {}
     let scope = attributes.scope || {}
+    let theme = attributes.theme
     let jsx = html.replace(/class=/g, 'className=')
 
     let output = [
@@ -109,6 +110,9 @@ function toModule(payload) {
             Object.keys(imports)
                 .map( module =>
                     `let ${module} = require('${imports[module]}')`),
+            theme
+                ? `let Theme = require('${theme}')`
+                : 'let Theme = () => ""',
             [
                 'module.exports = function () {',
                 'let initial = {',
@@ -129,7 +133,7 @@ function toModule(payload) {
                 jsx,
                 '  </section>)',
                 '}',
-                '  return React.createElement(Patternbook.Scope, {component: Component, initial: initial}, [])',
+                'return React.createElement(Patternbook.Scope, {component: Component, initial: initial}, [])',
                 '}'
             ]
         )

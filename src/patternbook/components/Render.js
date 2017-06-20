@@ -2,11 +2,15 @@ import React from 'react'
 import { StyleSheet, css } from 'aphrodite/no-important';
 
 function Render (props) {
-    let {children, styles} = props
+    let {children, styles, theme} = props
 
     return (
         <div className={css(classes.render, styles)}>
-            {children}
+            {
+                theme
+                    ? React.createElement(theme, {}, children)
+                    : children
+            }
         </div>
     )
 }
