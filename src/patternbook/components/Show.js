@@ -27,8 +27,11 @@ const classes = StyleSheet.create({
     },
     child: {
         margin: 0,
-        padding: '0.5em',
-        flexBasis: 'content'
+        padding: '1em',
+        flexBasis: 'content',
+        background: '#fffefe',
+        boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
+        borderRadius: '4px'
     }
 })
 

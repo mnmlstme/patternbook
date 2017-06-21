@@ -15,7 +15,8 @@ function Source (props) {
 
 const classes = StyleSheet.create({
     source: {
-        background: 'rgba(0,50,50,.2)',
+        fontFamily: 'Input, Courier, monospace',
+        fontSize: '.875rem'
     }
 })
 
