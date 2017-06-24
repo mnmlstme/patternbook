@@ -1,7 +1,7 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 import { createBrowserHistory } from 'history'
-
 
 import Page from './layouts/Page'
 import Home from './layouts/Home'
@@ -13,7 +13,7 @@ import Source from './components/Source'
 import Render from './components/Render'
 import Scope from './components/Scope'
 
-function NotFound (props) {
+function NotFound(props) {
     let path = props.params.splat
 
     return (
@@ -24,28 +24,41 @@ function NotFound (props) {
     )
 }
 
-function Patternbook (props) {
-    let history = createBrowserHistory();
+function Patternbook(props) {
+    let history = createBrowserHistory()
+    let { config } = props
+    let confed = comp => p =>
+        React.createElement(comp, Object.assign({ config }, p))
 
     return (
         <Router history={browserHistory}>
             <Route path="/" component={Page}>
-                <IndexRoute component={Home}/>
+                <IndexRoute component={confed(Home)} />
                 <Route path=":category">
-                    <IndexRoute component={Category}/>
-                    <Route path=":pattern" component={Pattern}/>
+                    <IndexRoute component={confed(Category)} />
+                    <Route path=":pattern" component={confed(Pattern)} />
                 </Route>
-                <Route path="**" component={NotFound}/>
+                <Route path="**" component={NotFound} />
             </Route>
         </Router>
     )
 }
 
+function config(object) {
+    let config = Object.assign({}, object)
+    config.render = el =>
+        ReactDOM.render(React.createElement(Patternbook, { config }), el)
+    return config
+}
+
+function render(el) {}
+
 Object.assign(Patternbook, {
     Show,
     Render,
     Source,
-    Scope
+    Scope,
+    config
 })
 
 module.exports = Patternbook

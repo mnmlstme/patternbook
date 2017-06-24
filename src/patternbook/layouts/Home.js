@@ -1,10 +1,9 @@
 import React from 'react'
-import {requireFromTarget} from './target'
 
-function Home (props) {
-
+function Home(props) {
+    let { requireFromTarget } = props.config
     let path = 'README.md'
-    let content = requireFromTarget(path)
+    let content = requireFromTarget(path)()
 
     return content
 }

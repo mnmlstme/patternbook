@@ -1,15 +1,13 @@
-var path = require('path');
-const webpack = require('webpack');
-
+var path = require('path')
+const webpack = require('webpack')
 
 module.exports = {
-
-    entry: './book.js',
+    entry: './src/patternbook/index.js',
 
     module: {
         loaders: [
             {
-                test: /.jsx?$/,
+                test: /.js$/,
                 exclude: /node_modules/,
                 use: {
                     loader: 'babel-loader',
@@ -17,63 +15,20 @@ module.exports = {
                         presets: ['react', 'es2015']
                     }
                 }
-            },
-
-            {
-                test: /\.md$/,
-                exclude: /node_modules/,
-                use: [
-                    {
-                        loader: 'babel-loader',
-                        query: {
-                            presets: ['react', 'es2015']
-                        }
-                    },
-                    {
-                        loader: 'patternbook/markdown-loader'
-                    }
-                ]
-            },
+            }
         ]
     },
 
     resolve: {
-        alias: {
-            TARGET: path.resolve(__dirname, 'patterns')
-        },
+        modules: [path.resolve(__dirname, 'src'), 'node_modules'],
 
-        modules: [
-            path.resolve(__dirname, 'src'),
-            'node_modules'
-        ],
-
-        extensions: [
-            '.js'
-        ],
-    },
-
-    resolveLoader : {
-        modules: [
-            path.resolve(__dirname, 'src'),
-            'node_modules'
-        ],
-        extensions: [".js", ".json"],
-        mainFields: ["loader", "main"]
+        extensions: ['.js']
     },
 
     output: {
-        filename: 'bundle.js',
+        filename: 'index.js',
         path: path.resolve(__dirname, 'dist'),
-        libraryTarget: 'umd'
-    },
-
-    plugins: [
-        new webpack.HotModuleReplacementPlugin() // Enable HMR
-    ],
-
-    devServer: {
-        port: 3000,
-        historyApiFallback: true,
-        hot: true, // Tell the dev-server we're using HMR
+        libraryTarget: 'umd',
+        library: 'Patternbook'
     }
-};
+}

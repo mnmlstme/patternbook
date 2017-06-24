@@ -2,14 +2,14 @@
   "name": "patternbook",
   "version": "0.1.0",
   "description": "A design documentation system",
-  "main": "src/patternbook/index.js",
+  "main": "dist/index.js",
+  "loader": "src/patternbook/markdown-loader/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/mnmlstme/patternbook.git"
   },
   "scripts": {
     "build": "webpack",
-    "start": "webpack-dev-server --hot --progress --colors",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -32,7 +32,6 @@
     "react-dom": "^15.5.4",
     "react-router": "^2.8.1",
     "remarkable": "^1.7.1",
-    "webpack": "^2.6.1",
-    "webpack-dev-server": "^2.4.5"
+    "webpack": "^2.6.1"
   }
 }
