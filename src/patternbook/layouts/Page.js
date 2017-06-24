@@ -25,7 +25,8 @@ function Page(props) {
 const classes = StyleSheet.create({
     article: {
         fontFamily: 'Georgia, serif',
-        background: '#faf8f8'
+        background: '#f1eeee',
+        color: '#58344d'
     },
     header: {
         fontFamily: 'Input, Courier, monospace',

@@ -1,18 +1,12 @@
 import React from 'react'
-import { StyleSheet, css } from 'aphrodite/no-important';
+import { StyleSheet, css } from 'aphrodite/no-important'
 
-function Show (props) {
-    let {children} = props
-    let styledChildren = React.Children.map(
-        children,
-        (child) => React.cloneElement(child, {
-            styles: classes.child
-        })
-    );
+function Show(props) {
+    let { children } = props
 
     return (
         <figure className={css(classes.show)}>
-            {styledChildren}
+            {children}
         </figure>
     )
 }
@@ -23,15 +17,7 @@ const classes = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'stretch',
-        margin: '1em 4em',
-    },
-    child: {
-        margin: 0,
-        padding: '1em',
-        flexBasis: 'content',
-        background: '#fffefe',
-        boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
-        borderRadius: '4px'
+        margin: '1em 4em'
     }
 })
 
