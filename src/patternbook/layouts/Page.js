@@ -1,12 +1,14 @@
 import React from 'react'
-import {StyleSheet, css} from 'aphrodite/no-important'
+import { StyleSheet, css } from 'aphrodite/no-important'
+let prismCSS = require('prismjs/themes/prism.css').toString()
 
 //const { StyleSheet: newStyleSheet, css: newCss } = StyleSheet.extend([myExtension]);
 
-function Page (props) {
+function Page(props) {
     return (
         <article className={css(classes.article)}>
-            <style>{"body { margin: 0; }"}</style>
+            <style>{'body { margin: 0; }'}</style>
+            <style>{prismCSS}</style>
             <header className={css(classes.header)}>
                 <h6> patternbook </h6>
             </header>

@@ -15,6 +15,11 @@ module.exports = {
                         presets: ['react', 'es2015']
                     }
                 }
+            },
+            {
+                test: /\.css$/,
+                include: /prismjs/,
+                use: ['css-loader']
             }
         ]
     },
