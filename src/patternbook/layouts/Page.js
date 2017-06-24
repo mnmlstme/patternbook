@@ -16,10 +16,14 @@ class Page extends React.Component {
     render() {
         return (
             <article className={css(classes.article)}>
-                <style>{'body { margin: 0; }'}</style>
+                <style>
+                    {['body,h1,h2{margin:0;}', '*{box-sizing:border-box}'].join(
+                        '\n'
+                    )}
+                </style>
                 <style>{prismCSS}</style>
                 <header className={css(classes.header)}>
-                    <h6> patternbook </h6>
+                    patternbook
                 </header>
                 <section className={css(classes.body)}>
                     {this.props.children}
@@ -34,6 +38,8 @@ class Page extends React.Component {
 
 const classes = StyleSheet.create({
     article: {
+        display: 'flex',
+        flexDirection: 'column',
         fontFamily: 'Georgia, serif',
         background: '#f1eeee',
         color: '#58344d',
@@ -41,15 +47,18 @@ const classes = StyleSheet.create({
     },
     header: {
         fontFamily: 'Input, Courier, monospace',
-        fontSize: '1.25rem'
+        fontSize: '1.25rem',
+        height: '2rem'
     },
     body: {
         margin: '2em',
-        fontSize: '1rem'
+        fontSize: '1rem',
+        flexGrow: 1
     },
     footer: {
         fontFamily: 'Input, Courier, monospace',
-        fontSize: '.75rem'
+        fontSize: '.75rem',
+        height: '1rem'
     }
 })
 
