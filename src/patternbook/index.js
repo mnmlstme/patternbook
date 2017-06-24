@@ -18,7 +18,7 @@ function NotFound(props) {
 
     return (
         <section>
-            <h3>No route</h3>
+            <h3>Not found:</h3>
             <p>{path}</p>
         </section>
     )
@@ -26,17 +26,25 @@ function NotFound(props) {
 
 function Patternbook(props) {
     let history = createBrowserHistory()
-    let { config } = props
-    let confed = comp => p =>
-        React.createElement(comp, Object.assign({ config }, p))
+    let ConfiguredPage = p =>
+        <Page configuration={props.configuration} {...p} />
+
+    /* Routes:
+        /
+            Home (entry point)
+        /dir1[/dir2...]/
+            Category (trailing slash)
+        /dir1[/dir2...]/name
+            Pattern (no trailing slash)
+    */
 
     return (
         <Router history={browserHistory}>
-            <Route path="/" component={Page}>
-                <IndexRoute component={confed(Home)} />
-                <Route path=":category">
-                    <IndexRoute component={confed(Category)} />
-                    <Route path=":pattern" component={confed(Pattern)} />
+            <Route path="/" component={ConfiguredPage}>
+                <IndexRoute component={Home} />
+                <Route path="**/">
+                    <IndexRoute component={Category} />
+                    <Route path=":pattern" component={Pattern} />
                 </Route>
                 <Route path="**" component={NotFound} />
             </Route>
@@ -45,10 +53,24 @@ function Patternbook(props) {
 }
 
 function config(object) {
-    let config = Object.assign({}, object)
-    config.render = el =>
-        ReactDOM.render(React.createElement(Patternbook, { config }), el)
-    return config
+    let configuration = Object.assign(
+        {},
+        {
+            entry: 'README'
+        },
+        object
+    )
+
+    return {
+        configuration,
+        render: el =>
+            ReactDOM.render(
+                React.createElement(Patternbook, {
+                    configuration
+                }),
+                el
+            )
+    }
 }
 
 function render(el) {}

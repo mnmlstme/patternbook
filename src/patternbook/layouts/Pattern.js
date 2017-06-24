@@ -1,12 +1,19 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-function Pattern(props) {
-    let { requireFromTarget } = props.config
-    let { category, pattern } = props.params
-    let path = [category, pattern].join('/')
-    let content = requireFromTarget(path)()
+class Pattern extends React.Component {
+    static contextTypes = {
+        requireFromTarget: PropTypes.func
+    }
 
-    return content
+    render() {
+        let { requireFromTarget } = this.context
+        let { splat, pattern } = this.props.params
+        let filepath = [splat, pattern]
+        let content = requireFromTarget(filepath.join('/'))()
+
+        return content
+    }
 }
 
 module.exports = Pattern

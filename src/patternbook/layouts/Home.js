@@ -1,12 +1,18 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-function Home(props) {
-    let { requireFromTarget } = props.config
-    // TODO: use mainFiles to set README
-    let path = 'README'
-    let content = requireFromTarget(path)()
+class Home extends React.Component {
+    static contextTypes = {
+        entry: PropTypes.string,
+        requireFromTarget: PropTypes.func
+    }
 
-    return content
+    render() {
+        let { requireFromTarget, entry } = this.context
+        let content = requireFromTarget(entry)()
+
+        return content
+    }
 }
 
 module.exports = Home
