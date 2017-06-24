@@ -2,18 +2,17 @@ let frontMatter = require('front-matter')
 let Prism = require('node-prismjs')
 let Remarkable = require('remarkable')
 
-function loader (content) {
+function loader(content) {
+    const callback = this.async()
 
-  const callback = this.async();
-
-  parse(content)
-    .then(toModule)
-    .then(component => callback(null, component))
-    .catch(callback);
+    parse(content)
+        .then(toModule)
+        .then(component => callback(null, component))
+        .catch(callback)
 }
 
 const fences = {
-    render: function (content, lang) {
+    render: function(content, lang) {
         let result =
             '<Patternbook.Show>' +
             '<Patternbook.Render theme={Theme}>' +
@@ -24,7 +23,7 @@ const fences = {
         return result
     },
 
-    show: function (content, lang) {
+    show: function(content, lang) {
         let source = markupSource(content, lang)
 
         let result =
@@ -32,7 +31,9 @@ const fences = {
             '<Patternbook.Render theme={Theme}>' +
             content +
             '</Patternbook.Render>' +
-            '<Patternbook.Source lang="' + lang + '">' +
+            '<Patternbook.Source lang="' +
+            lang +
+            '">' +
             source +
             '</Patternbook.Source>' +
             '</Patternbook.Show>'
@@ -40,12 +41,14 @@ const fences = {
         return result
     },
 
-    source: function (content, lang) {
+    source: function(content, lang) {
         let source = markupSource(content, lang)
 
         let result =
             '<Patternbook.Show>' +
-            '<Patternbook.Source lang="' + lang + '">' +
+            '<Patternbook.Source lang="' +
+            lang +
+            '">' +
             source +
             '</Patternbook.Source>' +
             '</Patternbook.Show>'
@@ -61,20 +64,23 @@ remarkable.set({
     xhtmlOut: true
 })
 
-Object.keys(fences).map( key => {
-    remarkable.renderer.rules.fence_custom[key] =
-        function (tokens, idx, options) {
-            let tags = tokens[idx].params.split(/\s+/g)
-            let content = tokens[idx].content
-            let lang = tags.pop()
-            return fences[key](content, lang, tags)
-        }
+Object.keys(fences).map(key => {
+    remarkable.renderer.rules.fence_custom[key] = function(
+        tokens,
+        idx,
+        options
+    ) {
+        let tags = tokens[idx].params.split(/\s+/g)
+        let content = tokens[idx].content
+        let lang = tags.pop()
+        return fences[key](content, lang, tags)
+    }
 })
 
-function parse (content) {
+function parse(content) {
     return new Promise((resolve, reject) => {
         try {
-            let {body, attributes} = frontMatter(content)
+            let { body, attributes } = frontMatter(content)
             let html = remarkable.render(body)
             resolve({ html, attributes })
         } catch (err) {
@@ -83,62 +89,60 @@ function parse (content) {
     })
 }
 
-function markupSource (content, lang) {
+function markupSource(content, lang) {
     return highlight(content, lang)
         .replace(/[{}]/g, '{"$&"}')
         .replace(/(\n)/g, '{"\\n"}')
-        .replace(/class=/g, 'className=');
+        .replace(/class=/g, 'className=')
 }
 
-function highlight (code, lang) {
+function highlight(code, lang) {
     const language = Prism.languages[lang] || Prism.languages.autoit
     return Prism.highlight(code, language)
 }
 
 function toModule(payload) {
-    let {html, attributes} = payload
+    let { html, attributes } = payload
     let imports = attributes.imports || {}
+    let styles = attributes.styles || []
     let scope = attributes.scope || {}
     let theme = attributes.theme
     let jsx = html.replace(/class=/g, 'className=')
 
     let output = [
-            "let React = require('react')",
-            "let Patternbook = require('patternbook')"
+        "let React = require('react')",
+        "let Patternbook = require('patternbook')"
+    ].concat(
+        Object.keys(imports).map(
+            module => `let ${module} = require('${imports[module]}')`
+        ),
+        theme ? `let Theme = require('${theme}')` : 'let Theme = () => ""',
+        ['module.exports = function () {', 'let initial = {'],
+        Object.keys(scope).map(
+            variable => variable + ':' + JSON.stringify(scope[variable]) + ','
+        ),
+        ['}', 'let styles = ['],
+        styles.map(file => `require('${file}'),`),
+        [
+            ']',
+            'let Component = function (props) {',
+            '  props = props || {}',
+            '  let { ',
+            Object.keys(scope).join(','),
+            '  } = props.scope || {}',
+            '  let dispatch = props.dispatch',
+            '  const {SET, RESET} = Patternbook.Scope.messageTypes',
+            '  return (<section>',
+            '    <style>{styles.join("\\n")}</style>',
+            jsx,
+            '  </section>)',
+            '}',
+            'return React.createElement(Patternbook.Scope, {component: Component, initial: initial}, [])',
+            '}'
         ]
-        .concat(
-            Object.keys(imports)
-                .map( module =>
-                    `let ${module} = require('${imports[module]}')`),
-            theme
-                ? `let Theme = require('${theme}')`
-                : 'let Theme = () => ""',
-            [
-                'module.exports = function () {',
-                'let initial = {',
-            ],
-            Object.keys(scope)
-                .map( variable =>
-                    variable + ':' + JSON.stringify(scope[variable]) +','),
-            [
-                '}',
-                'let Component = function (props) {',
-                '  props = props || {}',
-                '  let { ',
-                Object.keys(scope).join(','),
-                '  } = props.scope || {}',
-                '  let dispatch = props.dispatch',
-                '  const {SET, RESET} = Patternbook.Scope.messageTypes',
-                '  return (<section>',
-                jsx,
-                '  </section>)',
-                '}',
-                'return React.createElement(Patternbook.Scope, {component: Component, initial: initial}, [])',
-                '}'
-            ]
-        )
+    )
 
-    return output.join("\n")
+    return output.join('\n')
 }
 
 module.exports = loader

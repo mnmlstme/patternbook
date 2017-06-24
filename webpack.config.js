@@ -5,7 +5,7 @@ module.exports = {
     entry: './src/patternbook/index.js',
 
     module: {
-        loaders: [
+        rules: [
             {
                 test: /.js$/,
                 exclude: /node_modules/,
