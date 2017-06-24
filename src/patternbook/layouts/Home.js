@@ -2,7 +2,8 @@ import React from 'react'
 
 function Home(props) {
     let { requireFromTarget } = props.config
-    let path = 'README.md'
+    // TODO: use mainFiles to set README
+    let path = 'README'
     let content = requireFromTarget(path)()
 
     return content
