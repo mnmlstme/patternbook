@@ -101,43 +101,84 @@ function highlight(code, lang) {
     return Prism.highlight(code, language)
 }
 
+function generateImports(imports) {
+    return Object.keys(imports).map(
+        module => `let ${module} = require('${imports[module]}')`
+    )
+}
+
+function generateTheme(theme) {
+    return theme
+        ? [`let Theme = require('${theme}')`]
+        : ['let Theme = () => ""']
+}
+
+function generateScopeInitial(scope) {
+    return ['let initial = {'].concat(
+        Object.keys(scope).map(
+            variable => variable + ':' + JSON.stringify(scope[variable]) + ','
+        ),
+        ['}']
+    )
+}
+
+function generateStyles(styles) {
+    return ['let styles = ['].concat(
+        styles.map(file => `require('${file}'),`),
+        ['].join("")']
+    )
+}
+
+function generateSymbols(symbols) {
+    let keys = Object.keys(symbols)
+    return ['let symbols = {__html: ['].concat(
+        keys.map(
+            k =>
+                `Patternbook.convertSvgToSymbol('${k}',require('${symbols[
+                    k
+                ]}')),`
+        ),
+        ['].join("")}']
+    )
+}
+
+function generateComponent(vars, jsx) {
+    return [
+        'let Component = function (props) {',
+        '  props = props || {}',
+        '  let { ',
+        vars.join(','),
+        '  } = props.scope || {}',
+        '  let dispatch = props.dispatch',
+        '  const {SET, RESET} = Patternbook.Scope.messageTypes',
+        '  return (<section>',
+        '    <svg width="0" height="0" style={{position:"absolute"}}>',
+        '      <defs dangerouslySetInnerHTML={symbols}></defs></svg>',
+        '    <style>{styles}</style>',
+        jsx,
+        '  </section>)',
+        '}'
+    ]
+}
+
 function toModule(payload) {
     let { html, attributes } = payload
-    let imports = attributes.imports || {}
-    let styles = attributes.styles || []
-    let scope = attributes.scope || {}
-    let theme = attributes.theme
     let jsx = html.replace(/class=/g, 'className=')
 
     let output = [
         "let React = require('react')",
         "let Patternbook = require('patternbook')"
     ].concat(
-        Object.keys(imports).map(
-            module => `let ${module} = require('${imports[module]}')`
-        ),
-        theme ? `let Theme = require('${theme}')` : 'let Theme = () => ""',
-        ['module.exports = function () {', 'let initial = {'],
-        Object.keys(scope).map(
-            variable => variable + ':' + JSON.stringify(scope[variable]) + ','
-        ),
-        ['}', 'let styles = ['],
-        styles.map(file => `require('${file}'),`),
+        generateImports(attributes.imports || {}),
+        ['module.exports = function () {'],
+        generateTheme(attributes.theme),
+        generateScopeInitial(attributes.scope || {}),
+        generateStyles(attributes.styles || []),
+        generateSymbols(attributes.symbols || {}),
+        generateComponent(Object.keys(attributes.scope || {}), jsx),
         [
-            ']',
-            'let Component = function (props) {',
-            '  props = props || {}',
-            '  let { ',
-            Object.keys(scope).join(','),
-            '  } = props.scope || {}',
-            '  let dispatch = props.dispatch',
-            '  const {SET, RESET} = Patternbook.Scope.messageTypes',
-            '  return (<section>',
-            '    <style>{styles.join("\\n")}</style>',
-            jsx,
-            '  </section>)',
-            '}',
-            'return React.createElement(Patternbook.Scope, {component: Component, initial: initial}, [])',
+            'return React.createElement(Patternbook.Scope, ',
+            '    {component: Component, initial: initial}, [])',
             '}'
         ]
     )

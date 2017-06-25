@@ -73,14 +73,19 @@ function config(object) {
     }
 }
 
-function render(el) {}
+function convertSvgToSymbol(id, string) {
+    return string
+        .replace('<svg', `<symbol id="${id}"`)
+        .replace('</svg>', '</symbol>')
+}
 
 Object.assign(Patternbook, {
     Show,
     Render,
     Source,
     Scope,
-    config
+    config,
+    convertSvgToSymbol
 })
 
 module.exports = Patternbook
