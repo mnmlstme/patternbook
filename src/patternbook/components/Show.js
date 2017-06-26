@@ -15,6 +15,7 @@ const classes = StyleSheet.create({
     show: {
         display: 'flex',
         flexDirection: 'row',
+        flexWrap: 'wrap',
         justifyContent: 'space-between',
         alignItems: 'stretch',
         margin: '1em 4em'

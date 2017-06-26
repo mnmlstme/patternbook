@@ -1,5 +1,5 @@
 let frontMatter = require('front-matter')
-let Prism = require('node-prismjs')
+let Prism = require('prismjs')
 let Remarkable = require('remarkable')
 
 function loader(content) {
@@ -11,47 +11,51 @@ function loader(content) {
         .catch(callback)
 }
 
+function renderBlock(content, lang, attrs) {
+    let size = attrs.size
+
+    return [
+        '<Patternbook.Render theme={Theme}',
+        size ? ' size="' + size + '"' : '',
+        '>',
+        content,
+        '</Patternbook.Render>'
+    ]
+}
+
+function sourceBlock(content, lang, attrs) {
+    let source = markupSource(content, lang)
+
+    return [
+        '<Patternbook.Source lang="',
+        lang,
+        '">',
+        source,
+        '</Patternbook.Source>'
+    ]
+}
+
 const fences = {
-    render: function(content, lang) {
-        let result =
-            '<Patternbook.Show>' +
-            '<Patternbook.Render theme={Theme}>' +
-            content +
-            '</Patternbook.Render>' +
-            '</Patternbook.Show>'
-
-        return result
+    render: function(content, lang, attrs) {
+        return ['<Patternbook.Show>']
+            .concat(renderBlock(content, lang, attrs), ['</Patternbook.Show>'])
+            .join('')
     },
 
-    show: function(content, lang) {
-        let source = markupSource(content, lang)
-
-        let result =
-            '<Patternbook.Show>' +
-            '<Patternbook.Render theme={Theme}>' +
-            content +
-            '</Patternbook.Render>' +
-            '<Patternbook.Source lang="' +
-            lang +
-            '">' +
-            source +
-            '</Patternbook.Source>' +
-            '</Patternbook.Show>'
-
-        return result
+    show: function(content, lang, attrs) {
+        return ['<Patternbook.Show>']
+            .concat(
+                renderBlock(content, lang, attrs),
+                sourceBlock(content, lang, attrs),
+                '</Patternbook.Show>'
+            )
+            .join('')
     },
 
-    source: function(content, lang) {
-        let source = markupSource(content, lang)
-
-        let result =
-            '<Patternbook.Show>' +
-            '<Patternbook.Source lang="' +
-            lang +
-            '">' +
-            source +
-            '</Patternbook.Source>' +
-            '</Patternbook.Show>'
+    source: function(content, lang, attrs) {
+        return ['<Patternbook.Show>']
+            .concat(sourceBlock(content, lang, attrs), '</Patternbook.Show>')
+            .join('')
 
         return result
     }
@@ -71,9 +75,14 @@ Object.keys(fences).map(key => {
         options
     ) {
         let tags = tokens[idx].params.split(/\s+/g)
+        let type = tags.shift()
+        let lang = tags.shift()
+        let attrs = tags.map(s => s.split('=')).reduce((o, [key, value]) => {
+            o[key] = value
+            return o
+        }, {})
         let content = tokens[idx].content
-        let lang = tags.pop()
-        return fences[key](content, lang, tags)
+        return fences[key](content, lang, attrs)
     }
 })
 
@@ -97,7 +106,7 @@ function markupSource(content, lang) {
 }
 
 function highlight(code, lang) {
-    const language = Prism.languages[lang] || Prism.languages.autoit
+    const language = Prism.languages[lang] || Prism.languages.markup
     return Prism.highlight(code, language)
 }
 
@@ -110,7 +119,7 @@ function generateImports(imports) {
 function generateTheme(theme) {
     return theme
         ? [`let Theme = require('${theme}')`]
-        : ['let Theme = () => ""']
+        : ['let Theme = Patternbook.DefaultTheme']
 }
 
 function generateScopeInitial(scope) {

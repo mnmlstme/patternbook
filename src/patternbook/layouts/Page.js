@@ -1,11 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router'
 import { StyleSheet, css } from 'aphrodite/no-important'
 const prismCSS = require('prismjs/themes/prism.css').toString()
 
 class Page extends React.Component {
     static childContextTypes = {
         entry: PropTypes.string,
+        extension: PropTypes.string,
         requireFromTarget: PropTypes.func
     }
 
@@ -23,13 +25,16 @@ class Page extends React.Component {
                 </style>
                 <style>{prismCSS}</style>
                 <header className={css(classes.header)}>
-                    patternbook
+                    <Link to="/">patternbook</Link>
                 </header>
                 <section className={css(classes.body)}>
                     {this.props.children}
                 </section>
                 <footer className={css(classes.footer)}>
-                    presented by patternbook
+                    presented by{' '}
+                    <a href="https://github.com/mnmlstme/patternbook">
+                        patternbook
+                    </a>
                 </footer>
             </article>
         )
@@ -43,7 +48,11 @@ const classes = StyleSheet.create({
         fontFamily: 'Georgia, serif',
         background: '#f1eeee',
         color: '#58344d',
-        minHeight: '100vh'
+        height: '100%',
+        width: '100%',
+        position: 'fixed',
+        top: 0,
+        left: 0
     },
     header: {
         fontFamily: 'Input, Courier, monospace',
@@ -51,9 +60,10 @@ const classes = StyleSheet.create({
         height: '2rem'
     },
     body: {
-        margin: '2em',
+        padding: '2rem',
         fontSize: '1rem',
-        flexGrow: 1
+        flexGrow: 1,
+        overflow: 'auto'
     },
     footer: {
         fontFamily: 'Input, Courier, monospace',

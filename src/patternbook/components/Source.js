@@ -2,24 +2,45 @@ import React from 'react'
 import { StyleSheet, css } from 'aphrodite/no-important'
 
 function Source(props) {
-    let { lang, children, styles } = props
+    let { lang, children } = props
 
     return (
-        <pre className={css(classes.source, styles)}>
-            <code className={lang && 'language-' + lang}>
-                {children}
-            </code>
-        </pre>
+        <div className={css(classes.source)}>
+            <h6 className={css(classes.label)}>{lang}</h6>
+            <pre className={css(classes.pre)}>
+                <code
+                    className={
+                        css(classes.code) + (lang && ' language-' + lang)
+                    }
+                >
+                    {children}
+                </code>
+            </pre>
+        </div>
     )
 }
 
 const classes = StyleSheet.create({
     source: {
+        position: 'relative',
         margin: 0,
         padding: '1em',
-        flexBasis: 'content',
+        flex: '1 1 auto',
         fontFamily: 'Input, Courier, monospace',
         fontSize: '.875rem'
+    },
+    label: {
+        margin: 0,
+        position: 'absolute',
+        top: 0,
+        textTransform: 'uppercase',
+        color: 'rgba(0,0,0,0.4)'
+    },
+    pre: {
+        margin: 0
+    },
+    code: {
+        lineHeight: '1.1em'
     }
 })
 

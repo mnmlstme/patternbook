@@ -13,6 +13,8 @@ import Source from './components/Source'
 import Render from './components/Render'
 import Scope from './components/Scope'
 
+import DefaultTheme from './themes/DefaultTheme'
+
 function NotFound(props) {
     let path = props.params.splat
 
@@ -56,7 +58,8 @@ function config(object) {
     let configuration = Object.assign(
         {},
         {
-            entry: 'README'
+            entry: 'README',
+            extension: '.md'
         },
         object
     )
@@ -84,6 +87,7 @@ Object.assign(Patternbook, {
     Render,
     Source,
     Scope,
+    DefaultTheme,
     config,
     convertSvgToSymbol
 })
