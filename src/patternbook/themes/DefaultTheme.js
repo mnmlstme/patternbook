@@ -2,9 +2,11 @@ import React from 'react'
 import { StyleSheet, css } from 'aphrodite/no-important'
 
 function DefaultTheme(props) {
+    let { themeClass, children } = props
+
     return (
-        <div className={css(classes.theme)}>
-            {props.children}
+        <div className={[css(classes.theme), themeClass].join(' ')}>
+            {children}
         </div>
     )
 }

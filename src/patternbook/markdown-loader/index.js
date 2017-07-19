@@ -100,7 +100,7 @@ function parse(content) {
 
 function markupSource(content, lang) {
     return highlight(content, lang)
-        .replace(/[{}]/g, '{"$&"}')
+        .replace(/[{}]+/g, '{"$&"}')
         .replace(/(\n)/g, '{"\\n"}')
         .replace(/class=/g, 'className=')
 }
@@ -143,9 +143,7 @@ function generateSymbols(symbols) {
     return ['let symbols = {__html: ['].concat(
         keys.map(
             k =>
-                `Patternbook.convertSvgToSymbol('${k}',require('${symbols[
-                    k
-                ]}')),`
+                `Patternbook.convertSvgToSymbol('${k}',require('${symbols[k]}')),`
         ),
         ['].join("")}']
     )

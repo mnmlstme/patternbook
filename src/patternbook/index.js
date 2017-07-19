@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Router, Route, IndexRoute, browserHistory } from 'react-router'
-import { createBrowserHistory } from 'history'
 
 import Page from './layouts/Page'
 import Home from './layouts/Home'
@@ -27,9 +26,9 @@ function NotFound(props) {
 }
 
 function Patternbook(props) {
-    let history = createBrowserHistory()
-    let ConfiguredPage = p =>
+    let ConfiguredPage = p => (
         <Page configuration={props.configuration} {...p} />
+    )
 
     /* Routes:
         /
@@ -59,7 +58,8 @@ function config(object) {
         {},
         {
             entry: 'README',
-            extension: '.md'
+            extension: '.md',
+            themeClass: 'no-theme'
         },
         object
     )

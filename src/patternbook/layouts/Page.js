@@ -8,6 +8,7 @@ class Page extends React.Component {
     static childContextTypes = {
         entry: PropTypes.string,
         extension: PropTypes.string,
+        themeClass: PropTypes.string,
         requireFromTarget: PropTypes.func
     }
 
@@ -19,9 +20,11 @@ class Page extends React.Component {
         return (
             <article className={css(classes.article)}>
                 <style>
-                    {['body,h1,h2{margin:0;}', '*{box-sizing:border-box}'].join(
-                        '\n'
-                    )}
+                    {[
+                        'body,h1,h2{margin:0;}',
+                        '*{box-sizing:border-box}',
+                        'figure {max-height: 100vh; max-width: 100vw}'
+                    ].join('\n')}
                 </style>
                 <style>{prismCSS}</style>
                 <header className={css(classes.header)}>
