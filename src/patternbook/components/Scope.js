@@ -1,53 +1,31 @@
 import React from 'react'
+let ReactRedux = require('react-redux')
 
-const messageTypes = {
-    SET: 'patternbook.set',
-    RESET: 'patternbook.reset'
-}
+import ScopeStore from '../reducers/ScopeStore'
+const { Init } = ScopeStore.msgTypes
 
 class Scope extends React.Component {
-
-    constructor (props) {
-        super(props);
-        this.state = {}
-        this.componentWillReceiveProps(props)
+    constructor(props) {
+        let { dispatch, initial } = props
+        super(props)
+        dispatch(Init(initial))
     }
 
-    componentWillReceiveProps (nextProps) {
-        this.state = {
-            current: Object.assign({},nextProps.initial)
-        }
-    }
+    render() {
+        let { component } = this.props
 
-    render () {
-        return React.createElement(
-            this.props.component,
-            {
-                scope: this.state.current,
-                dispatch: this.dispatch.bind(this)
-            },
-            []
-        )
+        return React.createElement(component, this.props, [])
     }
+}
 
-    dispatch (key, payload) {
-        switch (key) {
-            case messageTypes.SET:
-                this.setState(
-                    {current: Object.assign({}, this.state.current, payload)}
-                )
-                break;
-            case messageTypes.RESET:
-                this.setState(
-                    {current: this.props.initial}
-                )
-                break;
-            default:
-                console.log('invalid message: ', key, payload)
+const mapStateToProps = (state, ownProps) => {
+    return {
+        scope: ScopeStore.getAll(state.scope),
+        messages: {
+            scope: ScopeStore.msgTypes
+            // TODO: inject method types for other reducers here
         }
     }
 }
 
-Scope.messageTypes = messageTypes
-
-module.exports = Scope
+module.exports = ReactRedux.connect(mapStateToProps)(Scope)

@@ -149,15 +149,28 @@ function generateSymbols(symbols) {
     )
 }
 
-function generateComponent(vars, jsx) {
+function generateMessages(messages) {
+    let keys = Object.keys(messages)
+    return [
+        'function messages(root) {',
+        '  return {',
+        keys.map(k => `${k}: root.${messages[k]}`).join(','),
+        '  }',
+        '}'
+    ]
+}
+
+function generateComponent(jsx, vars, msgtypes) {
     return [
         'let Component = function (props) {',
         '  props = props || {}',
         '  let { ',
-        vars.join(','),
+        (vars || []).join(','),
         '  } = props.scope || {}',
         '  let dispatch = props.dispatch',
-        '  const {SET, RESET} = Patternbook.Scope.messageTypes',
+        '  let { ',
+        (msgtypes || []).join(','),
+        '  } = messages(props.messages)',
         '  return (<section>',
         '    <svg width="0" height="0" style={{position:"absolute"}}>',
         '      <defs dangerouslySetInnerHTML={symbols}></defs></svg>',
@@ -182,7 +195,12 @@ function toModule(payload) {
         generateScopeInitial(attributes.scope || {}),
         generateStyles(attributes.styles || []),
         generateSymbols(attributes.symbols || {}),
-        generateComponent(Object.keys(attributes.scope || {}), jsx),
+        generateMessages(attributes.messages || {}),
+        generateComponent(
+            jsx,
+            attributes.scope && Object.keys(attributes.scope),
+            attributes.messages && Object.keys(attributes.messages)
+        ),
         [
             'return React.createElement(Patternbook.Scope, ',
             '    {component: Component, initial: initial}, [])',

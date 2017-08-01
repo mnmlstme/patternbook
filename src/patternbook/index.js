@@ -1,6 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Router, Route, IndexRoute, browserHistory } from 'react-router'
+let ReactRouter = require('react-router')
+let { Router, Route, IndexRoute, browserHistory } = ReactRouter
+let Redux = require('redux')
+let ReactRedux = require('react-redux')
+let { Provider } = ReactRedux
+let ReactRouterRedux = require('react-router-redux')
+import thunkMiddleware from 'redux-thunk'
 
 import Page from './layouts/Page'
 import Home from './layouts/Home'
@@ -13,6 +19,8 @@ import Render from './components/Render'
 import Scope from './components/Scope'
 
 import DefaultTheme from './themes/DefaultTheme'
+
+import rootReducer from './reducers'
 
 function NotFound(props) {
     let path = props.params.splat
@@ -40,16 +48,18 @@ function Patternbook(props) {
     */
 
     return (
-        <Router history={browserHistory}>
-            <Route path="/" component={ConfiguredPage}>
-                <IndexRoute component={Home} />
-                <Route path="**/">
-                    <IndexRoute component={Category} />
-                    <Route path=":pattern" component={Pattern} />
+        <Provider store={props.store}>
+            <Router history={browserHistory}>
+                <Route path="/" component={ConfiguredPage}>
+                    <IndexRoute component={Home} />
+                    <Route path="**/">
+                        <IndexRoute component={Category} />
+                        <Route path=":pattern" component={Pattern} />
+                    </Route>
+                    <Route path="**" component={NotFound} />
                 </Route>
-                <Route path="**" component={NotFound} />
-            </Route>
-        </Router>
+            </Router>
+        </Provider>
     )
 }
 
@@ -64,15 +74,35 @@ function config(object) {
         object
     )
 
+    function render(el) {
+        // Create flux store
+        let store = Redux.createStore(
+            rootReducer,
+            Redux.compose(
+                Redux.applyMiddleware(thunkMiddleware),
+                window.devToolsExtension ? window.devToolsExtension() : f => f
+            )
+        )
+
+        // Connect browser history to Flux store
+        let history = ReactRouterRedux.syncHistoryWithStore(
+            ReactRouter.browserHistory,
+            store
+        )
+
+        ReactDOM.render(
+            React.createElement(Patternbook, {
+                store,
+                history,
+                configuration
+            }),
+            el
+        )
+    }
+
     return {
         configuration,
-        render: el =>
-            ReactDOM.render(
-                React.createElement(Patternbook, {
-                    configuration
-                }),
-                el
-            )
+        render
     }
 }
 

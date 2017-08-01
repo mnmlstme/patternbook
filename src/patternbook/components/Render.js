@@ -101,7 +101,9 @@ const classes = StyleSheet.create({
         height: `576px`
     },
     content: {
-        transformOrigin: '0 0'
+        transformOrigin: '0 0',
+        minHeight: '1em',
+        minWidth: '1em'
     },
     content_screen: {
         width: '100vw',
