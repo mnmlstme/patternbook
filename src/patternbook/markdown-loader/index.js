@@ -2,6 +2,8 @@ let frontMatter = require('front-matter')
 let Prism = require('prismjs')
 let Remarkable = require('remarkable')
 
+require('prismjs/components/prism-jsx')
+
 function loader(content) {
     const callback = this.async()
 

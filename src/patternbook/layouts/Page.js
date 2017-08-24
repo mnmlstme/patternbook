@@ -9,7 +9,8 @@ class Page extends React.Component {
         entry: PropTypes.string,
         extension: PropTypes.string,
         themeClass: PropTypes.string,
-        requireFromTarget: PropTypes.func
+        requireFromTarget: PropTypes.func,
+        stylesheet: PropTypes.string
     }
 
     getChildContext() {
@@ -17,12 +18,15 @@ class Page extends React.Component {
     }
 
     render() {
+        let { stylesheet } = this.getChildContext()
+
         return (
             <article className={css(classes.article)}>
                 <style>
                     {'*{margin:0; box-sizing:border-box}'}
                 </style>
                 <style>{prismCSS}</style>
+                <style>{stylesheet || ''}</style>
                 <header className={css(classes.header)}>
                     <Link to="/">patternbook</Link>
                 </header>
