@@ -12,11 +12,11 @@ function loader(content) {
 }
 
 function renderBlock(content, lang, attrs) {
-    let size = attrs.size
+    let mod = Object.keys(attrs).filter(k => attrs[k] === true).join(' ')
 
     return [
         '<Patternbook.Render theme={Theme}',
-        size ? ' size="' + size + '"' : '',
+        mod ? ' mod="' + mod + '"' : '',
         '>',
         content,
         '</Patternbook.Render>'
@@ -77,7 +77,8 @@ Object.keys(fences).map(key => {
         let tags = tokens[idx].params.split(/\s+/g)
         let type = tags.shift()
         let lang = tags.shift()
-        let attrs = tags.map(s => s.split('=')).reduce((o, [key, value]) => {
+        let attrs = tags.map(s => s.split('=')).reduce((o, pair) => {
+            let [key, value] = pair.length > 1 ? pair : [pair[0], true]
             o[key] = value
             return o
         }, {})
@@ -143,7 +144,9 @@ function generateSymbols(symbols) {
     return ['let symbols = {__html: ['].concat(
         keys.map(
             k =>
-                `Patternbook.convertSvgToSymbol('${k}',require('${symbols[k]}')),`
+                `Patternbook.convertSvgToSymbol('${k}',require('${symbols[
+                    k
+                ]}')),`
         ),
         ['].join("")}']
     )

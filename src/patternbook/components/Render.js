@@ -24,7 +24,7 @@ class Render extends React.Component {
     }
 
     render() {
-        let { children, size, theme } = this.props
+        let { children, mod, theme } = this.props
         let { width, height } = this.state
         let Theme = theme || DefaultTheme
         let { themeClass } = this.context
@@ -32,10 +32,10 @@ class Render extends React.Component {
         let rendered = !!width && !!height && children
 
         return (
-            <div className={css(classes.render, classes['render_' + size])}>
+            <div className={css(classes.render, classes['render_' + mod])}>
                 <div
-                    className={css(classes.content, classes['content_' + size])}
-                    ref={node => this._content = node}
+                    className={css(classes.content, classes['content_' + mod])}
+                    ref={node => (this._content = node)}
                 >
                     <Theme
                         themeClass={themeClass}
