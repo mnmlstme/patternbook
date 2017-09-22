@@ -10,7 +10,18 @@ class Home extends React.Component {
 
     render() {
         let { requireFromTarget, entry, extension } = this.context
-        let content = requireFromTarget(entry + extension)()
+        let content
+        let error
+
+        try {
+            content = requireFromTarget(entry + extension)()
+        } catch (error) {
+            content = (
+                <ErrorPage title={entry}>
+                    {error.message}
+                </ErrorPage>
+            )
+        }
 
         return content
     }

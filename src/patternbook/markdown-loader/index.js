@@ -68,6 +68,22 @@ remarkable.set({
     xhtmlOut: true
 })
 
+remarkable.renderer.rules.link_open = function(tokens, idx, options) {
+    return '<Patternbook.Link to="' + tokens[idx].href + '">'
+}
+
+remarkable.renderer.rules.link_close = function(tokens, idx, options) {
+    return '</Patternbook.Link>'
+}
+
+remarkable.renderer.rules.heading_open = function(tokens, idx) {
+    return '<Patternbook.Heading level={' + tokens[idx].hLevel + '}>'
+}
+
+remarkable.renderer.rules.heading_close = function(tokens, idx) {
+    return '</Patternbook.Heading>'
+}
+
 Object.keys(fences).map(key => {
     remarkable.renderer.rules.fence_custom[key] = function(
         tokens,
@@ -167,19 +183,19 @@ function generateComponent(jsx, vars, msgtypes) {
     return [
         'let Component = function (props) {',
         '  props = props || {}',
+        '  let dispatch = props.dispatch',
         '  let { ',
         (vars || []).join(','),
         '  } = props.scope || {}',
-        '  let dispatch = props.dispatch',
         '  let { ',
         (msgtypes || []).join(','),
         '  } = messages(props.messages)',
-        '  return (<section>',
+        '  return (<Patternbook.Article>',
         '    <svg width="0" height="0" style={{position:"absolute"}}>',
         '      <defs dangerouslySetInnerHTML={symbols}></defs></svg>',
         '    <style>{styles}</style>',
         jsx,
-        '  </section>)',
+        '  </Patternbook.Article>)',
         '}'
     ]
 }
@@ -189,8 +205,8 @@ function toModule(payload) {
     let jsx = html.replace(/class=/g, 'className=')
 
     let output = [
-        "let React = require('react')",
-        "let Patternbook = require('patternbook')"
+        "import React from 'react'",
+        "import Patternbook from 'patternbook'"
     ].concat(
         generateImports(attributes.imports || {}),
         ['module.exports = function () {'],
@@ -211,6 +227,7 @@ function toModule(payload) {
         ]
     )
 
+    console.log('\n====\n', output.join('\n'), '\n====\n')
     return output.join('\n')
 }
 

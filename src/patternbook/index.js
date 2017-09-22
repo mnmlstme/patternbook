@@ -13,12 +13,10 @@ import Home from './layouts/Home'
 import Category from './layouts/Category'
 import Pattern from './layouts/Pattern'
 
-import Show from './components/Show'
-import Source from './components/Source'
-import Render from './components/Render'
-import Scope from './components/Scope'
+import components from './components'
 
 import DefaultTheme from './themes/DefaultTheme'
+import ErrorPage from './layouts/ErrorPage'
 
 import rootReducer from './reducers'
 
@@ -26,17 +24,15 @@ function NotFound(props) {
     let path = props.params.splat
 
     return (
-        <section>
-            <h3>Not found:</h3>
-            <p>{path}</p>
-        </section>
+        <ErrorPage title="Invalid Route">
+            The path "{path}" does not match any available route
+        </ErrorPage>
     )
 }
 
 function Patternbook(props) {
-    let ConfiguredPage = p => (
+    let ConfiguredPage = p =>
         <Page configuration={props.configuration} {...p} />
-    )
 
     /* Routes:
         /
@@ -112,14 +108,13 @@ function convertSvgToSymbol(id, string) {
         .replace('</svg>', '</symbol>')
 }
 
-Object.assign(Patternbook, {
-    Show,
-    Render,
-    Source,
-    Scope,
-    DefaultTheme,
-    config,
-    convertSvgToSymbol
-})
+Object.assign(
+    Patternbook,
+    Object.assign({}, components, {
+        DefaultTheme,
+        config,
+        convertSvgToSymbol
+    })
+)
 
 module.exports = Patternbook

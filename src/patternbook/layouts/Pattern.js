@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import ErrorPage from './ErrorPage'
 
 class Pattern extends React.Component {
     static contextTypes = {
@@ -11,7 +12,18 @@ class Pattern extends React.Component {
         let { requireFromTarget, extension } = this.context
         let { splat, pattern } = this.props.params
         let filepath = [splat, pattern]
-        let content = requireFromTarget(filepath.join('/') + extension)()
+        let content
+        let error
+
+        try {
+            content = requireFromTarget(filepath.join('/') + extension)()
+        } catch (error) {
+            content = (
+                <ErrorPage title={pattern}>
+                    {error.message}
+                </ErrorPage>
+            )
+        }
 
         return content
     }
