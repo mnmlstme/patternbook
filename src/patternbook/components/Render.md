@@ -4,7 +4,7 @@ imports:
 ---
 
 Render
-----
+====
 
 The `Render` component is used to display the rendered output
 of the components in the examples.

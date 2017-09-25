@@ -84,6 +84,14 @@ remarkable.renderer.rules.heading_close = function(tokens, idx) {
     return '</Patternbook.Heading>'
 }
 
+remarkable.renderer.rules.paragraph_open = function(tokens, idx) {
+    return '<Patternbook.Paragraph>'
+}
+
+remarkable.renderer.rules.paragraph_close = function(tokens, idx) {
+    return '</Patternbook.Paragraph>'
+}
+
 Object.keys(fences).map(key => {
     remarkable.renderer.rules.fence_custom[key] = function(
         tokens,

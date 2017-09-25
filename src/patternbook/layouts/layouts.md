@@ -1,5 +1,5 @@
 Layouts
-----
+====
 
 Depending on the route, a layout is selected.  [Page](/layouts/Page) is
 the master layout, rendered for all routes.  Within the page,

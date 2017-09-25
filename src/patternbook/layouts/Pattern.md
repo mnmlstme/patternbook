@@ -3,8 +3,9 @@ imports:
     Pattern: ./Pattern.js
 ---
 
-Home
-----
+Pattern
+====
+
 The `Pattern` layout displays a single pattern, which usually
 corresponds to a single component.
 It may contain multiple examples of the pattern, but all examples

@@ -1,5 +1,5 @@
 Components
-----
+====
 
 Components add interactivity to the otherwise static content
 of the patterns pages.

@@ -4,7 +4,8 @@ imports:
 ---
 
 Home
-----
+====
+
 The `Category` layout displays a group of related patterns, and
 usually corresponds to a directory of component source files.
 

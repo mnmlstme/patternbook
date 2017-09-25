@@ -17,8 +17,22 @@ function Article({ children }) {
 function Heading({ level, children }) {
     return React.createElement(
         'h' + level,
-        { className: css(classes.heading, classes['heading_' + level]) },
+        {
+            className: css(
+                classes.block,
+                classes.heading,
+                classes['heading_' + level]
+            )
+        },
         children
+    )
+}
+
+function Paragraph({ children }) {
+    return (
+        <p className={css(classes.block, classes.paragraph)}>
+            {children}
+        </p>
     )
 }
 
@@ -41,8 +55,13 @@ const classes = StyleSheet.create({
         padding: 0,
         paddingLeft: '20vw'
     },
+    block: {
+        margin: '1rem 0 0 0',
+        fontSize: '1rem',
+        lineHeight: '1.5rem'
+    },
     heading: {
-        margin: '0 0 0 -20vw',
+        marginLeft: '-20vw',
         fontSize: '1rem',
         fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif',
         fontWeight: 'normal'
@@ -55,8 +74,10 @@ const classes = StyleSheet.create({
         fontSize: '1.4rem',
         width: '20vw',
         float: 'left',
-        paddingRight: '1rem'
+        paddingRight: '1rem',
+        marginTop: '.8rem' // vertical rhythm correction for font-size change
     },
+    paragraph: {},
     link: {
         textDecoration: 'none',
         ':hover': {
@@ -72,5 +93,6 @@ module.exports = {
     Scope,
     Article,
     Link,
-    Heading
+    Heading,
+    Paragraph
 }
