@@ -1,4 +1,4 @@
 node_modules/
-dist/
+dist/bundle.js
 elm-stuff/
 npm-debug.log
