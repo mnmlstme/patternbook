@@ -18,7 +18,7 @@ const classes = StyleSheet.create({
         flexWrap: 'wrap',
         justifyContent: 'space-between',
         alignItems: 'stretch',
-        margin: '1em 4em'
+        margin: 0
     }
 })
 

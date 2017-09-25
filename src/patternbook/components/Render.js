@@ -85,11 +85,13 @@ const reduction = 0.4
 
 const classes = StyleSheet.create({
     render: {
-        margin: 0,
         padding: '1em',
+        margin: '0 -1em',
+        marginLeft: 'calc(-20vw - 1em)',
         flex: '0 0 auto',
         background: '#fff',
-        boxShadow: '0 5px 5px rgba(0,0,0,0.4)'
+        boxShadow: '0 0 4px 1px rgba(0,0,0,0.1)',
+        borderRadius: '2px'
     },
     render_screen: {
         boxSizing: 'content-box',
