@@ -1,18 +1,13 @@
 import React from 'react'
 import { StyleSheet, css } from 'aphrodite/no-important'
 
-import Show from './Show'
+import Article from './Article'
+import Demo from './Demo'
 import Source from './Source'
 import Render from './Render'
 import Scope from './Scope'
 
-function Article({ children }) {
-    return (
-        <section className={css(classes.article)}>
-            {children}
-        </section>
-    )
-}
+import { article } from './layout'
 
 function Heading({ level, children }) {
     return React.createElement(
@@ -48,31 +43,31 @@ function Link({ to, children }) {
     )
 }
 
+const headingOffset = `-${100 * (article.percentLeft / article.percentRight)}%`
+
 const classes = StyleSheet.create({
-    article: {
-        width: '80vw',
-        margin: '0 auto',
-        padding: 0,
-        paddingLeft: '20vw'
-    },
     block: {
+        boxSizing: 'border-box',
         margin: '1rem 0 0 0',
         fontSize: '1rem',
         lineHeight: '1.5rem'
     },
     heading: {
-        marginLeft: '-20vw',
+        boxSizing: 'border-box',
+        marginLeft: headingOffset,
         fontSize: '1rem',
         fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif',
-        fontWeight: 'normal'
+        fontWeight: 'normal',
+        clear: 'left'
     },
     heading_1: {
         fontSize: '2rem',
-        marginBottom: '1em'
+        marginBottom: '2rem',
+        width: '100%'
     },
     heading_2: {
         fontSize: '1.4rem',
-        width: '20vw',
+        marginBottom: '1rem',
         float: 'left',
         paddingRight: '1rem',
         marginTop: '.8rem' // vertical rhythm correction for font-size change
@@ -87,11 +82,11 @@ const classes = StyleSheet.create({
 })
 
 module.exports = {
-    Show,
+    Article,
+    Demo,
     Source,
     Render,
     Scope,
-    Article,
     Link,
     Heading,
     Paragraph

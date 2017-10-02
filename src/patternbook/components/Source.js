@@ -24,9 +24,10 @@ const classes = StyleSheet.create({
     source: {
         position: 'relative',
         margin: '1em 0',
-        flex: '1 1 auto',
+        // flex: '1 1 auto',
         fontFamily: 'Input, Courier, monospace',
-        fontSize: '.875rem'
+        fontSize: '.875rem',
+        display: 'inline-block'
     },
     label: {
         margin: 0,

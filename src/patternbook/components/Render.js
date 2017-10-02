@@ -2,7 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import debounce from 'debounce'
 import { StyleSheet, css } from 'aphrodite/no-important'
-import DefaultTheme from '../themes/DefaultTheme'
+
+import DefaultWrapper from './DefaultWrapper'
+import { article } from './layout'
 
 const RESIZE_DEBOUNCE_TIME = 500 // milliseconds
 
@@ -26,24 +28,26 @@ class Render extends React.Component {
     render() {
         let { children, mod, theme } = this.props
         let { width, height } = this.state
-        let Theme = theme || DefaultTheme
+        let Wrapper = theme || DefaultWrapper
         let { themeClass } = this.context
         // Do not render children until size of rendering pane is known:
         let rendered = !!width && !!height && children
 
         return (
-            <div className={css(classes.render, classes['render_' + mod])}>
+            <div
+                className={css(
+                    classes.render,
+                    classes['render_' + (mod || 'default')]
+                )}
+            >
                 <div
                     className={css(classes.content, classes['content_' + mod])}
                     ref={node => (this._content = node)}
                 >
-                    <Theme
-                        themeClass={themeClass}
-                        width={width}
-                        height={height}
-                    >
+                    <Wrapper themeClass={themeClass}>
+
                         {rendered}
-                    </Theme>
+                    </Wrapper>
                 </div>
             </div>
         )
@@ -82,25 +86,32 @@ class Render extends React.Component {
 }
 
 const reduction = 0.4
+const width = `${100 * (article.percentLeft / article.percentRight)}%`
+const offset = `-${width}`
 
 const classes = StyleSheet.create({
     render: {
-        padding: '1em',
-        margin: '0 -1em',
-        marginLeft: 'calc(-20vw - 1em)',
-        flex: '0 0 auto',
-        background: '#fff',
-        boxShadow: '0 0 4px 1px rgba(0,0,0,0.1)',
-        borderRadius: '2px'
+        float: 'left',
+        boxSizing: 'border-box',
+        margin: `0 2em 2em ${offset}`
+    },
+    render_default: {
+        width: '50%'
     },
     render_screen: {
-        boxSizing: 'content-box',
         width: `${100 * reduction}vw`,
         height: `${100 * reduction}vh`
     },
     render_wide: {
-        width: `1024px`,
-        height: `576px`
+        boxSizing: 'border-box',
+        width: `${100 * (100 / article.percentRight)}%`,
+        height: 'auto'
+    },
+    render_aside: {
+        boxSizing: 'border-box',
+        maxWidth: width,
+        height: 'auto',
+        marginLeft: offset
     },
     content: {
         transformOrigin: '0 0',
@@ -108,13 +119,15 @@ const classes = StyleSheet.create({
         minWidth: '1em'
     },
     content_screen: {
+        boxSizing: 'border-box',
         width: '100vw',
         height: '100vh',
         transform: `scale(${reduction},${reduction})`
     },
     content_wide: {
+        boxSizing: 'border-box',
         width: '100%',
-        height: '100%'
+        height: 'auto'
     }
 })
 

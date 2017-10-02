@@ -15,7 +15,7 @@ function renderBlock(content, lang, attrs) {
     let mod = Object.keys(attrs).filter(k => attrs[k] === true).join(' ')
 
     return [
-        '<Patternbook.Render theme={Theme}',
+        '<Patternbook.Render theme={Wrapper}',
         mod ? ' mod="' + mod + '"' : '',
         '>',
         content,
@@ -37,27 +37,21 @@ function sourceBlock(content, lang, attrs) {
 
 const fences = {
     render: function(content, lang, attrs) {
-        return ['<Patternbook.Show>']
-            .concat(renderBlock(content, lang, attrs), ['</Patternbook.Show>'])
-            .join('')
-    },
-
-    show: function(content, lang, attrs) {
-        return ['<Patternbook.Show>']
-            .concat(
-                renderBlock(content, lang, attrs),
-                sourceBlock(content, lang, attrs),
-                '</Patternbook.Show>'
-            )
-            .join('')
+        return renderBlock(content, lang, attrs).join('')
     },
 
     source: function(content, lang, attrs) {
-        return ['<Patternbook.Show>']
-            .concat(sourceBlock(content, lang, attrs), '</Patternbook.Show>')
-            .join('')
+        return sourceBlock(content, lang, attrs).join('')
+    },
 
-        return result
+    demo: function(content, lang, attrs) {
+        return ['<Patternbook.Demo>']
+            .concat(
+                renderBlock(content, lang, attrs),
+                sourceBlock(content, lang, attrs),
+                '</Patternbook.Demo>'
+            )
+            .join('')
     }
 }
 
@@ -141,10 +135,10 @@ function generateImports(imports) {
     )
 }
 
-function generateTheme(theme) {
+function generateWrapper(theme) {
     return theme
-        ? [`let Theme = require('${theme}')`]
-        : ['let Theme = Patternbook.DefaultTheme']
+        ? [`let Wrapper = require('${theme}')`]
+        : ['let Wrapper = Patternbook.DefaultWrapper']
 }
 
 function generateScopeInitial(scope) {
@@ -218,7 +212,7 @@ function toModule(payload) {
     ].concat(
         generateImports(attributes.imports || {}),
         ['module.exports = function () {'],
-        generateTheme(attributes.theme),
+        generateWrapper(attributes.theme),
         generateScopeInitial(attributes.scope || {}),
         generateStyles(attributes.styles || []),
         generateSymbols(attributes.symbols || {}),

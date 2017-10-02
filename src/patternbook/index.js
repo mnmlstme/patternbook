@@ -15,7 +15,7 @@ import Pattern from './layouts/Pattern'
 
 import components from './components'
 
-import DefaultTheme from './themes/DefaultTheme'
+const { DefaultWrapper } = components
 import ErrorPage from './layouts/ErrorPage'
 
 import rootReducer from './reducers'
@@ -111,7 +111,7 @@ function convertSvgToSymbol(id, string) {
 Object.assign(
     Patternbook,
     Object.assign({}, components, {
-        DefaultTheme,
+        DefaultWrapper,
         config,
         convertSvgToSymbol
     })
