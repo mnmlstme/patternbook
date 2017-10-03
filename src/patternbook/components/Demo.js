@@ -1,11 +1,13 @@
 import React from 'react'
 import { StyleSheet, css } from 'aphrodite/no-important'
 
-function Show(props) {
-    let { children } = props
+function Demo(props) {
+    let { mod, children } = props
 
     return (
-        <figure className={css(classes.demo)}>
+        <figure
+            className={css(classes.demo, classes['demo_' + (mod || 'default')])}
+        >
             {children}
         </figure>
     )
@@ -13,16 +15,13 @@ function Show(props) {
 
 const classes = StyleSheet.create({
     demo: {
-        /*
-        display: 'flex',
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'space-between',
-        alignItems: 'stretch',
-        */
         margin: 0,
-        clear: 'both'
+        clear: 'both',
+        display: 'flex'
+    },
+    demo_wide: {
+        display: 'block'
     }
 })
 
-module.exports = Show
+module.exports = Demo

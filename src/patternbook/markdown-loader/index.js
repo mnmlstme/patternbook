@@ -25,11 +25,14 @@ function renderBlock(content, lang, attrs) {
 
 function sourceBlock(content, lang, attrs) {
     let source = markupSource(content, lang)
+    let mod = Object.keys(attrs).filter(k => attrs[k] === true).join(' ')
 
     return [
         '<Patternbook.Source lang="',
         lang,
-        '">',
+        '"',
+        mod ? ' mod="' + mod + '"' : '',
+        '>',
         source,
         '</Patternbook.Source>'
     ]
@@ -45,7 +48,9 @@ const fences = {
     },
 
     demo: function(content, lang, attrs) {
-        return ['<Patternbook.Demo>']
+        let mod = Object.keys(attrs).filter(k => attrs[k] === true).join(' ')
+
+        return ['<Patternbook.Demo', mod ? ' mod="' + mod + '"' : '', '>']
             .concat(
                 renderBlock(content, lang, attrs),
                 sourceBlock(content, lang, attrs),
@@ -66,7 +71,7 @@ remarkable.renderer.rules.link_open = function(tokens, idx, options) {
     return '<Patternbook.Link to="' + tokens[idx].href + '">'
 }
 
-remarkable.renderer.rules.link_close = function(tokens, idx, options) {
+remarkable.renderer.rules.link_close = function() {
     return '</Patternbook.Link>'
 }
 
@@ -74,16 +79,24 @@ remarkable.renderer.rules.heading_open = function(tokens, idx) {
     return '<Patternbook.Heading level={' + tokens[idx].hLevel + '}>'
 }
 
-remarkable.renderer.rules.heading_close = function(tokens, idx) {
+remarkable.renderer.rules.heading_close = function() {
     return '</Patternbook.Heading>'
 }
 
-remarkable.renderer.rules.paragraph_open = function(tokens, idx) {
+remarkable.renderer.rules.paragraph_open = function() {
     return '<Patternbook.Paragraph>'
 }
 
-remarkable.renderer.rules.paragraph_close = function(tokens, idx) {
+remarkable.renderer.rules.paragraph_close = function() {
     return '</Patternbook.Paragraph>'
+}
+
+remarkable.renderer.rules.blockquote_open = function() {
+    return '<Patternbook.Blockquote>'
+}
+
+remarkable.renderer.rules.blockquote_close = function() {
+    return '</Patternbook.Blockquote>'
 }
 
 Object.keys(fences).map(key => {

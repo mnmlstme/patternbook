@@ -10,16 +10,18 @@ import Scope from './Scope'
 import { article } from './layout'
 
 function Heading({ level, children }) {
-    return React.createElement(
+    let hN = React.createElement(
         'h' + level,
         {
-            className: css(
-                classes.block,
-                classes.heading,
-                classes['heading_' + level]
-            )
+            className: css(classes.h, classes['h_' + level])
         },
         children
+    )
+
+    return (
+        <heading className={css(classes.block, classes.heading)}>
+            {hN}
+        </heading>
     )
 }
 
@@ -28,6 +30,14 @@ function Paragraph({ children }) {
         <p className={css(classes.block, classes.paragraph)}>
             {children}
         </p>
+    )
+}
+
+function Blockquote({ children }) {
+    return (
+        <blockquote className={css(classes.block, classes.blockquote)}>
+            {children}
+        </blockquote>
     )
 }
 
@@ -53,26 +63,42 @@ const classes = StyleSheet.create({
         lineHeight: '1.5rem'
     },
     heading: {
-        boxSizing: 'border-box',
-        marginLeft: headingOffset,
-        fontSize: '1rem',
+        width: `${100 * article.percent / article.percentRight}%`,
+        clear: 'both',
+        '::before': {
+            // align floated headings with text flow
+            content: '""',
+            display: 'block',
+            height: '1em'
+        }
+    },
+    h: {
         fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif',
-        fontWeight: 'normal',
-        clear: 'left'
+        fontWeight: 300,
+        marginLeft: headingOffset
     },
-    heading_1: {
+    h_1: {
         fontSize: '2rem',
-        marginBottom: '2rem',
-        width: '100%'
+        width: '100%',
+        marginBottom: '2rem'
     },
-    heading_2: {
+    h_2: {
         fontSize: '1.4rem',
         marginBottom: '1rem',
         float: 'left',
+        width: `${article.percentLeft}%`,
         paddingRight: '1rem',
         marginTop: '.8rem' // vertical rhythm correction for font-size change
     },
-    paragraph: {},
+    paragraph: {
+        ':first-child': {
+            marginTop: 0
+        }
+    },
+    blockquote: {
+        padding: '1em 2rem',
+        border: '2px solid rgba(88, 52, 77, 0.4)'
+    },
     link: {
         textDecoration: 'none',
         ':hover': {
@@ -89,5 +115,6 @@ module.exports = {
     Scope,
     Link,
     Heading,
-    Paragraph
+    Paragraph,
+    Blockquote
 }

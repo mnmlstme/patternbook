@@ -32,6 +32,9 @@ class Render extends React.Component {
         let { themeClass } = this.context
         // Do not render children until size of rendering pane is known:
         let rendered = !!width && !!height && children
+        let dimensions = mod === 'screen'
+            ? { width, height }
+            : { width: '100%', height: 'auto' }
 
         return (
             <div
@@ -40,15 +43,17 @@ class Render extends React.Component {
                     classes['render_' + (mod || 'default')]
                 )}
             >
-                <div
-                    className={css(classes.content, classes['content_' + mod])}
-                    ref={node => (this._content = node)}
-                >
-                    <Wrapper themeClass={themeClass}>
-
+                <Wrapper themeClass={themeClass} {...dimensions}>
+                    <div
+                        className={css(
+                            classes.content,
+                            classes['content_' + mod]
+                        )}
+                        ref={node => (this._content = node)}
+                    >
                         {rendered}
-                    </Wrapper>
-                </div>
+                    </div>
+                </Wrapper>
             </div>
         )
     }
@@ -93,27 +98,30 @@ const classes = StyleSheet.create({
     render: {
         float: 'left',
         boxSizing: 'border-box',
-        margin: `0 2em 2em ${offset}`
+        margin: `1rem 2rem 1rem ${offset}`
     },
     render_default: {
-        width: '50%'
+        width: `${50 * (100 / article.percentRight)}%`
     },
     render_screen: {
         width: `${100 * reduction}vw`,
         height: `${100 * reduction}vh`
     },
     render_wide: {
+        float: 'none',
         boxSizing: 'border-box',
         width: `${100 * (100 / article.percentRight)}%`,
-        height: 'auto'
+        height: 'auto',
+        marginTop: '2rem',
+        marginBottom: '2rem'
     },
     render_aside: {
         boxSizing: 'border-box',
-        maxWidth: width,
         height: 'auto',
         marginLeft: offset
     },
     content: {
+        boxSizing: 'content-box',
         transformOrigin: '0 0',
         minHeight: '1em',
         minWidth: '1em'

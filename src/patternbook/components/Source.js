@@ -23,20 +23,20 @@ function Source(props) {
 const classes = StyleSheet.create({
     source: {
         position: 'relative',
-        margin: '1em 0',
-        // flex: '1 1 auto',
+        flexGrow: 1,
+        margin: '1rem 0',
         fontFamily: 'Input, Courier, monospace',
         fontSize: '.875rem',
-        display: 'inline-block'
+        borderLeft: '2px solid rgba(88, 52, 77, 0.4)',
+        paddingLeft: '1em'
     },
     label: {
         margin: 0,
         position: 'absolute',
         top: 0,
-        left: '100%',
-        paddingLeft: '1rem',
+        right: 0,
         textTransform: 'uppercase',
-        color: 'rgba(0,0,0,0.4)'
+        opacity: 0.5
     },
     pre: {
         margin: 0

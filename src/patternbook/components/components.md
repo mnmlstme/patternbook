@@ -9,5 +9,5 @@ of the patterns pages.
   test data to the examples
 - [Source](/components/Source) is used to present the source code
   of an example
-- [Show](/components/Show) combines the source code and rendering
+- [Demo](/components/Demo) combines the source code and rendering
   into one coordinated component

@@ -10,7 +10,7 @@ Patternbook uses a different layout
 depending on whether an index screen or a pattern page is
 requested
 
-[Components and lot of other stuff](/components/)
+[Components](/components/)
 ----
 
 Patternbook embeds components
