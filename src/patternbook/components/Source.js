@@ -2,10 +2,16 @@ import React from 'react'
 import { StyleSheet, css } from 'aphrodite/no-important'
 
 function Source(props) {
-    let { lang, children } = props
+    let { lang, mod, children } = props
+    let mods = mod ? mod.split(' ') : []
 
     return (
-        <div className={css(classes.source)}>
+        <div
+            className={css(
+                classes.source,
+                mods.map(m => classes['source_' + m])
+            )}
+        >
             <h6 className={css(classes.label)}>{lang}</h6>
             <pre className={css(classes.pre)}>
                 <code
@@ -27,16 +33,24 @@ const classes = StyleSheet.create({
         margin: '1rem 0',
         fontFamily: 'Input, Courier, monospace',
         fontSize: '.875rem',
-        borderLeft: '2px solid rgba(88, 52, 77, 0.4)',
+        border: 'solid rgba(88, 52, 77, 0.4)',
+        borderWidth: '0 1px',
         paddingLeft: '1em'
+    },
+    source_demo: {
+        margin: 0
     },
     label: {
         margin: 0,
+        padding: '.25em 0',
         position: 'absolute',
-        top: 0,
-        right: 0,
+        bottom: '100%',
+        right: '100%',
+        transformOrigin: 'bottom right',
+        transform: 'rotate(-90deg)',
+        fontWeight: 300,
         textTransform: 'uppercase',
-        opacity: 0.5
+        opacity: 0.4
     },
     pre: {
         margin: 0

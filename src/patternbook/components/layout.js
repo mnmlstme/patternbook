@@ -5,8 +5,8 @@ module.exports = {
         percentRight: 75
     },
     wrapper: {
-        tickLength: 0.5,
-        tickOffset: 0.5,
-        tickWidth: 3
+        tickLength: 1,
+        tickOffset: 0,
+        tickWidth: 1
     }
 }

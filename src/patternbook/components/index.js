@@ -69,7 +69,7 @@ const classes = StyleSheet.create({
             // align floated headings with text flow
             content: '""',
             display: 'block',
-            height: '1em'
+            height: '4em'
         }
     },
     h: {
@@ -97,7 +97,7 @@ const classes = StyleSheet.create({
     },
     blockquote: {
         padding: '1em 2rem',
-        border: '2px solid rgba(88, 52, 77, 0.4)'
+        border: '1px solid rgba(88, 52, 77, 0.4)'
     },
     link: {
         textDecoration: 'none',

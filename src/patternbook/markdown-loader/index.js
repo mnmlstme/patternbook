@@ -49,11 +49,12 @@ const fences = {
 
     demo: function(content, lang, attrs) {
         let mod = Object.keys(attrs).filter(k => attrs[k] === true).join(' ')
+        let demoAttrs = Object.assign({}, attrs, { demo: true })
 
         return ['<Patternbook.Demo', mod ? ' mod="' + mod + '"' : '', '>']
             .concat(
-                renderBlock(content, lang, attrs),
-                sourceBlock(content, lang, attrs),
+                renderBlock(content, lang, demoAttrs),
+                sourceBlock(content, lang, demoAttrs),
                 '</Patternbook.Demo>'
             )
             .join('')
@@ -99,24 +100,20 @@ remarkable.renderer.rules.blockquote_close = function() {
     return '</Patternbook.Blockquote>'
 }
 
-Object.keys(fences).map(key => {
-    remarkable.renderer.rules.fence_custom[key] = function(
-        tokens,
-        idx,
-        options
-    ) {
-        let tags = tokens[idx].params.split(/\s+/g)
-        let type = tags.shift()
-        let lang = tags.shift()
-        let attrs = tags.map(s => s.split('=')).reduce((o, pair) => {
-            let [key, value] = pair.length > 1 ? pair : [pair[0], true]
-            o[key] = value
-            return o
-        }, {})
-        let content = tokens[idx].content
-        return fences[key](content, lang, attrs)
-    }
-})
+remarkable.renderer.rules.fence = function(tokens, idx, options) {
+    let tags = tokens[idx].params.split(/\s+/g)
+    let type = tags.shift()
+    let lang = fences[type] ? tags.shift() : type
+    let render = fences[type] || fences.source
+    let attrs = tags.map(s => s.split('=')).reduce((o, pair) => {
+        let [key, value] = pair.length > 1 ? pair : [pair[0], true]
+        o[key] = value
+        return o
+    }, {})
+    let content = tokens[idx].content
+
+    return render(content, lang, attrs)
+}
 
 function parse(content) {
     return new Promise((resolve, reject) => {

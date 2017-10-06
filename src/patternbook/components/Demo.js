@@ -1,5 +1,7 @@
 import React from 'react'
 import { StyleSheet, css } from 'aphrodite/no-important'
+import Source from './Source'
+import Render from './Render'
 
 function Demo(props) {
     let { mod, children } = props
@@ -15,7 +17,7 @@ function Demo(props) {
 
 const classes = StyleSheet.create({
     demo: {
-        margin: 0,
+        margin: '2rem 0 0 0',
         clear: 'both',
         display: 'flex'
     },

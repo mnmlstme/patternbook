@@ -32,22 +32,21 @@ class Render extends React.Component {
         let { themeClass } = this.context
         // Do not render children until size of rendering pane is known:
         let rendered = !!width && !!height && children
-        let dimensions = mod === 'screen'
-            ? { width, height }
-            : { width: '100%', height: 'auto' }
+        let mods = mod ? mod.split(' ') : []
+        let dimensions = { width, height }
 
         return (
             <div
                 className={css(
                     classes.render,
-                    classes['render_' + (mod || 'default')]
+                    mods.map(m => classes['render_' + m])
                 )}
             >
                 <Wrapper themeClass={themeClass} {...dimensions}>
                     <div
                         className={css(
                             classes.content,
-                            classes['content_' + mod]
+                            mods.map(m => classes['content_' + m])
                         )}
                         ref={node => (this._content = node)}
                     >
@@ -98,9 +97,7 @@ const classes = StyleSheet.create({
     render: {
         float: 'left',
         boxSizing: 'border-box',
-        margin: `1rem 2rem 1rem ${offset}`
-    },
-    render_default: {
+        margin: `0 4rem 2rem ${offset}`,
         width: `${50 * (100 / article.percentRight)}%`
     },
     render_screen: {
@@ -112,19 +109,20 @@ const classes = StyleSheet.create({
         boxSizing: 'border-box',
         width: `${100 * (100 / article.percentRight)}%`,
         height: 'auto',
-        marginTop: '2rem',
-        marginBottom: '2rem'
+        marginTop: '2rem'
     },
     render_aside: {
         boxSizing: 'border-box',
         height: 'auto',
-        marginLeft: offset
+        marginRight: '2rem',
+        width: 'auto'
     },
     content: {
         boxSizing: 'content-box',
         transformOrigin: '0 0',
         minHeight: '1em',
-        minWidth: '1em'
+        minWidth: '1em',
+        overflow: 'auto'
     },
     content_screen: {
         boxSizing: 'border-box',
