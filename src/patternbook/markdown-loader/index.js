@@ -15,7 +15,7 @@ function renderBlock(content, lang, attrs) {
     let mod = Object.keys(attrs).filter(k => attrs[k] === true).join(' ')
 
     return [
-        '<Patternbook.Render theme={Wrapper}',
+        '<Patternbook.Render theme={Theme}',
         mod ? ' mod="' + mod + '"' : '',
         '>',
         content,
@@ -145,10 +145,8 @@ function generateImports(imports) {
     )
 }
 
-function generateWrapper(theme) {
-    return theme
-        ? [`let Wrapper = require('${theme}')`]
-        : ['let Wrapper = Patternbook.DefaultWrapper']
+function generateTheme(theme) {
+    return theme ? [`let Theme = require('${theme}')`] : ['let Theme = null']
 }
 
 function generateScopeInitial(scope) {
@@ -222,7 +220,7 @@ function toModule(payload) {
     ].concat(
         generateImports(attributes.imports || {}),
         ['module.exports = function () {'],
-        generateWrapper(attributes.theme),
+        generateTheme(attributes.theme),
         generateScopeInitial(attributes.scope || {}),
         generateStyles(attributes.styles || []),
         generateSymbols(attributes.symbols || {}),

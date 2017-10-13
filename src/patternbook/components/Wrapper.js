@@ -3,14 +3,22 @@ import { StyleSheet, css } from 'aphrodite/no-important'
 
 import { wrapper } from '../components/layout'
 
-function DefaultWrapper(props) {
-    let { themeClass, children, width, height } = props
+let DefaultTheme = props =>
+    <div className={props.className}>
+        {props.children}
+    </div>
+
+function Wrapper(props) {
+    let { themeClass, theme, children, width, height } = props
+    let Theme = theme || DefaultTheme
     themeClass = themeClass || 'pbReset'
 
     return (
         <div className={css(classes.wrapper)}>
-            <div className={[css(classes.wrapped), themeClass].join(' ')}>
-                {children}
+            <div className={[css(classes.wrapped)].join(' ')}>
+                <Theme className={themeClass}>
+                    {children}
+                </Theme>
             </div>
             <div className={css(classes.ruler, classes.ruler_top)} />
             <div className={css(classes.ruler, classes.ruler_left)} />
@@ -102,4 +110,4 @@ const classes = StyleSheet.create({
     }
 })
 
-module.exports = DefaultWrapper
+module.exports = Wrapper

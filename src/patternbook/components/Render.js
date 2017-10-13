@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import debounce from 'debounce'
 import { StyleSheet, css } from 'aphrodite/no-important'
 
-import DefaultWrapper from './DefaultWrapper'
+import Wrapper from './Wrapper'
 import { article } from './layout'
 
 const RESIZE_DEBOUNCE_TIME = 500 // milliseconds
@@ -28,7 +28,6 @@ class Render extends React.Component {
     render() {
         let { children, mod, theme } = this.props
         let { width, height } = this.state
-        let Wrapper = theme || DefaultWrapper
         let { themeClass } = this.context
         // Do not render children until size of rendering pane is known:
         let rendered = !!width && !!height && children
