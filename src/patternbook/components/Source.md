@@ -31,7 +31,7 @@ in Patternbook Markdown code fences.
 The body of the `Source` component contains the code,
 and may be marked up for syntax highlighting.
 
-```demo jsx
+```demo jsx wide
 <Source lang="html">
   <span class="token tag">
     <span class="token tag">

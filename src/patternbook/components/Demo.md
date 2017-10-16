@@ -41,10 +41,11 @@ Demo
 `Demo` is used to present, side-by-side or stacked vertically,
 the rendering and source of examples that appear
 in Patternbook Markdown code fences.
+
 The body of the `Demo` component contains one `Render`
 component and one `Source` component.
 This means the example is actually entered twice—once as
-JSX and once as escaped and highlighted code.
+JSX and once as escaped (and highlighted) code.
 The `demo` code fence handles this duplication automatically
 so the example only needs to be entered once in Patternbook Markdown.
 

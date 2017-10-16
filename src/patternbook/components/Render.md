@@ -43,7 +43,7 @@ The `aside` modifier causes the rendered area to be placed aside the
 flow of text, to the left.  If the rendering is too large to fit
 in the left margin, it will push text over.
 
-```demo jsx
+```demo jsx wide
 <Article>
   <p>Stuff before...</p>
   <Render mod="aside">
@@ -83,7 +83,7 @@ in size so that a full screen can be shown in a limited space.
 This is useful for demoing layouts which use viewport (`vw`, `vh`)
 units or would otherwise not fit within the page layout.
 
-```demo jsx
+```demo jsx wide
 <Article>
   <p>Stuff before...</p>
   <Render mod="screen">

@@ -84,12 +84,37 @@ remarkable.renderer.rules.heading_close = function() {
     return '</Patternbook.Heading>'
 }
 
-remarkable.renderer.rules.paragraph_open = function() {
-    return '<Patternbook.Paragraph>'
+remarkable.renderer.rules.paragraph_open = function(tokens, idx) {
+    return tokens[idx].tight ? '' : '<Patternbook.Paragraph>'
 }
 
-remarkable.renderer.rules.paragraph_close = function() {
-    return '</Patternbook.Paragraph>'
+remarkable.renderer.rules.paragraph_close = function(tokens, idx) {
+    return tokens[idx].tight ? '' : '</Patternbook.Paragraph>'
+}
+
+remarkable.renderer.rules.bullet_list_open = function(/* tokens, idx, options, env */) {
+    return '<Patternbook.UList>'
+}
+remarkable.renderer.rules.bullet_list_close = function(
+    tokens,
+    idx /*, options, env */
+) {
+    return '</Patternbook.UList>'
+}
+
+remarkable.renderer.rules.ordered_list_open = function(
+    tokens,
+    idx /*, options, env */
+) {
+    var token = tokens[idx]
+    var order = token.order > 1 ? ' start="' + token.order + '"' : ''
+    return '<Patternbook.OList ' + order + '>'
+}
+remarkable.renderer.rules.ordered_list_close = function(
+    tokens,
+    idx /*, options, env */
+) {
+    return '</Patternbook.OList>'
 }
 
 remarkable.renderer.rules.blockquote_open = function() {

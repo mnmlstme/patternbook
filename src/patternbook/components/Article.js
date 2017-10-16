@@ -1,6 +1,5 @@
 import React from 'react'
 import { StyleSheet, css } from 'aphrodite/no-important'
-
 import { article } from './layout'
 
 function Article({ children }) {
@@ -13,17 +12,14 @@ function Article({ children }) {
 
 const classes = StyleSheet.create({
     article: {
+        display: 'flex',
+        flexFlow: 'row wrap',
+        justifyContent: 'flex-end',
         boxSizing: 'border-box',
-        width: `${article.percent}%`,
+        width: '100%',
+        minWidth: '45rem',
         margin: '0 auto',
-        padding: 0,
-        paddingLeft: `${article.percentLeft}%`,
-        '::after': {
-            content: '""',
-            display: 'block',
-            clear: 'both',
-            height: 0
-        }
+        padding: 0
     }
 })
 

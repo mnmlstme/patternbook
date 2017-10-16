@@ -17,12 +17,20 @@ function Demo(props) {
 
 const classes = StyleSheet.create({
     demo: {
-        margin: '2rem 0 0 0',
+        flex: '0 0 100%',
+        width: '100%',
+        margin: 0,
+        padding: 0,
         clear: 'both',
-        display: 'flex'
+        display: 'flex',
+        boxSizing: 'border-box',
+        flexFlow: 'row nowrap',
+        justifyContent: 'space-between',
+        alignItems: 'space-start'
     },
     demo_wide: {
-        display: 'block'
+        justifyContent: 'flex-end',
+        flexFlow: 'row wrap'
     }
 })
 

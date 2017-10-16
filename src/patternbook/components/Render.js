@@ -31,7 +31,7 @@ class Render extends React.Component {
         let { themeClass } = this.context
         // Do not render children until size of rendering pane is known:
         let rendered = !!width && !!height && children
-        let mods = mod ? mod.split(' ') : []
+        let mods = mod ? mod.split(' ') : ['default']
         let dimensions = { width, height }
 
         return (
@@ -88,49 +88,53 @@ class Render extends React.Component {
     }
 }
 
-const reduction = 0.4
-const width = `${100 * (article.percentLeft / article.percentRight)}%`
-const offset = `-${width}`
+const reduction = 0.3
 
 const classes = StyleSheet.create({
     render: {
-        float: 'left',
+        flex: '0 0 auto',
+        alignSelf: 'flex-start',
         boxSizing: 'border-box',
-        margin: `0 4rem 2rem ${offset}`,
-        width: `${50 * (100 / article.percentRight)}%`
+        margin: '2rem 0',
+        paddingRight: '2rem',
+        height: 'auto',
+        minWidth: `${article.percentLeft}%`,
+        ':nth-child(1n) + *': {
+            flex: `1 0 ${article.percentMid}%`,
+            margin: '2rem 0 0 0',
+            paddingLeft: 0
+        }
+    },
+    render_default: {
+        maxWidth: `${article.percentMid}%`
     },
     render_screen: {
         width: `${100 * reduction}vw`,
-        height: `${100 * reduction}vh`
+        height: `${100 * reduction}vh`,
+        paddingRight: 0,
+        marginRight: '2rem'
     },
     render_wide: {
-        float: 'none',
-        boxSizing: 'border-box',
-        width: `${100 * (100 / article.percentRight)}%`,
-        height: 'auto',
-        marginTop: '2rem'
+        width: '100%',
+        ':nth-child(1n) + *': {
+            flex: `0 0 ${article.percentRight}%`
+        }
     },
     render_aside: {
-        boxSizing: 'border-box',
-        height: 'auto',
-        marginRight: '2rem',
-        width: 'auto'
+        width: `${article.percentLeft}%`
     },
     content: {
-        boxSizing: 'content-box',
         transformOrigin: '0 0',
         minHeight: '1em',
         minWidth: '1em',
         overflow: 'auto'
     },
     content_screen: {
-        boxSizing: 'border-box',
         width: '100vw',
         height: '100vh',
         transform: `scale(${reduction},${reduction})`
     },
     content_wide: {
-        boxSizing: 'border-box',
         width: '100%',
         height: 'auto'
     }

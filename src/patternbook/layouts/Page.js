@@ -22,8 +22,8 @@ class Page extends React.Component {
                 <style>
                     {[
                         'body,h1,h2{margin:0;}',
-                        '*{box-sizing:border-box}',
-                        'figure {max-height: 100vh; max-width: 100vw}'
+                        '*{box-sizing:border-box}'
+                        // 'figure {max-height: 100vh; max-width: 100vw}'
                     ].join('\n')}
                 </style>
                 <style>{prismCSS}</style>

@@ -1,7 +1,8 @@
 module.exports = {
     article: {
-        percent: 100,
+        percentTotal: 100,
         percentLeft: 25,
+        percentMid: 50,
         percentRight: 75
     },
     wrapper: {
