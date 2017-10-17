@@ -19,19 +19,11 @@ function Heading({ level, children }) {
 }
 
 function Paragraph({ children }) {
-    return (
-        <p className={css(classes.block, classes.paragraph)}>
-            {children}
-        </p>
-    )
+    return <p className={css(classes.block, classes.paragraph)}>{children}</p>
 }
 
 function UList({ children }) {
-    return (
-        <ul className={css(classes.block, classes.ulist)}>
-            {children}
-        </ul>
-    )
+    return <ul className={css(classes.block, classes.ulist)}>{children}</ul>
 }
 
 function OList({ start, children }) {
@@ -81,10 +73,12 @@ const classes = StyleSheet.create({
     },
     paragraph: {},
     ulist: {
-        paddingLeft: '2rem'
+        paddingLeft: '2rem',
+        listStyleType: 'disc'
     },
     olist: {
-        paddingLeft: '2rem'
+        paddingLeft: '2rem',
+        listStyleType: 'decimal'
     },
     blockquote: {
         padding: '1em 4rem',

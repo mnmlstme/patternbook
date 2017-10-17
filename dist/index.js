@@ -69,7 +69,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "2d3031f5097c4d9ad338"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "5deba0290328c477ce61"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -10231,7 +10231,10 @@ var classes = _noImportant.StyleSheet.create({
         }
     },
     render_aside: {
-        gridColumn: 'aside-start aside-end'
+        gridColumn: 'aside-start aside-end',
+        ':nth-child(1n) + *': {
+            gridColumn: 'block-start / block-end'
+        }
     },
     content: {
         transformOrigin: '0 0',
@@ -10448,10 +10451,12 @@ var classes = _noImportant.StyleSheet.create({
     },
     paragraph: {},
     ulist: {
-        paddingLeft: '2rem'
+        paddingLeft: '2rem',
+        listStyleType: 'disc'
     },
     olist: {
-        paddingLeft: '2rem'
+        paddingLeft: '2rem',
+        listStyleType: 'decimal'
     },
     blockquote: {
         padding: '1em 4rem',

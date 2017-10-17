@@ -110,7 +110,10 @@ const classes = StyleSheet.create({
         }
     },
     render_aside: {
-        gridColumn: 'aside-start aside-end'
+        gridColumn: 'aside-start aside-end',
+        ':nth-child(1n) + *': {
+            gridColumn: 'block-start / block-end'
+        }
     },
     content: {
         transformOrigin: '0 0',
