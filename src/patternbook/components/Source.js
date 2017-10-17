@@ -29,16 +29,12 @@ function Source(props) {
 
 const classes = StyleSheet.create({
     source: {
-        flex: '0 1 auto',
-        width: `${article.percentRight}%`,
+        gridColumn: 'block-start / block-end',
         position: 'relative',
-        margin: '1rem 0',
         fontFamily: 'Input, Courier, monospace',
         fontSize: '.875rem'
     },
-    source_demo: {
-        margin: '2rem 0'
-    },
+    source_demo: {},
     label: {
         margin: 0,
         position: 'absolute',

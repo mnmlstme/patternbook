@@ -48,15 +48,8 @@ const fences = {
     },
 
     demo: function(content, lang, attrs) {
-        let mod = Object.keys(attrs).filter(k => attrs[k] === true).join(' ')
-        let demoAttrs = Object.assign({}, attrs, { demo: true })
-
-        return ['<Patternbook.Demo', mod ? ' mod="' + mod + '"' : '', '>']
-            .concat(
-                renderBlock(content, lang, demoAttrs),
-                sourceBlock(content, lang, demoAttrs),
-                '</Patternbook.Demo>'
-            )
+        return renderBlock(content, lang, attrs)
+            .concat(sourceBlock(content, lang, attrs))
             .join('')
     }
 }

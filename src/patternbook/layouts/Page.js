@@ -20,11 +20,7 @@ class Page extends React.Component {
         return (
             <article className={css(classes.article)}>
                 <style>
-                    {[
-                        'body,h1,h2{margin:0;}',
-                        '*{box-sizing:border-box}'
-                        // 'figure {max-height: 100vh; max-width: 100vw}'
-                    ].join('\n')}
+                    {'*{margin:0; box-sizing:border-box}'}
                 </style>
                 <style>{prismCSS}</style>
                 <header className={css(classes.header)}>

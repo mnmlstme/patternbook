@@ -2,7 +2,6 @@ import React from 'react'
 import { StyleSheet, css } from 'aphrodite/no-important'
 
 import Article from './Article'
-import Demo from './Demo'
 import Source from './Source'
 import Render from './Render'
 import Scope from './Scope'
@@ -65,47 +64,27 @@ function Link({ to, children }) {
 
 const classes = StyleSheet.create({
     block: {
-        flex: `0 ${article.percentTotal}%`,
-        boxSizing: 'border-box',
-        margin: '1rem 0 0 0',
-        paddingLeft: `${article.percentLeft}%`,
-        lineHeight: '1.5rem',
-        ':first-child': {
-            marginTop: 0
-        }
+        gridColumn: 'block-start / block-end',
+        lineHeight: '1.5rem'
     },
     h: {
-        paddingLeft: 0,
         fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif',
         fontWeight: 300
     },
     h_1: {
-        flex: `0 ${article.percentTotal}%`,
-        alignSelf: 'flex-start',
-        fontSize: '2rem',
-        marginBottom: '2rem'
+        gridColumn: 'heading-start / heading-end',
+        fontSize: '2rem'
     },
     h_2: {
-        flex: `0 ${article.percentLeft}%`,
-        alignSelf: 'flex-start',
-        ':nth-child(1n) + *': {
-            flex: `1 ${article.percentRight}%`,
-            paddingLeft: 0
-        },
-        fontSize: '1.4rem',
-        marginBottom: '1rem',
-        paddingRight: '1rem'
+        gridColumn: 'aside-start / aside-end',
+        fontSize: '1.4rem'
     },
     paragraph: {},
     ulist: {
-        ':nth-child(1n) > li': {
-            marginLeft: '2rem'
-        }
+        paddingLeft: '2rem'
     },
     olist: {
-        ':nth-child(1n) > li': {
-            marginLeft: '2rem'
-        }
+        paddingLeft: '2rem'
     },
     blockquote: {
         padding: '1em 4rem',
@@ -122,7 +101,6 @@ const classes = StyleSheet.create({
 
 module.exports = {
     Article,
-    Demo,
     Source,
     Render,
     Scope,

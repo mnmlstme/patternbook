@@ -92,36 +92,25 @@ const reduction = 0.3
 
 const classes = StyleSheet.create({
     render: {
-        flex: '0 0 auto',
-        alignSelf: 'flex-start',
-        boxSizing: 'border-box',
-        margin: '2rem 0',
-        paddingRight: '2rem',
+        gridColumn: 'render-start / render-end',
         height: 'auto',
-        minWidth: `${article.percentLeft}%`,
         ':nth-child(1n) + *': {
-            flex: `1 0 ${article.percentMid}%`,
-            margin: '2rem 0 0 0',
-            paddingLeft: 0
+            gridColumn: 'source-start / source-end'
         }
     },
-    render_default: {
-        maxWidth: `${article.percentMid}%`
-    },
+    render_default: {},
     render_screen: {
         width: `${100 * reduction}vw`,
-        height: `${100 * reduction}vh`,
-        paddingRight: 0,
-        marginRight: '2rem'
+        height: `${100 * reduction}vh`
     },
     render_wide: {
-        width: '100%',
+        gridColumn: 'wide-start / wide-end',
         ':nth-child(1n) + *': {
-            flex: `0 0 ${article.percentRight}%`
+            gridColumn: 'block-start / block-end'
         }
     },
     render_aside: {
-        width: `${article.percentLeft}%`
+        gridColumn: 'aside-start aside-end'
     },
     content: {
         transformOrigin: '0 0',

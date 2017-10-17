@@ -12,9 +12,15 @@ function Article({ children }) {
 
 const classes = StyleSheet.create({
     article: {
-        display: 'flex',
-        flexFlow: 'row wrap',
-        justifyContent: 'flex-end',
+        display: 'grid',
+        gridGap: '2rem',
+        gridTemplateRows: 'none',
+        gridTemplateColumns: [
+            '[aside-start aside-end wide-start render-start heading-start] minmax(20%, 1fr)',
+            '[block-start render-end] minmax(20%, 1fr)',
+            '[source-start] minmax(40%, 2fr)',
+            '[block-end source-end heading-end]'
+        ].join(' '),
         boxSizing: 'border-box',
         width: '100%',
         minWidth: '45rem',
