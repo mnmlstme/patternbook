@@ -22,9 +22,7 @@ class Page extends React.Component {
 
         return (
             <article className={css(classes.article)}>
-                <style>
-                    {'*{margin:0; box-sizing:border-box}'}
-                </style>
+                <style>{'*{margin:0; box-sizing:border-box}'}</style>
                 <style>{prismCSS}</style>
                 <style>{stylesheet || ''}</style>
                 <header className={css(classes.header)}>
