@@ -69,7 +69,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "5deba0290328c477ce61"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "abed9ccd8e09079e35a2"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -10049,7 +10049,7 @@ var classes = _noImportant.StyleSheet.create({
         display: 'grid',
         gridGap: '2rem',
         gridTemplateRows: 'none',
-        gridTemplateColumns: ['[aside-start aside-end wide-start render-start heading-start] minmax(20%, 1fr)', '[block-start render-end] minmax(20%, 1fr)', '[source-start] minmax(40%, 2fr)', '[block-end source-end heading-end]'].join(' '),
+        gridTemplateColumns: ['[aside-start aside-end wide-start render-start heading-start] minmax(20%, 1fr)', '[block-start] minmax(20%, 1fr)', '[render-end source-start] minmax(40%, 2fr)', '[block-end source-end heading-end]'].join(' '),
         boxSizing: 'border-box',
         width: '100%',
         minWidth: '45rem',
@@ -10215,6 +10215,7 @@ var classes = _noImportant.StyleSheet.create({
     render: {
         gridColumn: 'render-start / render-end',
         height: 'auto',
+        marginBottom: '2rem',
         ':nth-child(1n) + *': {
             gridColumn: 'source-start / source-end'
         }

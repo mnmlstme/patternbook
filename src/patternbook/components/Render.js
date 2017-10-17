@@ -94,6 +94,7 @@ const classes = StyleSheet.create({
     render: {
         gridColumn: 'render-start / render-end',
         height: 'auto',
+        marginBottom: '2rem',
         ':nth-child(1n) + *': {
             gridColumn: 'source-start / source-end'
         }

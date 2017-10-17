@@ -3,11 +3,7 @@ import { StyleSheet, css } from 'aphrodite/no-important'
 import { article } from './layout'
 
 function Article({ children }) {
-    return (
-        <section className={css(classes.article)}>
-            {children}
-        </section>
-    )
+    return <section className={css(classes.article)}>{children}</section>
 }
 
 const classes = StyleSheet.create({
@@ -17,8 +13,8 @@ const classes = StyleSheet.create({
         gridTemplateRows: 'none',
         gridTemplateColumns: [
             '[aside-start aside-end wide-start render-start heading-start] minmax(20%, 1fr)',
-            '[block-start render-end] minmax(20%, 1fr)',
-            '[source-start] minmax(40%, 2fr)',
+            '[block-start] minmax(20%, 1fr)',
+            '[render-end source-start] minmax(40%, 2fr)',
             '[block-end source-end heading-end]'
         ].join(' '),
         boxSizing: 'border-box',
