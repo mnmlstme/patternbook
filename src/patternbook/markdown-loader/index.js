@@ -1,8 +1,5 @@
 let frontMatter = require('front-matter')
-let Prism = require('prismjs')
 let Remarkable = require('remarkable')
-
-require('prismjs/components/prism-jsx')
 
 function loader(content) {
     const callback = this.async()
@@ -13,30 +10,24 @@ function loader(content) {
         .catch(callback)
 }
 
-function renderBlock(content, lang, attrs) {
-    let mod = Object.keys(attrs).filter(k => attrs[k] === true).join(' ')
+function renderBlock(jsx, lang, attrs) {
+    let mod = Object.keys(attrs)
+        .filter(k => attrs[k] === true)
+        .join(' ')
 
     return [
-        '<Patternbook.Render theme={Theme}',
-        mod ? ' mod="' + mod + '"' : '',
-        '>',
-        content,
-        '</Patternbook.Render>'
+        `<Patternbook.Render theme={Theme} mod="${mod}">${jsx}</Patternbook.Render>`
     ]
 }
 
 function sourceBlock(content, lang, attrs) {
-    let source = markupSource(content, lang)
-    let mod = Object.keys(attrs).filter(k => attrs[k] === true).join(' ')
+    let source = escapeJsx(content)
+    let mod = Object.keys(attrs)
+        .filter(k => attrs[k] === true)
+        .join(' ')
 
     return [
-        '<Patternbook.Source lang="',
-        lang,
-        '"',
-        mod ? ' mod="' + mod + '"' : '',
-        '>',
-        source,
-        '</Patternbook.Source>'
+        `<Patternbook.Source lang="${lang}" mod="${mod}">${source}</Patternbook.Source>`
     ]
 }
 
@@ -56,23 +47,32 @@ const fences = {
     }
 }
 
-let remarkable = new Remarkable()
-
-remarkable.set({
-    highlight: highlight,
+let remarkable = new Remarkable({
+    // allow HTML/JSX tags in Markdown:
+    html: true,
+    typographer: true,
+    // linkifying could affect code:
+    linkify: false,
+    // JSX is like XHTML (no implied tags)
     xhtmlOut: true
 })
 
 remarkable.renderer.rules.link_open = function(tokens, idx, options) {
-    return '<Patternbook.Link to="' + tokens[idx].href + '">'
+    return `<Patternbook.Link to="${tokens[idx].href}">`
 }
 
 remarkable.renderer.rules.link_close = function() {
     return '</Patternbook.Link>'
 }
 
+remarkable.renderer.rules.code = function(tokens, idx /*, options, env */) {
+    let code = escapeJsx(tokens[idx].content)
+
+    return `<Patternbook.Code>${code}</Patternbook.Code>`
+}
+
 remarkable.renderer.rules.heading_open = function(tokens, idx) {
-    return '<Patternbook.Heading level={' + tokens[idx].hLevel + '}>'
+    return `<Patternbook.Heading level="${tokens[idx].hLevel}">`
 }
 
 remarkable.renderer.rules.heading_close = function() {
@@ -103,7 +103,7 @@ remarkable.renderer.rules.ordered_list_open = function(
 ) {
     var token = tokens[idx]
     var order = token.order > 1 ? ' start="' + token.order + '"' : ''
-    return '<Patternbook.OList ' + order + '>'
+    return `<Patternbook.OList ${order}>`
 }
 remarkable.renderer.rules.ordered_list_close = function(
     tokens,
@@ -122,8 +122,8 @@ remarkable.renderer.rules.blockquote_close = function() {
 
 remarkable.renderer.rules.fence = function(tokens, idx, options) {
     let tags = tokens[idx].params.split(/\s+/g)
+    let lang = tags.shift()
     let type = tags.shift()
-    let lang = fences[type] ? tags.shift() : type
     let render = fences[type] || fences.source
     let attrs = tags.map(s => s.split('=')).reduce((o, pair) => {
         let [key, value] = pair.length > 1 ? pair : [pair[0], true]
@@ -147,16 +147,25 @@ function parse(content) {
     })
 }
 
-function markupSource(content, lang) {
-    return highlight(content, lang)
-        .replace(/[{}]+/g, '{"$&"}')
-        .replace(/(\n)/g, '{"\\n"}')
-        .replace(/class=/g, 'className=')
+function escapeJsx(jsx) {
+    const rx = /[&<>{}"]/g
+    const entity = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '{': '&#123;',
+        '}': '&#125;',
+        '"': '&quot;'
+    }
+
+    return (rx.test(jsx) ? jsx.replace(rx, ch => entity[ch]) : jsx).replace(
+        /(\n)/g,
+        '{"\\n"}'
+    )
 }
 
-function highlight(code, lang) {
-    const language = Prism.languages[lang] || Prism.languages.markup
-    return Prism.highlight(code, language)
+function htmlToJsx(html) {
+    return html.replace(/[{}]+/g, '{"$&"}').replace(/class=/g, 'className=')
 }
 
 function generateImports(imports) {
@@ -232,7 +241,8 @@ function generateComponent(jsx, vars, msgtypes) {
 
 function toModule(payload) {
     let { html, attributes } = payload
-    let jsx = html.replace(/class=/g, 'className=')
+    // insert whitespace after a tag at end of line not followed by another tag
+    let jsx = html.replace(/([>])\n\s*([^<])/g, '$1 $2')
 
     let output = [
         "import React from 'react'",
@@ -257,7 +267,8 @@ function toModule(payload) {
         ]
     )
 
-    console.log('\n====\n', output.join('\n'), '\n====\n')
+    // console.log('\n====\n', output.join('\n'), '\n====\n')
+
     return output.join('\n')
 }
 

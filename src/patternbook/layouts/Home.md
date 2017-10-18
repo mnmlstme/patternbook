@@ -6,7 +6,7 @@ imports:
 Home
 ====
 
-```demo jsx screen
+```jsx demo screen
 <Home>
 </Home>
 ```

@@ -3,10 +3,9 @@ import { StyleSheet, css } from 'aphrodite/no-important'
 
 import { wrapper } from '../components/layout'
 
-let DefaultTheme = props =>
-    <div className={props.className}>
-        {props.children}
-    </div>
+let DefaultTheme = props => (
+    <div className={props.className}>{props.children}</div>
+)
 
 function Wrapper(props) {
     let { themeClass, theme, children, width, height } = props
@@ -16,9 +15,7 @@ function Wrapper(props) {
     return (
         <div className={css(classes.wrapper)}>
             <div className={[css(classes.wrapped)].join(' ')}>
-                <Theme className={themeClass}>
-                    {children}
-                </Theme>
+                <Theme className={themeClass}>{children}</Theme>
             </div>
             <div className={css(classes.ruler, classes.ruler_top)} />
             <div className={css(classes.ruler, classes.ruler_left)} />
@@ -59,7 +56,10 @@ const classes = StyleSheet.create({
         position: 'absolute',
         boxSizing: 'content-box',
         borderColor: 'rgba(88, 52, 77, 0.4)',
-        borderWidth: `${wrapper.tickWidth}px`
+        borderWidth: `${wrapper.tickWidth}px`,
+        fontSize: '10px',
+        fontFamily:
+            'Monaco, Consolas, "Lucida Sans Typewriter", "Lucida Console"'
     },
     ruler_top: {
         left: rulerOverhang,
@@ -94,7 +94,6 @@ const classes = StyleSheet.create({
         background: `linear-gradient(to left, ${bg}, rgba(255,255,255,0))`
     },
     dim: {
-        fontSize: '10px',
         position: 'absolute'
     },
     dim_bottom: {

@@ -26,14 +26,19 @@ class Page extends React.Component {
                 <style>{prismCSS}</style>
                 <style>{stylesheet || ''}</style>
                 <header className={css(classes.header)}>
-                    <Link to="/">patternbook</Link>
+                    <Link className={css(classes.link)} to="/">
+                        patternbook
+                    </Link>
                 </header>
                 <section className={css(classes.body)}>
                     {this.props.children}
                 </section>
                 <footer className={css(classes.footer)}>
                     presented by{' '}
-                    <a href="https://github.com/mnmlstme/patternbook">
+                    <a
+                        className={css(classes.link)}
+                        href="https://github.com/mnmlstme/patternbook"
+                    >
                         patternbook
                     </a>
                 </footer>
@@ -46,7 +51,7 @@ const classes = StyleSheet.create({
     article: {
         display: 'flex',
         flexDirection: 'column',
-        fontFamily: 'Georgia, serif',
+        fontFamily: '"Hoefler Text", Didot, Cambria, Georgia, serif',
         background: '#f4f4f4',
         color: '#7b6073',
         height: '100%',
@@ -56,7 +61,9 @@ const classes = StyleSheet.create({
         left: 0
     },
     header: {
-        fontFamily: 'Input, Courier, monospace',
+        fontFamily:
+            'Monaco, Consolas, "Lucida Sans Typewriter", "Lucida Console"',
+        color: '#905',
         fontSize: '1.25rem',
         height: '2rem'
     },
@@ -67,9 +74,16 @@ const classes = StyleSheet.create({
         overflow: 'auto'
     },
     footer: {
-        fontFamily: 'Input, Courier, monospace',
         fontSize: '.75rem',
         height: '1rem'
+    },
+    link: {
+        fontFamily:
+            'Monaco, Consolas, "Lucida Sans Typewriter", "Lucida Console"',
+        color: '#905',
+        ':hover': {
+            color: '#905'
+        }
     }
 })
 

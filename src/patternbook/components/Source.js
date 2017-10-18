@@ -1,10 +1,23 @@
 import React from 'react'
 import { StyleSheet, css } from 'aphrodite/no-important'
 import { article } from './layout'
+import textContent from 'react-addons-text-content'
+
+let Prism = require('prismjs')
+// disable Prism's auto-highlighting, thank you.
+document.removeEventListener('DOMContentLoaded', Prism.highlightAll)
+require('prismjs/components/prism-jsx')
+
+function highlight(code, lang) {
+    const language = Prism.languages[lang] || Prism.languages.markup
+    return Prism.highlight(code, language)
+}
 
 function Source(props) {
     let { lang, mod, children } = props
     let mods = mod ? mod.split(' ') : []
+    let content = textContent(children)
+    let code = { __html: highlight(content, lang) }
 
     return (
         <div
@@ -19,9 +32,8 @@ function Source(props) {
                     className={
                         css(classes.code) + (lang && ' language-' + lang)
                     }
-                >
-                    {children}
-                </code>
+                    dangerouslySetInnerHTML={code}
+                />
             </pre>
         </div>
     )
@@ -31,11 +43,11 @@ const classes = StyleSheet.create({
     source: {
         gridColumn: 'block-start / block-end',
         position: 'relative',
-        fontFamily: 'Input, Courier, monospace',
         fontSize: '.875rem'
     },
     source_demo: {},
     label: {
+        fontFamily: 'Futura, Geneva, "Gill Sans", "Trebuchet MS", sans-serif',
         margin: 0,
         position: 'absolute',
         bottom: '100%',
@@ -48,6 +60,8 @@ const classes = StyleSheet.create({
         margin: 0
     },
     code: {
+        fontFamily:
+            'Monaco, Consolas, "Lucida Sans Typewriter", "Lucida Console"',
         lineHeight: '1.1em'
     }
 })

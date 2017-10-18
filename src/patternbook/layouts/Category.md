@@ -6,7 +6,7 @@ imports:
 Category
 ====
 
-```demo jsx screen
+```jsx demo screen
 <Category params={{splat: 'layouts'}}>
 </Category>
 ```

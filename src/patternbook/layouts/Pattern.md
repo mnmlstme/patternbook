@@ -6,7 +6,7 @@ imports:
 Pattern
 ====
 
-```demo jsx screen
+```jsx demo screen
 <Pattern params={{splat: 'layouts', pattern: 'Pattern'}}>
 </Pattern>
 ```
