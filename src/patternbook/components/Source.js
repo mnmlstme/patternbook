@@ -62,7 +62,10 @@ const classes = StyleSheet.create({
     code: {
         fontFamily:
             'Monaco, Consolas, "Lucida Sans Typewriter", "Lucida Console"',
-        lineHeight: '1.1em'
+        ':nth-child(1n) .tag': {
+            // Prism override
+            padding: 0
+        }
     }
 })
 

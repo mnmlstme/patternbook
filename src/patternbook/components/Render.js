@@ -8,6 +8,10 @@ import { article } from './layout'
 
 const RESIZE_DEBOUNCE_TIME = 500 // milliseconds
 
+let DefaultTheme = props => (
+    <div className={props.className}>{props.children}</div>
+)
+
 class Render extends React.Component {
     static contextTypes = {
         themeClass: PropTypes.string
@@ -33,6 +37,8 @@ class Render extends React.Component {
         let rendered = !!width && !!height && children
         let mods = mod ? mod.split(' ') : ['default']
         let dimensions = { width, height }
+        let Theme = theme || DefaultTheme
+        themeClass = themeClass || 'pbReset'
 
         return (
             <div
@@ -41,7 +47,7 @@ class Render extends React.Component {
                     mods.map(m => classes['render_' + m])
                 )}
             >
-                <Wrapper themeClass={themeClass} {...dimensions}>
+                <Wrapper {...dimensions}>
                     <div
                         className={css(
                             classes.content,
@@ -49,7 +55,7 @@ class Render extends React.Component {
                         )}
                         ref={node => (this._content = node)}
                     >
-                        {rendered}
+                        <Theme className={themeClass}>{rendered}</Theme>
                     </div>
                 </Wrapper>
             </div>
@@ -99,33 +105,34 @@ const classes = StyleSheet.create({
             gridColumn: 'source-start / source-end'
         }
     },
+    content: {
+        display: 'inline-block',
+        transformOrigin: '0 0',
+        minHeight: '1em',
+        minWidth: '1em',
+        margin: 0
+    },
     render_default: {},
-    render_screen: {
-        width: `${100 * reduction}vw`,
-        height: `${100 * reduction}vh`
-    },
-    render_wide: {
-        gridColumn: 'wide-start / wide-end',
-        ':nth-child(1n) + *': {
-            gridColumn: 'block-start / block-end'
-        }
-    },
     render_aside: {
         gridColumn: 'aside-start / aside-end',
         ':nth-child(1n) + *': {
             gridColumn: 'block-start / block-end'
         }
     },
-    content: {
-        transformOrigin: '0 0',
-        minHeight: '1em',
-        minWidth: '1em',
-        overflow: 'auto'
+    render_screen: {
+        width: `${100 * reduction}vw`,
+        height: `${100 * reduction}vh`
     },
     content_screen: {
         width: '100vw',
         height: '100vh',
         transform: `scale(${reduction},${reduction})`
+    },
+    render_wide: {
+        gridColumn: 'wide-start / wide-end',
+        ':nth-child(1n) + *': {
+            gridColumn: 'block-start / block-end'
+        }
     },
     content_wide: {
         width: '100%',

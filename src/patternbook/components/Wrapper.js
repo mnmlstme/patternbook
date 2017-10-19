@@ -3,54 +3,54 @@ import { StyleSheet, css } from 'aphrodite/no-important'
 
 import { wrapper } from '../components/layout'
 
-let DefaultTheme = props => (
-    <div className={props.className}>{props.children}</div>
-)
-
 function Wrapper(props) {
-    let { themeClass, theme, children, width, height } = props
-    let Theme = theme || DefaultTheme
-    themeClass = themeClass || 'pbReset'
+    let { children, width, height } = props
+    let wpx = `${width.toFixed(1)}px`
+    let hpx = `${height.toFixed(1)}px`
 
     return (
         <div className={css(classes.wrapper)}>
-            <div className={[css(classes.wrapped)].join(' ')}>
-                <Theme className={themeClass}>{children}</Theme>
-            </div>
-            <div className={css(classes.ruler, classes.ruler_top)} />
-            <div className={css(classes.ruler, classes.ruler_left)} />
-            <div className={css(classes.ruler, classes.ruler_bottom)}>
+            <div className={[css(classes.wrapped)].join(' ')}>{children}</div>
+            <div
+                className={css(classes.ruler, classes.ruler_top)}
+                style={{ width: wpx }}
+            />
+            <div
+                className={css(classes.ruler, classes.ruler_left)}
+                style={{ height: hpx }}
+            />
+            <div
+                className={css(classes.ruler, classes.ruler_bottom)}
+                style={{ width: wpx }}>
                 <span className={css(classes.dim, classes.dim_bottom)}>
-                    {`${width.toFixed(1)}px`}
+                    {wpx}
                 </span>
             </div>
-            <div className={css(classes.ruler, classes.ruler_right)}>
+            <div
+                className={css(classes.ruler, classes.ruler_right)}
+                style={{ height: hpx }}>
                 <span className={css(classes.dim, classes.dim_right)}>
-                    {`${height.toFixed(1)}px`}
+                    {hpx}
                 </span>
             </div>
         </div>
     )
 }
 
-const rulerSize = `${wrapper.tickLength}rem`
-const rulerLocation = `-${wrapper.tickLength + wrapper.tickOffset}rem`
-const rulerOverhang = `-${wrapper.tickWidth}px`
-
+const buffer = '2rem' // buffer (padding) around wrapped content
+const rulerWidth = `${wrapper.tickLength}rem`
 const bg = 'white' // should be themed
 
 const classes = StyleSheet.create({
     wrapper: {
+        display: 'inline-block',
         position: 'relative',
         maxWidth: '100%',
-        maxHeight: '100%'
-    },
-    wrapped: {
+        maxHeight: '100%',
         background: bg,
         color: '#333',
         fontFamily: 'Helvetica,Arial,sans-serif',
-        maxWidth: '100%',
-        maxHeight: '100%'
+        padding: buffer
     },
     ruler: {
         position: 'absolute',
@@ -62,34 +62,30 @@ const classes = StyleSheet.create({
             'Monaco, Consolas, "Lucida Sans Typewriter", "Lucida Console"'
     },
     ruler_top: {
-        left: rulerOverhang,
-        right: rulerOverhang,
-        top: rulerLocation,
-        height: rulerSize,
+        left: buffer,
+        top: 0,
+        height: rulerWidth,
         borderStyle: 'none solid',
         background: `linear-gradient(to top, ${bg}, rgba(255,255,255,0))`
     },
     ruler_right: {
-        top: rulerOverhang,
-        bottom: rulerOverhang,
-        right: rulerLocation,
-        width: rulerSize,
+        top: buffer,
+        right: 0,
+        width: rulerWidth,
         borderStyle: 'solid none',
         background: `linear-gradient(to right, ${bg}, rgba(255,255,255,0))`
     },
     ruler_bottom: {
-        left: rulerOverhang,
-        right: rulerOverhang,
-        bottom: rulerLocation,
-        height: rulerSize,
+        left: buffer,
+        bottom: 0,
+        height: rulerWidth,
         borderStyle: 'none solid',
         background: `linear-gradient(to bottom, ${bg}, rgba(255,255,255,0))`
     },
     ruler_left: {
-        top: rulerOverhang,
-        bottom: rulerOverhang,
-        left: rulerLocation,
-        width: rulerSize,
+        top: buffer,
+        left: 0,
+        width: rulerWidth,
         borderStyle: 'solid none',
         background: `linear-gradient(to left, ${bg}, rgba(255,255,255,0))`
     },

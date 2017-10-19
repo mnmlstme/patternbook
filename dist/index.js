@@ -69,7 +69,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "f85fe5a63377ad02933d"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "9e8b92e2c37b9dcbb4e2"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -10049,7 +10049,7 @@ var classes = _noImportant.StyleSheet.create({
         display: 'grid',
         gridGap: '2rem',
         gridTemplateRows: 'none',
-        gridTemplateColumns: ['[aside-start aside-end wide-start render-start heading-start] minmax(20%, 1fr)', '[block-start] minmax(20%, 1fr)', '[render-end source-start] minmax(40%, 2fr)', '[block-end source-end heading-end]'].join(' '),
+        gridTemplateColumns: ['[aside-start aside-end wide-start render-start heading-start] minmax(20%, 3fr)', '[block-start] minmax(30%, 5fr)', '[render-end source-start] minmax(40%, 8fr)', '[block-end source-end heading-end]'].join(' '),
         boxSizing: 'border-box',
         width: '100%',
         minWidth: '45rem',
@@ -10066,8 +10066,6 @@ module.exports = Article;
 
 "use strict";
 
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -10100,6 +10098,14 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var RESIZE_DEBOUNCE_TIME = 500; // milliseconds
+
+var DefaultTheme = function DefaultTheme(props) {
+    return _react2.default.createElement(
+        'div',
+        { className: props.className },
+        props.children
+    );
+};
 
 var Render = function (_React$Component) {
     _inherits(Render, _React$Component);
@@ -10135,6 +10141,8 @@ var Render = function (_React$Component) {
             var rendered = !!width && !!height && children;
             var mods = mod ? mod.split(' ') : ['default'];
             var dimensions = { width: width, height: height };
+            var Theme = theme || DefaultTheme;
+            themeClass = themeClass || 'pbReset';
 
             return _react2.default.createElement(
                 'div',
@@ -10145,7 +10153,7 @@ var Render = function (_React$Component) {
                 },
                 _react2.default.createElement(
                     _Wrapper2.default,
-                    _extends({ themeClass: themeClass }, dimensions),
+                    dimensions,
                     _react2.default.createElement(
                         'div',
                         {
@@ -10156,7 +10164,11 @@ var Render = function (_React$Component) {
                                 return _this2._content = node;
                             }
                         },
-                        rendered
+                        _react2.default.createElement(
+                            Theme,
+                            { className: themeClass },
+                            rendered
+                        )
                     )
                 )
             );
@@ -10220,33 +10232,34 @@ var classes = _noImportant.StyleSheet.create({
             gridColumn: 'source-start / source-end'
         }
     },
+    content: {
+        display: 'inline-block',
+        transformOrigin: '0 0',
+        minHeight: '1em',
+        minWidth: '1em',
+        margin: 0
+    },
     render_default: {},
-    render_screen: {
-        width: 100 * reduction + 'vw',
-        height: 100 * reduction + 'vh'
-    },
-    render_wide: {
-        gridColumn: 'wide-start / wide-end',
-        ':nth-child(1n) + *': {
-            gridColumn: 'block-start / block-end'
-        }
-    },
     render_aside: {
         gridColumn: 'aside-start / aside-end',
         ':nth-child(1n) + *': {
             gridColumn: 'block-start / block-end'
         }
     },
-    content: {
-        transformOrigin: '0 0',
-        minHeight: '1em',
-        minWidth: '1em',
-        overflow: 'auto'
+    render_screen: {
+        width: 100 * reduction + 'vw',
+        height: 100 * reduction + 'vh'
     },
     content_screen: {
         width: '100vw',
         height: '100vh',
         transform: 'scale(' + reduction + ',' + reduction + ')'
+    },
+    render_wide: {
+        gridColumn: 'wide-start / wide-end',
+        ':nth-child(1n) + *': {
+            gridColumn: 'block-start / block-end'
+        }
     },
     content_wide: {
         width: '100%',
@@ -10341,7 +10354,10 @@ var classes = _noImportant.StyleSheet.create({
     },
     code: {
         fontFamily: 'Monaco, Consolas, "Lucida Sans Typewriter", "Lucida Console"',
-        lineHeight: '1.1em'
+        ':nth-child(1n) .tag': {
+            // Prism override
+            padding: 0
+        }
     }
 });
 
@@ -11371,23 +11387,13 @@ var _layout = __webpack_require__(28);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var DefaultTheme = function DefaultTheme(props) {
-    return _react2.default.createElement(
-        'div',
-        { className: props.className },
-        props.children
-    );
-};
-
 function Wrapper(props) {
-    var themeClass = props.themeClass,
-        theme = props.theme,
-        children = props.children,
+    var children = props.children,
         width = props.width,
         height = props.height;
 
-    var Theme = theme || DefaultTheme;
-    themeClass = themeClass || 'pbReset';
+    var wpx = width.toFixed(1) + 'px';
+    var hpx = height.toFixed(1) + 'px';
 
     return _react2.default.createElement(
         'div',
@@ -11395,53 +11401,55 @@ function Wrapper(props) {
         _react2.default.createElement(
             'div',
             { className: [(0, _noImportant.css)(classes.wrapped)].join(' ') },
-            _react2.default.createElement(
-                Theme,
-                { className: themeClass },
-                children
-            )
+            children
         ),
-        _react2.default.createElement('div', { className: (0, _noImportant.css)(classes.ruler, classes.ruler_top) }),
-        _react2.default.createElement('div', { className: (0, _noImportant.css)(classes.ruler, classes.ruler_left) }),
+        _react2.default.createElement('div', {
+            className: (0, _noImportant.css)(classes.ruler, classes.ruler_top),
+            style: { width: wpx }
+        }),
+        _react2.default.createElement('div', {
+            className: (0, _noImportant.css)(classes.ruler, classes.ruler_left),
+            style: { height: hpx }
+        }),
         _react2.default.createElement(
             'div',
-            { className: (0, _noImportant.css)(classes.ruler, classes.ruler_bottom) },
+            {
+                className: (0, _noImportant.css)(classes.ruler, classes.ruler_bottom),
+                style: { width: wpx } },
             _react2.default.createElement(
                 'span',
                 { className: (0, _noImportant.css)(classes.dim, classes.dim_bottom) },
-                width.toFixed(1) + 'px'
+                wpx
             )
         ),
         _react2.default.createElement(
             'div',
-            { className: (0, _noImportant.css)(classes.ruler, classes.ruler_right) },
+            {
+                className: (0, _noImportant.css)(classes.ruler, classes.ruler_right),
+                style: { height: hpx } },
             _react2.default.createElement(
                 'span',
                 { className: (0, _noImportant.css)(classes.dim, classes.dim_right) },
-                height.toFixed(1) + 'px'
+                hpx
             )
         )
     );
 }
 
-var rulerSize = _layout.wrapper.tickLength + 'rem';
-var rulerLocation = '-' + (_layout.wrapper.tickLength + _layout.wrapper.tickOffset) + 'rem';
-var rulerOverhang = '-' + _layout.wrapper.tickWidth + 'px';
-
+var buffer = '2rem'; // buffer (padding) around wrapped content
+var rulerWidth = _layout.wrapper.tickLength + 'rem';
 var bg = 'white'; // should be themed
 
 var classes = _noImportant.StyleSheet.create({
     wrapper: {
+        display: 'inline-block',
         position: 'relative',
         maxWidth: '100%',
-        maxHeight: '100%'
-    },
-    wrapped: {
+        maxHeight: '100%',
         background: bg,
         color: '#333',
         fontFamily: 'Helvetica,Arial,sans-serif',
-        maxWidth: '100%',
-        maxHeight: '100%'
+        padding: buffer
     },
     ruler: {
         position: 'absolute',
@@ -11452,34 +11460,30 @@ var classes = _noImportant.StyleSheet.create({
         fontFamily: 'Monaco, Consolas, "Lucida Sans Typewriter", "Lucida Console"'
     },
     ruler_top: {
-        left: rulerOverhang,
-        right: rulerOverhang,
-        top: rulerLocation,
-        height: rulerSize,
+        left: buffer,
+        top: 0,
+        height: rulerWidth,
         borderStyle: 'none solid',
         background: 'linear-gradient(to top, ' + bg + ', rgba(255,255,255,0))'
     },
     ruler_right: {
-        top: rulerOverhang,
-        bottom: rulerOverhang,
-        right: rulerLocation,
-        width: rulerSize,
+        top: buffer,
+        right: 0,
+        width: rulerWidth,
         borderStyle: 'solid none',
         background: 'linear-gradient(to right, ' + bg + ', rgba(255,255,255,0))'
     },
     ruler_bottom: {
-        left: rulerOverhang,
-        right: rulerOverhang,
-        bottom: rulerLocation,
-        height: rulerSize,
+        left: buffer,
+        bottom: 0,
+        height: rulerWidth,
         borderStyle: 'none solid',
         background: 'linear-gradient(to bottom, ' + bg + ', rgba(255,255,255,0))'
     },
     ruler_left: {
-        top: rulerOverhang,
-        bottom: rulerOverhang,
-        left: rulerLocation,
-        width: rulerSize,
+        top: buffer,
+        left: 0,
+        width: rulerWidth,
         borderStyle: 'solid none',
         background: 'linear-gradient(to left, ' + bg + ', rgba(255,255,255,0))'
     },
