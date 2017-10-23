@@ -5,11 +5,19 @@ import { wrapper } from '../components/layout'
 
 function Wrapper(props) {
     let { children, width, height } = props
-    let wpx = `${width.toFixed(1)}px`
-    let hpx = `${height.toFixed(1)}px`
+    let wpx = width && `${width.toFixed(1)}px`
+    let hpx = height && `${height.toFixed(1)}px`
+    let style =
+        width || height
+            ? {
+                  width: wpx,
+                  height: hpx,
+                  overflow: 'hidden'
+              }
+            : {}
 
     return (
-        <div className={css(classes.wrapper)}>
+        <div className={css(classes.wrapper)} style={style}>
             {children}
             <div className={css(classes.mask)} />
             <div
@@ -47,12 +55,12 @@ const classes = StyleSheet.create({
     wrapper: {
         display: 'inline-block',
         position: 'relative',
-        maxWidth: '100%',
-        maxHeight: '100%',
         background: bg,
         color: '#333',
         fontFamily: 'Helvetica,Arial,sans-serif',
-        padding: buffer
+        padding: buffer,
+        overflow: 'hidden',
+        boxSizing: 'content-box'
     },
     mask: {
         position: 'absolute',

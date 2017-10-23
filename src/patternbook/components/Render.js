@@ -45,16 +45,14 @@ class Render extends React.Component {
                 className={css(
                     classes.render,
                     mods.map(m => classes['render_' + m])
-                )}
-            >
+                )}>
                 <Wrapper {...dimensions}>
                     <div
                         className={css(
                             classes.content,
                             mods.map(m => classes['content_' + m])
                         )}
-                        ref={node => (this._content = node)}
-                    >
+                        ref={node => (this._content = node)}>
                         <Theme className={themeClass}>{rendered}</Theme>
                     </div>
                 </Wrapper>
@@ -103,7 +101,8 @@ const classes = StyleSheet.create({
         marginBottom: '2rem',
         ':nth-child(1n) + *': {
             gridColumn: 'source-start / source-end'
-        }
+        },
+        overflow: 'auto'
     },
     content: {
         display: 'inline-block',

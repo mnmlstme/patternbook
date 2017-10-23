@@ -69,7 +69,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "768b1cffd6edbec83001"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "19d771d9541bf85c082a"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -10149,8 +10149,7 @@ var Render = function (_React$Component) {
                 {
                     className: (0, _noImportant.css)(classes.render, mods.map(function (m) {
                         return classes['render_' + m];
-                    }))
-                },
+                    })) },
                 _react2.default.createElement(
                     _Wrapper2.default,
                     dimensions,
@@ -10162,8 +10161,7 @@ var Render = function (_React$Component) {
                             })),
                             ref: function ref(node) {
                                 return _this2._content = node;
-                            }
-                        },
+                            } },
                         _react2.default.createElement(
                             Theme,
                             { className: themeClass },
@@ -10230,7 +10228,8 @@ var classes = _noImportant.StyleSheet.create({
         marginBottom: '2rem',
         ':nth-child(1n) + *': {
             gridColumn: 'source-start / source-end'
-        }
+        },
+        overflow: 'auto'
     },
     content: {
         display: 'inline-block',
@@ -11392,12 +11391,17 @@ function Wrapper(props) {
         width = props.width,
         height = props.height;
 
-    var wpx = width.toFixed(1) + 'px';
-    var hpx = height.toFixed(1) + 'px';
+    var wpx = width && width.toFixed(1) + 'px';
+    var hpx = height && height.toFixed(1) + 'px';
+    var style = width || height ? {
+        width: wpx,
+        height: hpx,
+        overflow: 'hidden'
+    } : {};
 
     return _react2.default.createElement(
         'div',
-        { className: (0, _noImportant.css)(classes.wrapper) },
+        { className: (0, _noImportant.css)(classes.wrapper), style: style },
         children,
         _react2.default.createElement('div', { className: (0, _noImportant.css)(classes.mask) }),
         _react2.default.createElement('div', {
@@ -11442,12 +11446,12 @@ var classes = _noImportant.StyleSheet.create({
     wrapper: {
         display: 'inline-block',
         position: 'relative',
-        maxWidth: '100%',
-        maxHeight: '100%',
         background: bg,
         color: '#333',
         fontFamily: 'Helvetica,Arial,sans-serif',
-        padding: buffer
+        padding: buffer,
+        overflow: 'hidden',
+        boxSizing: 'content-box'
     },
     mask: {
         position: 'absolute',
