@@ -33,8 +33,6 @@ class Render extends React.Component {
         let { children, mod, theme } = this.props
         let { width, height } = this.state
         let { themeClass } = this.context
-        // Do not render children until size of rendering pane is known:
-        let rendered = !!width && !!height && children
         let mods = mod ? mod.split(' ') : ['default']
         let dimensions = { width, height }
         let Theme = theme || DefaultTheme
@@ -53,7 +51,7 @@ class Render extends React.Component {
                             mods.map(m => classes['content_' + m])
                         )}
                         ref={node => (this._content = node)}>
-                        <Theme className={themeClass}>{rendered}</Theme>
+                        <Theme className={themeClass}>{children}</Theme>
                     </div>
                 </Wrapper>
             </div>
@@ -86,6 +84,7 @@ class Render extends React.Component {
             let { width, height } = content.getBoundingClientRect()
 
             if (s.width !== width || s.height !== height) {
+                console.log('resizing to width, height=', width, height)
                 this.setState({ width, height })
             }
         }
@@ -107,12 +106,11 @@ const classes = StyleSheet.create({
     content: {
         display: 'inline-block',
         transformOrigin: '0 0',
-        minHeight: '1em',
-        minWidth: '1em',
         margin: 0
     },
     render_default: {},
     render_aside: {
+        textAlign: 'right',
         gridColumn: 'aside-start / aside-end',
         ':nth-child(1n) + *': {
             gridColumn: 'block-start / block-end'

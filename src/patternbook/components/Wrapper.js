@@ -8,13 +8,15 @@ function Wrapper(props) {
     let wpx = width && `${width.toFixed(1)}px`
     let hpx = height && `${height.toFixed(1)}px`
     let style =
-        width || height
+        width && height
             ? {
                   width: wpx,
                   height: hpx,
                   overflow: 'hidden'
               }
             : {}
+
+    console.log('width, height=', width, height)
 
     return (
         <div className={css(classes.wrapper)} style={style}>
@@ -59,7 +61,6 @@ const classes = StyleSheet.create({
         color: '#333',
         fontFamily: 'Helvetica,Arial,sans-serif',
         padding: buffer,
-        overflow: 'hidden',
         boxSizing: 'content-box'
     },
     mask: {
@@ -68,7 +69,8 @@ const classes = StyleSheet.create({
         height: '100%',
         boxShadow: `inset 0 0 ${fringe} calc(${buffer} - ${fringe}) ${bg}`,
         top: 0,
-        left: 0
+        left: 0,
+        pointerEvents: 'none'
     },
     ruler: {
         position: 'absolute',

@@ -69,7 +69,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "19d771d9541bf85c082a"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "74e44e3a147c713dca44"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -10136,9 +10136,7 @@ var Render = function (_React$Component) {
                 width = _state.width,
                 height = _state.height;
             var themeClass = this.context.themeClass;
-            // Do not render children until size of rendering pane is known:
 
-            var rendered = !!width && !!height && children;
             var mods = mod ? mod.split(' ') : ['default'];
             var dimensions = { width: width, height: height };
             var Theme = theme || DefaultTheme;
@@ -10165,7 +10163,7 @@ var Render = function (_React$Component) {
                         _react2.default.createElement(
                             Theme,
                             { className: themeClass },
-                            rendered
+                            children
                         )
                     )
                 )
@@ -10205,6 +10203,7 @@ var Render = function (_React$Component) {
                     height = _content$getBoundingC.height;
 
                 if (s.width !== width || s.height !== height) {
+                    console.log('resizing to width, height=', width, height);
                     this.setState({ width: width, height: height });
                 }
             }
@@ -10234,12 +10233,11 @@ var classes = _noImportant.StyleSheet.create({
     content: {
         display: 'inline-block',
         transformOrigin: '0 0',
-        minHeight: '1em',
-        minWidth: '1em',
         margin: 0
     },
     render_default: {},
     render_aside: {
+        textAlign: 'right',
         gridColumn: 'aside-start / aside-end',
         ':nth-child(1n) + *': {
             gridColumn: 'block-start / block-end'
@@ -11393,11 +11391,13 @@ function Wrapper(props) {
 
     var wpx = width && width.toFixed(1) + 'px';
     var hpx = height && height.toFixed(1) + 'px';
-    var style = width || height ? {
+    var style = width && height ? {
         width: wpx,
         height: hpx,
         overflow: 'hidden'
     } : {};
+
+    console.log('width, height=', width, height);
 
     return _react2.default.createElement(
         'div',
@@ -11450,7 +11450,6 @@ var classes = _noImportant.StyleSheet.create({
         color: '#333',
         fontFamily: 'Helvetica,Arial,sans-serif',
         padding: buffer,
-        overflow: 'hidden',
         boxSizing: 'content-box'
     },
     mask: {
@@ -11459,7 +11458,8 @@ var classes = _noImportant.StyleSheet.create({
         height: '100%',
         boxShadow: 'inset 0 0 ' + fringe + ' calc(' + buffer + ' - ' + fringe + ') ' + bg,
         top: 0,
-        left: 0
+        left: 0,
+        pointerEvents: 'none'
     },
     ruler: {
         position: 'absolute',
