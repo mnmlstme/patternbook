@@ -159,7 +159,7 @@ function escapeJsx(jsx) {
     }
 
     return (rx.test(jsx) ? jsx.replace(rx, ch => entity[ch]) : jsx).replace(
-        /(\n)/g,
+        /\n/g,
         '{"\\n"}'
     )
 }
@@ -241,8 +241,10 @@ function generateComponent(jsx, vars, msgtypes) {
 
 function toModule(payload) {
     let { html, attributes } = payload
-    // insert whitespace after a tag at end of line not followed by another tag
-    let jsx = html.replace(/([>])\n\s*([^<])/g, '$1 $2')
+    let jsx = html
+        // combine newlines and whitespace in mixed content
+        .replace(/([>])\n\s+([^<])/g, '$1 $2')
+        .replace(/([^>])\n\s*([<])/g, '$1 $2')
 
     let output = [
         "import React from 'react'",

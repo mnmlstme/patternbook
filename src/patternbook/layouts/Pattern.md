@@ -7,7 +7,7 @@ Pattern
 ====
 
 ```jsx demo screen
-<Pattern params={{splat: 'layouts', pattern: 'Pattern'}}>
+<Pattern params={{splat: 'layouts', pattern: 'Category'}}>
 </Pattern>
 ```
 

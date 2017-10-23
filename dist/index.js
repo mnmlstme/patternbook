@@ -69,7 +69,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "74e44e3a147c713dca44"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "af1277124fb0c85b8022"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -10231,11 +10231,13 @@ var classes = _noImportant.StyleSheet.create({
         overflow: 'auto'
     },
     content: {
-        display: 'inline-block',
         transformOrigin: '0 0',
         margin: 0
     },
     render_default: {},
+    content_default: {
+        display: 'block'
+    },
     render_aside: {
         textAlign: 'right',
         gridColumn: 'aside-start / aside-end',
@@ -10243,10 +10245,11 @@ var classes = _noImportant.StyleSheet.create({
             gridColumn: 'block-start / block-end'
         }
     },
-    render_screen: {
-        width: 100 * reduction + 'vw',
-        height: 100 * reduction + 'vh'
+    content_aside: {
+        display: 'inline-block',
+        textAlign: 'left'
     },
+    render_screen: {},
     content_screen: {
         width: '100vw',
         height: '100vh',
@@ -10259,6 +10262,7 @@ var classes = _noImportant.StyleSheet.create({
         }
     },
     content_wide: {
+        display: 'block',
         width: '100%',
         height: 'auto'
     }
@@ -10303,7 +10307,7 @@ function Source(props) {
         children = props.children;
 
     var mods = mod ? mod.split(' ') : [];
-    var content = (0, _reactAddonsTextContent2.default)(children);
+    var content = (0, _reactAddonsTextContent2.default)(children).replace(/^\s+/, '');
     var code = { __html: highlight(content, lang) };
 
     return _react2.default.createElement(
@@ -10311,8 +10315,7 @@ function Source(props) {
         {
             className: (0, _noImportant.css)(classes.source, mods.map(function (m) {
                 return classes['source_' + m];
-            }))
-        },
+            })) },
         _react2.default.createElement(
             'h6',
             { className: (0, _noImportant.css)(classes.label) },
@@ -11444,7 +11447,7 @@ var bg = 'white'; // should be themed
 
 var classes = _noImportant.StyleSheet.create({
     wrapper: {
-        display: 'inline-block',
+        // display: 'inline-block',
         position: 'relative',
         background: bg,
         color: '#333',

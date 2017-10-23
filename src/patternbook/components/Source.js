@@ -16,7 +16,7 @@ function highlight(code, lang) {
 function Source(props) {
     let { lang, mod, children } = props
     let mods = mod ? mod.split(' ') : []
-    let content = textContent(children)
+    let content = textContent(children).replace(/^\s+/, '')
     let code = { __html: highlight(content, lang) }
 
     return (
@@ -24,8 +24,7 @@ function Source(props) {
             className={css(
                 classes.source,
                 mods.map(m => classes['source_' + m])
-            )}
-        >
+            )}>
             <h6 className={css(classes.label)}>{lang}</h6>
             <pre className={css(classes.pre)}>
                 <code

@@ -55,7 +55,7 @@ const bg = 'white' // should be themed
 
 const classes = StyleSheet.create({
     wrapper: {
-        display: 'inline-block',
+        // display: 'inline-block',
         position: 'relative',
         background: bg,
         color: '#333',

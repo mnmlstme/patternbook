@@ -9,16 +9,30 @@ Render
 
 ```jsx render
 <Article>
-    <Render>
-        <button>Hit me</button>
+    <Render lang="html">
+<a href="/home">
+    Time to go home
+</a>
     </Render>
-    <p>Here is a button</p>
 </Article>
 ```
 
 The `Render` component is used to display the rendered output
 of the components in the demos (when the `render` and `demo`
 custom code fences are used in patternbook Markdown).
+
+```jsx demo
+<Article>
+    <Render lang="html">
+<p>
+    Here is a link to
+    <a href="/home">something</a>
+    over there.
+</p>
+    </Render>
+</Article>
+```
+
 
 By default, the rendered output area is about half the width
 of the page layout.  But if the fence has additional words after

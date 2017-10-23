@@ -104,11 +104,13 @@ const classes = StyleSheet.create({
         overflow: 'auto'
     },
     content: {
-        display: 'inline-block',
         transformOrigin: '0 0',
         margin: 0
     },
     render_default: {},
+    content_default: {
+        display: 'block'
+    },
     render_aside: {
         textAlign: 'right',
         gridColumn: 'aside-start / aside-end',
@@ -116,10 +118,11 @@ const classes = StyleSheet.create({
             gridColumn: 'block-start / block-end'
         }
     },
-    render_screen: {
-        width: `${100 * reduction}vw`,
-        height: `${100 * reduction}vh`
+    content_aside: {
+        display: 'inline-block',
+        textAlign: 'left'
     },
+    render_screen: {},
     content_screen: {
         width: '100vw',
         height: '100vh',
@@ -132,6 +135,7 @@ const classes = StyleSheet.create({
         }
     },
     content_wide: {
+        display: 'block',
         width: '100%',
         height: 'auto'
     }
