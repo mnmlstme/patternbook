@@ -10,7 +10,8 @@ function Wrapper(props) {
 
     return (
         <div className={css(classes.wrapper)}>
-            <div className={[css(classes.wrapped)].join(' ')}>{children}</div>
+            {children}
+            <div className={css(classes.mask)} />
             <div
                 className={css(classes.ruler, classes.ruler_top)}
                 style={{ width: wpx }}
@@ -38,6 +39,7 @@ function Wrapper(props) {
 }
 
 const buffer = '2rem' // buffer (padding) around wrapped content
+const fringe = '10px' // fringing effect on mask
 const rulerWidth = `${wrapper.tickLength}rem`
 const bg = 'white' // should be themed
 
@@ -52,6 +54,14 @@ const classes = StyleSheet.create({
         fontFamily: 'Helvetica,Arial,sans-serif',
         padding: buffer
     },
+    mask: {
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        boxShadow: `inset 0 0 ${fringe} calc(${buffer} - ${fringe}) ${bg}`,
+        top: 0,
+        left: 0
+    },
     ruler: {
         position: 'absolute',
         boxSizing: 'content-box',
@@ -65,29 +75,25 @@ const classes = StyleSheet.create({
         left: buffer,
         top: 0,
         height: rulerWidth,
-        borderStyle: 'none solid',
-        background: `linear-gradient(to top, ${bg}, rgba(255,255,255,0))`
+        borderStyle: 'none solid'
     },
     ruler_right: {
         top: buffer,
         right: 0,
         width: rulerWidth,
-        borderStyle: 'solid none',
-        background: `linear-gradient(to right, ${bg}, rgba(255,255,255,0))`
+        borderStyle: 'solid none'
     },
     ruler_bottom: {
         left: buffer,
         bottom: 0,
         height: rulerWidth,
-        borderStyle: 'none solid',
-        background: `linear-gradient(to bottom, ${bg}, rgba(255,255,255,0))`
+        borderStyle: 'none solid'
     },
     ruler_left: {
         top: buffer,
         left: 0,
         width: rulerWidth,
-        borderStyle: 'solid none',
-        background: `linear-gradient(to left, ${bg}, rgba(255,255,255,0))`
+        borderStyle: 'solid none'
     },
     dim: {
         position: 'absolute'

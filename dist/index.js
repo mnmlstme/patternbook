@@ -69,7 +69,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "9e8b92e2c37b9dcbb4e2"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "768b1cffd6edbec83001"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -11398,11 +11398,8 @@ function Wrapper(props) {
     return _react2.default.createElement(
         'div',
         { className: (0, _noImportant.css)(classes.wrapper) },
-        _react2.default.createElement(
-            'div',
-            { className: [(0, _noImportant.css)(classes.wrapped)].join(' ') },
-            children
-        ),
+        children,
+        _react2.default.createElement('div', { className: (0, _noImportant.css)(classes.mask) }),
         _react2.default.createElement('div', {
             className: (0, _noImportant.css)(classes.ruler, classes.ruler_top),
             style: { width: wpx }
@@ -11437,6 +11434,7 @@ function Wrapper(props) {
 }
 
 var buffer = '2rem'; // buffer (padding) around wrapped content
+var fringe = '10px'; // fringing effect on mask
 var rulerWidth = _layout.wrapper.tickLength + 'rem';
 var bg = 'white'; // should be themed
 
@@ -11451,6 +11449,14 @@ var classes = _noImportant.StyleSheet.create({
         fontFamily: 'Helvetica,Arial,sans-serif',
         padding: buffer
     },
+    mask: {
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        boxShadow: 'inset 0 0 ' + fringe + ' calc(' + buffer + ' - ' + fringe + ') ' + bg,
+        top: 0,
+        left: 0
+    },
     ruler: {
         position: 'absolute',
         boxSizing: 'content-box',
@@ -11463,29 +11469,25 @@ var classes = _noImportant.StyleSheet.create({
         left: buffer,
         top: 0,
         height: rulerWidth,
-        borderStyle: 'none solid',
-        background: 'linear-gradient(to top, ' + bg + ', rgba(255,255,255,0))'
+        borderStyle: 'none solid'
     },
     ruler_right: {
         top: buffer,
         right: 0,
         width: rulerWidth,
-        borderStyle: 'solid none',
-        background: 'linear-gradient(to right, ' + bg + ', rgba(255,255,255,0))'
+        borderStyle: 'solid none'
     },
     ruler_bottom: {
         left: buffer,
         bottom: 0,
         height: rulerWidth,
-        borderStyle: 'none solid',
-        background: 'linear-gradient(to bottom, ' + bg + ', rgba(255,255,255,0))'
+        borderStyle: 'none solid'
     },
     ruler_left: {
         top: buffer,
         left: 0,
         width: rulerWidth,
-        borderStyle: 'solid none',
-        background: 'linear-gradient(to left, ' + bg + ', rgba(255,255,255,0))'
+        borderStyle: 'solid none'
     },
     dim: {
         position: 'absolute'
