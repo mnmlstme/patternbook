@@ -16,8 +16,6 @@ function Wrapper(props) {
               }
             : {}
 
-    console.log('width, height=', width, height)
-
     return (
         <div className={css(classes.wrapper)} style={style}>
             {children}

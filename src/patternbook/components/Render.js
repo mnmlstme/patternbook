@@ -84,7 +84,6 @@ class Render extends React.Component {
             let { width, height } = content.getBoundingClientRect()
 
             if (s.width !== width || s.height !== height) {
-                console.log('resizing to width, height=', width, height)
                 this.setState({ width, height })
             }
         }
