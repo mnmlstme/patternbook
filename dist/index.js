@@ -69,7 +69,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "af1277124fb0c85b8022"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "fe3b0e00ce48d7b5e26d"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -10203,7 +10203,6 @@ var Render = function (_React$Component) {
                     height = _content$getBoundingC.height;
 
                 if (s.width !== width || s.height !== height) {
-                    console.log('resizing to width, height=', width, height);
                     this.setState({ width: width, height: height });
                 }
             }
@@ -10239,7 +10238,7 @@ var classes = _noImportant.StyleSheet.create({
         display: 'block'
     },
     render_aside: {
-        textAlign: 'right',
+        justifySelf: 'end',
         gridColumn: 'aside-start / aside-end',
         ':nth-child(1n) + *': {
             gridColumn: 'block-start / block-end'
@@ -11399,8 +11398,6 @@ function Wrapper(props) {
         height: hpx,
         overflow: 'hidden'
     } : {};
-
-    console.log('width, height=', width, height);
 
     return _react2.default.createElement(
         'div',

@@ -10,10 +10,11 @@ function loader(content) {
         .catch(callback)
 }
 
-function renderBlock(jsx, lang, attrs) {
+function renderBlock(code, lang, attrs) {
     let mod = Object.keys(attrs)
         .filter(k => attrs[k] === true)
         .join(' ')
+    let jsx = lang.toLowerCase() === 'jsx' ? code : htmlToJsx(code)
 
     return [
         `<Patternbook.Render theme={Theme} mod="${mod}">${jsx}</Patternbook.Render>`

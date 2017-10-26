@@ -111,7 +111,7 @@ const classes = StyleSheet.create({
         display: 'block'
     },
     render_aside: {
-        textAlign: 'right',
+        justifySelf: 'end',
         gridColumn: 'aside-start / aside-end',
         ':nth-child(1n) + *': {
             gridColumn: 'block-start / block-end'
