@@ -69,7 +69,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "53681d7ca9953315d0ce"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "f0ad30b217ef0cfde6d5"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -10222,6 +10222,8 @@ var reduction = 0.3;
 var classes = _noImportant.StyleSheet.create({
     render: {
         gridColumn: 'render-start / render-end',
+        alignSelf: 'start',
+        justifySelf: 'end',
         height: 'auto',
         marginBottom: '2rem',
         ':nth-child(1n) + *': {

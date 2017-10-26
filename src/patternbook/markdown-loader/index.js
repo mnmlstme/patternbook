@@ -243,9 +243,10 @@ function generateComponent(jsx, vars, msgtypes) {
 function toModule(payload) {
     let { html, attributes } = payload
     let jsx = html
-        // combine newlines and whitespace in mixed content
-        .replace(/([>])\n\s+([^<])/g, '$1 $2')
-        .replace(/([^>])\n\s*([<])/g, '$1 $2')
+        // add whitespace where JSX ignores but HTML doesn't
+        .replace(/(>)\n\s+([^<])/g, '$1 $2')
+        .replace(/([^>])\n\s*(<[^/])/g, '$1 $2')
+        .replace(/(<[/][\w.]+>)\n([^<])/g, '$1 $2')
 
     let output = [
         "import React from 'react'",
