@@ -19,12 +19,13 @@ class Page extends React.Component {
 
     render() {
         let { stylesheet } = this.getChildContext()
+        let stylesheet_html = { __html: stylesheet || '' }
 
         return (
             <article className={css(classes.article)}>
                 <style>{'*{margin:0; box-sizing:border-box}'}</style>
                 <style>{prismCSS}</style>
-                <style>{stylesheet || ''}</style>
+                <style dangerouslySetInnerHTML={stylesheet_html} />
                 <header className={css(classes.header)}>
                     <Link className={css(classes.link)} to="/">
                         patternbook
@@ -37,8 +38,7 @@ class Page extends React.Component {
                     presented by{' '}
                     <a
                         className={css(classes.link)}
-                        href="https://github.com/mnmlstme/patternbook"
-                    >
+                        href="https://github.com/mnmlstme/patternbook">
                         patternbook
                     </a>
                 </footer>
@@ -52,7 +52,8 @@ const classes = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         fontFamily: '"Hoefler Text", Didot, Cambria, Georgia, serif',
-        background: '#f4f4f4',
+        lineHeight: '1.5',
+        background: '#faf8fc',
         color: '#7b6073',
         height: '100%',
         width: '100%',

@@ -95,6 +95,8 @@ const reduction = 0.3
 const classes = StyleSheet.create({
     render: {
         gridColumn: 'render-start / render-end',
+        alignSelf: 'start',
+        justifySelf: 'end',
         height: 'auto',
         marginBottom: '2rem',
         ':nth-child(1n) + *': {
@@ -103,19 +105,21 @@ const classes = StyleSheet.create({
         overflow: 'auto'
     },
     content: {
+        display: 'block',
         transformOrigin: '0 0',
-        margin: 0
+        margin: 0,
+        border: '1px solid transparent' // avoid margin collapse on content
     },
     render_default: {},
     content_default: {
-        display: 'block'
+        display: 'inline-block'
     },
     render_aside: {
-        justifySelf: 'end',
         gridColumn: 'aside-start / aside-end',
         ':nth-child(1n) + *': {
             gridColumn: 'block-start / block-end'
-        }
+        },
+        maxWidth: '100%'
     },
     content_aside: {
         display: 'inline-block',

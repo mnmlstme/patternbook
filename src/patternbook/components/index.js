@@ -24,12 +24,18 @@ function Paragraph({ children }) {
 }
 
 function UList({ children }) {
-    return <ul className={css(classes.block, classes.ulist)}>{children}</ul>
+    return (
+        <ul className={css(classes.block, classes.list, classes.ulist)}>
+            {children}
+        </ul>
+    )
 }
 
 function OList({ start, children }) {
     return (
-        <ol start={start} className={css(classes.block, classes.olist)}>
+        <ol
+            start={start}
+            className={css(classes.block, classes.list, classes.olist)}>
             {children}
         </ol>
     )
@@ -64,7 +70,10 @@ function Code({ children }) {
 const classes = StyleSheet.create({
     block: {
         gridColumn: 'block-start / block-end',
-        lineHeight: '1.5'
+        font: 'inherit',
+        lineHeight: '1.5',
+        padding: 0,
+        margin: 0
     },
     h: {
         fontFamily: 'Futura, Geneva, "Gill Sans", "Trebuchet MS", sans-serif'
@@ -72,22 +81,29 @@ const classes = StyleSheet.create({
     h_1: {
         gridColumn: 'heading-start / heading-end',
         fontSize: '4rem',
-        fontWeight: 300,
         marginBottom: '4rem'
     },
     h_2: {
         gridColumn: 'aside-start / aside-end',
         fontSize: '1.4rem',
-        fontWeight: 900,
         marginBottom: '2rem'
     },
     paragraph: {},
-    ulist: {
+    list: {
         paddingLeft: '2rem',
+        ':nth-child(1n) > li': {
+            padding: 0,
+            margin: 0,
+            lineHeight: '1.5'
+        },
+        ':nth-child(1n) > li + li': {
+            marginTop: '0.5em'
+        }
+    },
+    ulist: {
         listStyleType: 'disc'
     },
     olist: {
-        paddingLeft: '2rem',
         listStyleType: 'decimal'
     },
     blockquote: {
@@ -113,7 +129,8 @@ const classes = StyleSheet.create({
         fontFamily:
             'Monaco, Consolas, "Lucida Sans Typewriter", "Lucida Console"',
         color: '#905',
-        fontWeight: 600
+        fontSize: '85%',
+        textShadow: '0 1px white'
     }
 })
 

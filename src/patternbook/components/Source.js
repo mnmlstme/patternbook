@@ -47,6 +47,7 @@ const classes = StyleSheet.create({
     source_demo: {},
     label: {
         fontFamily: 'Futura, Geneva, "Gill Sans", "Trebuchet MS", sans-serif',
+        fontSize: '8px',
         margin: 0,
         position: 'absolute',
         bottom: '100%',

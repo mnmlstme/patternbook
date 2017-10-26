@@ -69,7 +69,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "fe3b0e00ce48d7b5e26d"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "53681d7ca9953315d0ce"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -10049,7 +10049,7 @@ var classes = _noImportant.StyleSheet.create({
         display: 'grid',
         gridGap: '2rem',
         gridTemplateRows: 'none',
-        gridTemplateColumns: ['[aside-start aside-end wide-start render-start heading-start] minmax(20%, 3fr)', '[block-start] minmax(30%, 5fr)', '[render-end source-start] minmax(40%, 8fr)', '[block-end source-end heading-end]'].join(' '),
+        gridTemplateColumns: ['[aside-start wide-start render-start heading-start] 3fr', '[aside-end render-end block-start source-start] 4fr', '[block-end source-end heading-end]'].join(' '),
         boxSizing: 'border-box',
         width: '100%',
         minWidth: '45rem',
@@ -10230,19 +10230,21 @@ var classes = _noImportant.StyleSheet.create({
         overflow: 'auto'
     },
     content: {
+        display: 'block',
         transformOrigin: '0 0',
-        margin: 0
+        margin: 0,
+        border: '1px solid transparent' // avoid margin collapse on content
     },
     render_default: {},
     content_default: {
-        display: 'block'
+        display: 'inline-block'
     },
     render_aside: {
-        justifySelf: 'end',
         gridColumn: 'aside-start / aside-end',
         ':nth-child(1n) + *': {
             gridColumn: 'block-start / block-end'
-        }
+        },
+        maxWidth: '100%'
     },
     content_aside: {
         display: 'inline-block',
@@ -10340,6 +10342,7 @@ var classes = _noImportant.StyleSheet.create({
     source_demo: {},
     label: {
         fontFamily: 'Futura, Geneva, "Gill Sans", "Trebuchet MS", sans-serif',
+        fontSize: '8px',
         margin: 0,
         position: 'absolute',
         bottom: '100%',
@@ -10425,7 +10428,7 @@ function UList(_ref3) {
 
     return _react2.default.createElement(
         'ul',
-        { className: (0, _noImportant.css)(classes.block, classes.ulist) },
+        { className: (0, _noImportant.css)(classes.block, classes.list, classes.ulist) },
         children
     );
 }
@@ -10436,7 +10439,9 @@ function OList(_ref4) {
 
     return _react2.default.createElement(
         'ol',
-        { start: start, className: (0, _noImportant.css)(classes.block, classes.olist) },
+        {
+            start: start,
+            className: (0, _noImportant.css)(classes.block, classes.list, classes.olist) },
         children
     );
 }
@@ -10481,7 +10486,10 @@ function Code(_ref7) {
 var classes = _noImportant.StyleSheet.create({
     block: {
         gridColumn: 'block-start / block-end',
-        lineHeight: '1.5'
+        font: 'inherit',
+        lineHeight: '1.5',
+        padding: 0,
+        margin: 0
     },
     h: {
         fontFamily: 'Futura, Geneva, "Gill Sans", "Trebuchet MS", sans-serif'
@@ -10489,22 +10497,29 @@ var classes = _noImportant.StyleSheet.create({
     h_1: {
         gridColumn: 'heading-start / heading-end',
         fontSize: '4rem',
-        fontWeight: 300,
         marginBottom: '4rem'
     },
     h_2: {
         gridColumn: 'aside-start / aside-end',
         fontSize: '1.4rem',
-        fontWeight: 900,
         marginBottom: '2rem'
     },
     paragraph: {},
-    ulist: {
+    list: {
         paddingLeft: '2rem',
+        ':nth-child(1n) > li': {
+            padding: 0,
+            margin: 0,
+            lineHeight: '1.5'
+        },
+        ':nth-child(1n) > li + li': {
+            marginTop: '0.5em'
+        }
+    },
+    ulist: {
         listStyleType: 'disc'
     },
     olist: {
-        paddingLeft: '2rem',
         listStyleType: 'decimal'
     },
     blockquote: {
@@ -10529,7 +10544,8 @@ var classes = _noImportant.StyleSheet.create({
     code: {
         fontFamily: 'Monaco, Consolas, "Lucida Sans Typewriter", "Lucida Console"',
         color: '#905',
-        fontWeight: 600
+        fontSize: '85%',
+        textShadow: '0 1px white'
     }
 });
 
@@ -10598,6 +10614,8 @@ var Page = function (_React$Component) {
             var _getChildContext = this.getChildContext(),
                 stylesheet = _getChildContext.stylesheet;
 
+            var stylesheet_html = { __html: stylesheet || '' };
+
             return _react2.default.createElement(
                 'article',
                 { className: (0, _noImportant.css)(classes.article) },
@@ -10611,11 +10629,7 @@ var Page = function (_React$Component) {
                     null,
                     prismCSS
                 ),
-                _react2.default.createElement(
-                    'style',
-                    null,
-                    stylesheet || ''
-                ),
+                _react2.default.createElement('style', { dangerouslySetInnerHTML: stylesheet_html }),
                 _react2.default.createElement(
                     'header',
                     { className: (0, _noImportant.css)(classes.header) },
@@ -10639,8 +10653,7 @@ var Page = function (_React$Component) {
                         'a',
                         {
                             className: (0, _noImportant.css)(classes.link),
-                            href: 'https://github.com/mnmlstme/patternbook'
-                        },
+                            href: 'https://github.com/mnmlstme/patternbook' },
                         'patternbook'
                     )
                 )
@@ -10665,7 +10678,8 @@ var classes = _noImportant.StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         fontFamily: '"Hoefler Text", Didot, Cambria, Georgia, serif',
-        background: '#f4f4f4',
+        lineHeight: '1.5',
+        background: '#faf8fc',
         color: '#7b6073',
         height: '100%',
         width: '100%',
