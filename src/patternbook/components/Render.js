@@ -95,8 +95,6 @@ const reduction = 0.3
 const classes = StyleSheet.create({
     render: {
         gridColumn: 'render-start / render-end',
-        alignSelf: 'start',
-        justifySelf: 'end',
         height: 'auto',
         marginBottom: '2rem',
         ':nth-child(1n) + *': {
@@ -110,7 +108,11 @@ const classes = StyleSheet.create({
         margin: 0,
         border: '1px solid transparent' // avoid margin collapse on content
     },
-    render_default: {},
+    render_default: {
+        alignSelf: 'start',
+        justifySelf: 'end',
+        maxWidth: '100%'
+    },
     content_default: {
         display: 'inline-block'
     },
@@ -119,13 +121,18 @@ const classes = StyleSheet.create({
         ':nth-child(1n) + *': {
             gridColumn: 'block-start / block-end'
         },
+        alignSelf: 'start',
+        justifySelf: 'end',
         maxWidth: '100%'
     },
     content_aside: {
         display: 'inline-block',
         textAlign: 'left'
     },
-    render_screen: {},
+    render_screen: {
+        alignSelf: 'start',
+        justifySelf: 'end'
+    },
     content_screen: {
         width: '100vw',
         height: '100vh',

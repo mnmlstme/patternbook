@@ -69,7 +69,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "f0ad30b217ef0cfde6d5"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "adcccb569c67075f0cd5"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -10222,8 +10222,6 @@ var reduction = 0.3;
 var classes = _noImportant.StyleSheet.create({
     render: {
         gridColumn: 'render-start / render-end',
-        alignSelf: 'start',
-        justifySelf: 'end',
         height: 'auto',
         marginBottom: '2rem',
         ':nth-child(1n) + *': {
@@ -10237,7 +10235,11 @@ var classes = _noImportant.StyleSheet.create({
         margin: 0,
         border: '1px solid transparent' // avoid margin collapse on content
     },
-    render_default: {},
+    render_default: {
+        alignSelf: 'start',
+        justifySelf: 'end',
+        maxWidth: '100%'
+    },
     content_default: {
         display: 'inline-block'
     },
@@ -10246,13 +10248,18 @@ var classes = _noImportant.StyleSheet.create({
         ':nth-child(1n) + *': {
             gridColumn: 'block-start / block-end'
         },
+        alignSelf: 'start',
+        justifySelf: 'end',
         maxWidth: '100%'
     },
     content_aside: {
         display: 'inline-block',
         textAlign: 'left'
     },
-    render_screen: {},
+    render_screen: {
+        alignSelf: 'start',
+        justifySelf: 'end'
+    },
     content_screen: {
         width: '100vw',
         height: '100vh',
