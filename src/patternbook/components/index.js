@@ -69,22 +69,22 @@ function Code({ children }) {
 
 const classes = StyleSheet.create({
     block: {
-        gridColumn: 'block-start / block-end',
+        gridColumn: 2,
         font: 'inherit',
         lineHeight: '1.5',
         padding: 0,
         margin: 0
     },
     h: {
-        fontFamily: 'Futura, Geneva, "Gill Sans", "Trebuchet MS", sans-serif'
+        fontFamily: 'Futura, "Gill Sans", "Trebuchet MS", sans-serif'
     },
     h_1: {
-        gridColumn: 'heading-start / heading-end',
+        gridColumn: '1 / 2',
         fontSize: '4rem',
         marginBottom: '4rem'
     },
     h_2: {
-        gridColumn: 'aside-start / aside-end',
+        gridColumn: 1,
         fontSize: '1.4rem',
         marginBottom: '2rem'
     },
@@ -114,7 +114,7 @@ const classes = StyleSheet.create({
         border: '2px solid rgba(0,0,0,0.2)'
     },
     link: {
-        fontFamily: 'Futura, Geneva, "Gill Sans", "Trebuchet MS", sans-serif',
+        fontFamily: 'Futura, "Gill Sans", "Trebuchet MS", sans-serif',
         color: 'inherit',
         padding: '0 .25em',
         backgroundColor: 'rgba(200, 200, 200, 0.5)',

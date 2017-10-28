@@ -51,7 +51,7 @@ const classes = StyleSheet.create({
     article: {
         display: 'flex',
         flexDirection: 'column',
-        fontFamily: '"Hoefler Text", Didot, Cambria, Georgia, serif',
+        fontFamily: 'Didot, Cambria, Georgia, serif',
         lineHeight: '1.5',
         background: '#faf8fc',
         color: '#7b6073',
@@ -63,7 +63,7 @@ const classes = StyleSheet.create({
     },
     header: {
         fontFamily:
-            'Monaco, Consolas, "Lucida Sans Typewriter", "Lucida Console"',
+            'Monaco, Consolas, "Lucida Sans Typewriter", "Lucida Console", monospace',
         color: '#905',
         fontSize: '1.25rem',
         height: '2rem'

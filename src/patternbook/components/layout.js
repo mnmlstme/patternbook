@@ -6,6 +6,8 @@ module.exports = {
         percentRight: 75
     },
     wrapper: {
+        buffer: 32,
+        fringe: 10,
         tickLength: 1,
         tickOffset: 0,
         tickWidth: 1

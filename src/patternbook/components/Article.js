@@ -11,11 +11,7 @@ const classes = StyleSheet.create({
         display: 'grid',
         gridGap: '2rem',
         gridTemplateRows: 'none',
-        gridTemplateColumns: [
-            '[aside-start wide-start render-start heading-start] 3fr',
-            '[aside-end render-end block-start source-start] 4fr',
-            '[block-end source-end heading-end]'
-        ].join(' '),
+        gridTemplateColumns: '3fr 4fr',
         boxSizing: 'border-box',
         width: '100%',
         minWidth: '45rem',

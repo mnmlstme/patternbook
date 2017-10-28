@@ -40,7 +40,7 @@ function Source(props) {
 
 const classes = StyleSheet.create({
     source: {
-        gridColumn: 'block-start / block-end',
+        gridColumn: 2,
         position: 'relative',
         fontSize: '.875rem'
     },
