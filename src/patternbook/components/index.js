@@ -69,7 +69,7 @@ function Code({ children }) {
 
 const classes = StyleSheet.create({
     block: {
-        gridColumn: 2,
+        gridColumn: 'start-right / end-right',
         font: 'inherit',
         lineHeight: '1.5',
         padding: 0,
@@ -79,12 +79,12 @@ const classes = StyleSheet.create({
         fontFamily: 'Futura, "Gill Sans", "Trebuchet MS", sans-serif'
     },
     h_1: {
-        gridColumn: '1 / 2',
+        gridColumn: 'start-left / end-right',
         fontSize: '4rem',
         marginBottom: '4rem'
     },
     h_2: {
-        gridColumn: 1,
+        gridColumn: 'start-left / end-left',
         fontSize: '1.4rem',
         marginBottom: '2rem'
     },

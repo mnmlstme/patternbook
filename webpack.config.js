@@ -21,7 +21,7 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                include: /prismjs/,
+                include: /prism(js|-\w+)/,
                 use: ['css-loader']
             },
             {

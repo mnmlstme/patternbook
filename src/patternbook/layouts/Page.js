@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router'
 import { StyleSheet, css } from 'aphrodite/no-important'
-const prismCSS = require('prismjs/themes/prism.css').toString()
+const prismCSS = require('prism-themes/themes/prism-hopscotch.css').toString()
 
 class Page extends React.Component {
     static childContextTypes = {

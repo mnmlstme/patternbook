@@ -26,46 +26,46 @@ function Source(props) {
                 mods.map(m => classes['source_' + m])
             )}>
             <h6 className={css(classes.label)}>{lang}</h6>
-            <pre className={css(classes.pre)}>
-                <code
-                    className={
-                        css(classes.code) + (lang && ' language-' + lang)
-                    }
-                    dangerouslySetInnerHTML={code}
-                />
-            </pre>
+            <pre
+                className={css(classes.pre) + ' language-' + (lang || 'markup')}
+                dangerouslySetInnerHTML={code}
+            />
         </div>
     )
 }
 
 const classes = StyleSheet.create({
     source: {
-        gridColumn: 2,
+        gridColumn: 'start-source / end-source',
         position: 'relative',
-        fontSize: '.875rem'
+        fontSize: '.875rem',
+        lineHeight: '1.2em'
     },
-    source_demo: {},
+    source_aside: {
+        gridColumn: 'end-aside / end-right'
+    },
+    source_wide: {
+        gridColumn: 'start-left / end-right'
+    },
     label: {
         fontFamily: 'Futura, Geneva, "Gill Sans", "Trebuchet MS", sans-serif',
         fontSize: '8px',
         margin: 0,
         position: 'absolute',
-        bottom: '100%',
-        left: 0,
+        top: '.5em',
+        right: '.5em',
         fontWeight: 300,
         textTransform: 'uppercase',
-        opacity: 0.4
+        color: '#322931',
+        background: 'rgba(255, 255, 255, 0.4)',
+        borderRadius: '2px',
+        padding: '.25em',
+        lineHeight: 1
     },
     pre: {
-        margin: 0
-    },
-    code: {
-        fontFamily:
-            'Monaco, Consolas, "Lucida Sans Typewriter", "Lucida Console"',
-        ':nth-child(1n) .tag': {
-            // Prism override
-            padding: 0
-        }
+        // override PrismJS and theme
+        margin: '0 !important',
+        whiteSpace: 'pre !important'
     }
 })
 

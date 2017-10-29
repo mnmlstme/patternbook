@@ -1,7 +1,11 @@
 A Pattern book for `patternbook`
 ====
 
-A little meta.
+[Example](/example/Example)
+----
+
+This is a basic example page demonstrating
+the different sizes of rendering demos available.
 
 [Layouts](/layouts/)
 ----

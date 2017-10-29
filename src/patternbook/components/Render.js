@@ -131,7 +131,7 @@ class Render extends React.Component {
 
 const classes = StyleSheet.create({
     render: {
-        gridColumn: 1,
+        gridColumn: 'start-left / end-left',
         height: 'auto',
         overflow: 'auto',
         alignSelf: 'start',
@@ -147,18 +147,41 @@ const classes = StyleSheet.create({
         color: '#333',
         fontFamily: 'Helvetica,Arial,sans-serif'
     },
-    render_fit: {
-        justifySelf: 'end'
+    render_default: {},
+    content_default: {},
+    render_aside: {
+        gridColumn: 'start-aside / end-aside',
+        justifySelf: 'start'
     },
-    content_fit: {
-        display: 'inline-block'
+    content_aside: {
+        display: 'inline-block',
+        maxWidth: '100%'
     },
-    render_fill: {
+    render_wide: {
+        gridColumn: 'start-row / end-row'
+    },
+    content_wide: {
+        width: '100%',
+        height: 'auto'
+    },
+    render_hero: {
+        gridColumn: 'start-left / end-right',
+        width: '100%',
+        height: 0,
+        paddingBottom: '20%'
+    },
+    content_hero: {
+        position: 'absolute',
+        width: '100%',
+        height: '100%'
+    },
+    render_pane: {
         width: '100%',
         height: 0,
         paddingBottom: '75%'
     },
-    content_fill: {
+    content_pane: {
+        position: 'absolute',
         width: '100%',
         height: '100%'
     },
@@ -171,21 +194,14 @@ const classes = StyleSheet.create({
         height: '100vh',
         transform: `scale(${reduction},${reduction})`
     },
-    render_wide: {
-        gridColumn: '1 / 2'
-    },
-    content_wide: {
-        display: 'block',
-        width: '100%',
-        height: 'auto'
-    },
     background: {
         position: 'absolute',
         width: '100%',
         height: '100%',
         top: 0,
         left: 0,
-        background: bg
+        background: bg,
+        zIndex: -1
     },
     mask: {
         position: 'absolute',

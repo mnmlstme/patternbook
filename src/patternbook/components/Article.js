@@ -11,7 +11,14 @@ const classes = StyleSheet.create({
         display: 'grid',
         gridGap: '2rem',
         gridTemplateRows: 'none',
-        gridTemplateColumns: '3fr 4fr',
+        gridTemplateColumns: [
+            '[start-row] minmax(2rem, 1fr)',
+            '[start-left start-aside] minmax(15rem, 3fr)',
+            '[start-right end-aside] minmax(5rem, 1fr)',
+            '[end-left start-source] minmax(20rem, 4fr)',
+            '[end-right end-source] minmax(2rem, 1fr)',
+            '[end-row]'
+        ].join(' '),
         boxSizing: 'border-box',
         width: '100%',
         minWidth: '45rem',
