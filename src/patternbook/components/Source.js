@@ -39,13 +39,27 @@ const classes = StyleSheet.create({
         gridColumn: 'start-source / end-source',
         position: 'relative',
         fontSize: '.875rem',
-        lineHeight: '1.2em'
+        lineHeight: '1.2em',
+        opacity: 0.8,
+        transition: 'opacity 500ms',
+        ':hover': {
+            opacity: 1
+        }
     },
     source_aside: {
         gridColumn: 'end-aside / end-right'
     },
     source_wide: {
         gridColumn: 'start-left / end-right'
+    },
+    source_hero: {
+        gridColumn: 'start-left / end-right',
+        height: '3em',
+        transform: 'translate(0,-2rem)',
+        opacity: 0.2,
+        ':hover': {
+            height: 'auto'
+        }
     },
     label: {
         fontFamily: 'Futura, Geneva, "Gill Sans", "Trebuchet MS", sans-serif',
@@ -65,7 +79,8 @@ const classes = StyleSheet.create({
     pre: {
         // override PrismJS and theme
         margin: '0 !important',
-        whiteSpace: 'pre !important'
+        whiteSpace: 'pre !important',
+        maxHeight: '100%'
     }
 })
 

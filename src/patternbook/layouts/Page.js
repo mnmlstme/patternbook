@@ -52,6 +52,7 @@ const classes = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         fontFamily: 'Didot, Cambria, Georgia, serif',
+        fontSize: '18px',
         lineHeight: '1.5',
         background: '#faf8fc',
         color: '#7b6073',

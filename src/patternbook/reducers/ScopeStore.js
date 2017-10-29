@@ -23,8 +23,10 @@ function scopeReducer(state, action) {
             return state.merge(action.assignments)
         case types.RESET:
             return initState
+        case types.INIT:
+            return state.merge((initState = Im.Map(action.assignments)))
         default:
-            return (initState = Im.Map(action.assignments))
+            return state
     }
 }
 

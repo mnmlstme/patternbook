@@ -32,28 +32,22 @@ class Render extends React.Component {
 
     render() {
         let { children, mod, theme } = this.props
-        let { width, height } = this.state
+        let { top, left, width, height } = this.state
         let themeClass = this.context.themeClass || 'pbReset'
         let mods = mod ? mod.split(' ') : ['default']
         let Theme = theme || DefaultTheme
         let dimensions = { width, height }
-        let wpx = width && `${width.toFixed(1)}px`
-        let hpx = height && `${height.toFixed(1)}px`
-        let dimstyle =
-            width && height
-                ? {
-                      width: wpx,
-                      height: hpx
-                  }
-                : {}
+        let tpx = top && `${top.toFixed(0)}px`
+        let lpx = left && `${left.toFixed(0)}px`
+        let wpx = width && `${width.toFixed(0)}px`
+        let hpx = height && `${height.toFixed(0)}px`
 
         return (
             <div
                 className={css(
                     classes.render,
                     mods.map(m => classes['render_' + m])
-                )}
-                style={dimstyle}>
+                )}>
                 <div className={css(classes.background)} />
                 <div
                     className={css(
@@ -66,22 +60,22 @@ class Render extends React.Component {
                 <div className={css(classes.mask)} />
                 <div
                     className={css(classes.ruler, classes.ruler_top)}
-                    style={{ width: wpx }}
+                    style={{ width: wpx, left: lpx }}
                 />
                 <div
                     className={css(classes.ruler, classes.ruler_left)}
-                    style={{ height: hpx }}
+                    style={{ height: hpx, top: tpx }}
                 />
                 <div
                     className={css(classes.ruler, classes.ruler_bottom)}
-                    style={{ width: wpx }}>
+                    style={{ width: wpx, left: lpx }}>
                     <span className={css(classes.dim, classes.dim_bottom)}>
                         {wpx}
                     </span>
                 </div>
                 <div
                     className={css(classes.ruler, classes.ruler_right)}
-                    style={{ height: hpx }}>
+                    style={{ height: hpx, top: tpx }}>
                     <span className={css(classes.dim, classes.dim_right)}>
                         {hpx}
                     </span>
@@ -92,6 +86,7 @@ class Render extends React.Component {
 
     componentDidMount() {
         window.addEventListener('resize', this.handleResize.bind(this))
+        // TODO: add MutationObserver here
         this.componentDidUpdate()
     }
 
@@ -100,31 +95,32 @@ class Render extends React.Component {
     }
 
     componentDidUpdate() {
-        this.afterApplyingStyles(this.setActualDimensions.bind(this))
+        this.afterApplyingStyles(this.updateRulers.bind(this))
     }
 
     afterApplyingStyles(fn) {
-        // Aphrodite does not apply styles until the next rendering cycle
+        // Aphrodite does not apply styles until the next render
         setTimeout(fn, 0)
     }
 
     handleResize() {
-        debounce(this.setActualDimensions().bind(this), RESIZE_DEBOUNCE_TIME)
+        debounce(this.updateRulers.bind(this), RESIZE_DEBOUNCE_TIME)
     }
 
-    setActualDimensions() {
+    updateRulers() {
         let content = this._content
         let s = this.state
 
         if (content) {
-            let { width, height } = content.getBoundingClientRect()
-            //debugger
-            if (s.width !== width || s.height !== height) {
-                console.log(
-                    `resizing: ${s.width} => ${width}, ${s.height} => ${height}`
-                )
-                //this.setState({ width, height })
-            }
+            let { top, left, width, height } = content.getBoundingClientRect()
+            let parent = content.parentElement.getBoundingClientRect()
+
+            this.setState({
+                top: top - parent.top,
+                left: left - parent.left,
+                width,
+                height
+            })
         }
     }
 }
@@ -143,15 +139,19 @@ const classes = StyleSheet.create({
         display: 'block',
         transformOrigin: '0 0',
         margin: 0,
+        textAlign: 'left',
         maxWidth: '100%',
         color: '#333',
-        fontFamily: 'Helvetica,Arial,sans-serif'
+        fontFamily: 'Helvetica,Arial,sans-serif',
+        fontSize: '16px',
+        fontStyle: 'normal'
     },
     render_default: {},
     content_default: {},
     render_aside: {
         gridColumn: 'start-aside / end-aside',
-        justifySelf: 'start'
+        // justifySelf: 'start'
+        textAlign: 'center'
     },
     content_aside: {
         display: 'inline-block',
@@ -173,7 +173,13 @@ const classes = StyleSheet.create({
     content_hero: {
         position: 'absolute',
         width: '100%',
-        height: '100%'
+        height: '100%',
+        top: 0,
+        left: 0,
+        ':not(:empty) ~ *': {
+            // hide mask and rulers
+            display: 'none'
+        }
     },
     render_pane: {
         width: '100%',
@@ -250,12 +256,12 @@ const classes = StyleSheet.create({
         borderStyle: 'solid none'
     },
     dim: {
-        position: 'absolute'
+        position: 'absolute',
+        paddingLeft: '0.25em'
     },
     dim_bottom: {
         bottom: 0,
-        right: 0,
-        textAlign: 'right'
+        left: '100%'
     },
     dim_right: {
         bottom: 0,

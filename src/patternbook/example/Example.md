@@ -6,8 +6,12 @@ scope:
     landscape: http://unsplash.it/960/720
 ---
 
-```jsx render hero
-<div style={{width: '100%', height: '100%', backgroundImage: hero, backgroundSize: 'cover'}}/>
+```jsx demo hero
+<div style={{
+    width: '100%',
+    height: '100%',
+    backgroundImage: `url(${hero})`,
+    backgroundSize: 'cover'}}/>
 ```
 
 Example
@@ -15,7 +19,7 @@ Example
 
 This is a typical block context example:
 
-```jsx demo
+```jsx demo aside
 <p>
     One morning, when
     <a href="/">Gregor Samsa</a>
@@ -32,13 +36,16 @@ This is a typical block context example:
 This example is a small inline element which can be shown `aside`:
 
 ```jsx demo aside
-<button style={{backgroundColor: 'blue', color: 'white'}}>Click me</button>
+<button style={{backgroundColor: 'blue', color: 'white'}}>
+    Click me
+    </button>
 ```
 
 This demo expands to fill the width but has its own height:
 
 ```jsx demo
-<img src={landscape} style={{maxWidth: '100%'}}/>
+<img src={landscape}
+    style={{maxWidth: '100%'}}/>
 ```
 
 This demo is wide:
