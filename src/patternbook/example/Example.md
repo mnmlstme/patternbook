@@ -56,10 +56,14 @@ This demo is wide:
 </table>
 ```
 
-This demo needs to have a width and a height on its container:
+This demo expects that its container will have a width and a height:
 
-```jsx demo pane
-<div style={{width: '100%', height: '100%', backgroundImage: landscape, backgroundSize: 'cover'}}/>
+```jsx demo block
+<div style={{
+    width: '100%',
+    height: '100%',
+    backgroundImage: `url(${landscape})`,
+    backgroundSize: 'cover'}}/>
 ```
 
 This demo is a reduced copy of the entire screen:

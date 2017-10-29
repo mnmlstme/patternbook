@@ -55,7 +55,13 @@ class Render extends React.Component {
                         mods.map(m => classes['content_' + m])
                     )}
                     ref={node => (this._content = node)}>
-                    <Theme className={themeClass}>{children}</Theme>
+                    <div
+                        className={css(
+                            classes.wrapper,
+                            mods.map(m => classes['wrapper_' + m])
+                        )}>
+                        <Theme className={themeClass}>{children}</Theme>
+                    </div>
                 </div>
                 <div className={css(classes.mask)} />
                 <div
@@ -131,12 +137,14 @@ const classes = StyleSheet.create({
         height: 'auto',
         overflow: 'auto',
         alignSelf: 'start',
+        textAlign: 'center',
         maxWidth: '100%',
         position: 'relative',
         padding: buffer
     },
     content: {
-        display: 'block',
+        display: 'inline-block',
+        position: 'relative',
         transformOrigin: '0 0',
         margin: 0,
         textAlign: 'left',
@@ -149,18 +157,28 @@ const classes = StyleSheet.create({
     render_default: {},
     content_default: {},
     render_aside: {
-        gridColumn: 'start-aside / end-aside',
-        // justifySelf: 'start'
-        textAlign: 'center'
+        gridColumn: 'start-aside / end-aside'
     },
-    content_aside: {
-        display: 'inline-block',
-        maxWidth: '100%'
+    content_aside: {},
+    render_block: {},
+    content_block: {
+        width: '100%',
+        height: 0,
+        paddingBottom: '75%'
+    },
+    wrapper_block: {
+        display: 'block',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%'
     },
     render_wide: {
         gridColumn: 'start-row / end-row'
     },
     content_wide: {
+        display: 'block',
         width: '100%',
         height: 'auto'
     },
