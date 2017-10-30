@@ -52,7 +52,7 @@ const classes = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         fontFamily: 'Didot, Cambria, Georgia, serif',
-        fontSize: '18px',
+        fontSize: '1.125rem',
         lineHeight: '1.5',
         background: '#faf8fc',
         color: '#7b6073',
@@ -70,8 +70,6 @@ const classes = StyleSheet.create({
         height: '2rem'
     },
     body: {
-        padding: '2rem',
-        fontSize: '1rem',
         flexGrow: 1,
         overflow: 'auto'
     },

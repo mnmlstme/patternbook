@@ -37,10 +37,13 @@ class Render extends React.Component {
         let mods = mod ? mod.split(' ') : ['default']
         let Theme = theme || DefaultTheme
         let dimensions = { width, height }
+        let scale = mods.find(s => s === 'screen') ? reduction : 1
         let tpx = top && `${top.toFixed(0)}px`
         let lpx = left && `${left.toFixed(0)}px`
         let wpx = width && `${width.toFixed(0)}px`
         let hpx = height && `${height.toFixed(0)}px`
+        let swpx = width && `${(width / scale).toFixed(0)}px`
+        let shpx = height && `${(height / scale).toFixed(0)}px`
 
         return (
             <div
@@ -76,14 +79,14 @@ class Render extends React.Component {
                     className={css(classes.ruler, classes.ruler_bottom)}
                     style={{ width: wpx, left: lpx }}>
                     <span className={css(classes.dim, classes.dim_bottom)}>
-                        {wpx}
+                        {swpx}
                     </span>
                 </div>
                 <div
                     className={css(classes.ruler, classes.ruler_right)}
                     style={{ height: hpx, top: tpx }}>
                     <span className={css(classes.dim, classes.dim_right)}>
-                        {hpx}
+                        {shpx}
                     </span>
                 </div>
             </div>
@@ -145,7 +148,6 @@ const classes = StyleSheet.create({
     content: {
         display: 'inline-block',
         position: 'relative',
-        transformOrigin: '0 0',
         margin: 0,
         textAlign: 'left',
         maxWidth: '100%',
@@ -154,19 +156,22 @@ const classes = StyleSheet.create({
         fontSize: '16px',
         fontStyle: 'normal'
     },
+    wrapper: {
+        transformOrigin: '0 0'
+    },
     render_default: {},
     content_default: {},
     render_aside: {
         gridColumn: 'start-aside / end-aside'
     },
     content_aside: {},
-    render_block: {},
-    content_block: {
+    render_pane: {},
+    content_pane: {
         width: '100%',
         height: 0,
         paddingBottom: '75%'
     },
-    wrapper_block: {
+    wrapper_pane: {
         display: 'block',
         position: 'absolute',
         top: 0,
@@ -199,21 +204,12 @@ const classes = StyleSheet.create({
             display: 'none'
         }
     },
-    render_pane: {
-        width: '100%',
-        height: 0,
-        paddingBottom: '75%'
-    },
-    content_pane: {
-        position: 'absolute',
-        width: '100%',
-        height: '100%'
-    },
-    render_screen: {
-        alignSelf: 'start',
-        justifySelf: 'start'
-    },
+    render_screen: {},
     content_screen: {
+        width: `${100 * reduction}vw`,
+        height: `${100 * reduction}vh`
+    },
+    wrapper_screen: {
         width: '100vw',
         height: '100vh',
         transform: `scale(${reduction},${reduction})`

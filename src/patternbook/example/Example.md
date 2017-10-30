@@ -19,7 +19,7 @@ Example
 
 This is a typical block context example:
 
-```jsx demo aside
+```jsx demo
 <p>
     One morning, when
     <a href="/">Gregor Samsa</a>
@@ -48,7 +48,7 @@ This demo expands to fill the width but has its own height:
     style={{maxWidth: '100%'}}/>
 ```
 
-This demo is wide:
+This demo is `wide`:
 
 ```jsx demo wide
 <table width="100%">
@@ -56,9 +56,9 @@ This demo is wide:
 </table>
 ```
 
-This demo expects that its container will have a width and a height:
+This demo is rendered in a `pane`, which sets a fixed width and height:
 
-```jsx demo block
+```jsx demo pane
 <div style={{
     width: '100%',
     height: '100%',
@@ -66,12 +66,9 @@ This demo expects that its container will have a width and a height:
     backgroundSize: 'cover'}}/>
 ```
 
-This demo is a reduced copy of the entire screen:
+This demo is a reduced copy of the entire `screen`:
 
 ```jsx demo screen
 <Home>
 </Home>
 ```
-
-The `Home` layout is only used for the very first page of
-the patternbook, the one based (by default) on `README.md`
