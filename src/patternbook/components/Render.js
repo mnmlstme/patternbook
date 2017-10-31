@@ -51,43 +51,42 @@ class Render extends React.Component {
                     classes.render,
                     mods.map(m => classes['render_' + m])
                 )}>
-                <div className={css(classes.background)} />
                 <div
                     className={css(
-                        classes.content,
-                        mods.map(m => classes['content_' + m])
-                    )}
-                    ref={node => (this._content = node)}>
+                        classes.wrapper,
+                        mods.map(m => classes['wrapper_' + m])
+                    )}>
                     <div
                         className={css(
-                            classes.wrapper,
-                            mods.map(m => classes['wrapper_' + m])
-                        )}>
+                            classes.content,
+                            mods.map(m => classes['content_' + m])
+                        )}
+                        ref={node => (this._content = node)}>
                         <Theme className={themeClass}>{children}</Theme>
                     </div>
-                </div>
-                <div className={css(classes.mask)} />
-                <div
-                    className={css(classes.ruler, classes.ruler_top)}
-                    style={{ width: wpx, left: lpx }}
-                />
-                <div
-                    className={css(classes.ruler, classes.ruler_left)}
-                    style={{ height: hpx, top: tpx }}
-                />
-                <div
-                    className={css(classes.ruler, classes.ruler_bottom)}
-                    style={{ width: wpx, left: lpx }}>
-                    <span className={css(classes.dim, classes.dim_bottom)}>
-                        {swpx}
-                    </span>
-                </div>
-                <div
-                    className={css(classes.ruler, classes.ruler_right)}
-                    style={{ height: hpx, top: tpx }}>
-                    <span className={css(classes.dim, classes.dim_right)}>
-                        {shpx}
-                    </span>
+                    <div className={css(classes.mask)} />
+                    <div
+                        className={css(classes.ruler, classes.ruler_top)}
+                        style={{ width: wpx, left: lpx }}
+                    />
+                    <div
+                        className={css(classes.ruler, classes.ruler_left)}
+                        style={{ height: hpx, top: tpx }}
+                    />
+                    <div
+                        className={css(classes.ruler, classes.ruler_bottom)}
+                        style={{ width: wpx, left: lpx }}>
+                        <span className={css(classes.dim, classes.dim_bottom)}>
+                            {swpx}
+                        </span>
+                    </div>
+                    <div
+                        className={css(classes.ruler, classes.ruler_right)}
+                        style={{ height: hpx, top: tpx }}>
+                        <span className={css(classes.dim, classes.dim_right)}>
+                            {shpx}
+                        </span>
+                    </div>
                 </div>
             </div>
         )
@@ -140,23 +139,25 @@ const classes = StyleSheet.create({
         height: 'auto',
         overflow: 'auto',
         alignSelf: 'start',
-        textAlign: 'center',
         maxWidth: '100%',
         position: 'relative',
-        padding: buffer
+        background: bg
+    },
+    wrapper: {
+        display: 'inline-block',
+        textAlign: 'center',
+        padding: buffer,
+        position: 'relative',
+        minWidth: '100%'
     },
     content: {
         display: 'inline-block',
-        position: 'relative',
         margin: 0,
         textAlign: 'left',
-        maxWidth: '100%',
         color: '#333',
         fontFamily: 'Helvetica,Arial,sans-serif',
         fontSize: '16px',
-        fontStyle: 'normal'
-    },
-    wrapper: {
+        fontStyle: 'normal',
         transformOrigin: '0 0'
     },
     render_default: {},
@@ -165,63 +166,73 @@ const classes = StyleSheet.create({
         gridColumn: 'start-aside / end-aside'
     },
     content_aside: {},
-    render_pane: {},
-    content_pane: {
+    render_pane: {
         width: '100%',
         height: 0,
-        paddingBottom: '75%'
+        paddingBottom: '75%',
+        overflow: 'hidden'
     },
     wrapper_pane: {
-        display: 'block',
         position: 'absolute',
         top: 0,
         left: 0,
         width: '100%',
         height: '100%'
     },
+    content_pane: {
+        display: 'block'
+    },
     render_wide: {
         gridColumn: 'start-row / end-row'
     },
-    content_wide: {
+    wrapper_wide: {
         display: 'block',
         width: '100%',
         height: 'auto'
+    },
+    content_wide: {
+        display: 'block'
     },
     render_hero: {
         gridColumn: 'start-left / end-right',
         width: '100%',
         height: 0,
-        paddingBottom: '20%'
+        paddingBottom: '20%',
+        overflow: 'hidden'
     },
-    content_hero: {
+    wrapper_hero: {
         position: 'absolute',
         width: '100%',
         height: '100%',
         top: 0,
         left: 0,
+        padding: 0
+    },
+    content_hero: {
+        display: 'block',
+        height: '100%',
+        width: '100%',
         ':not(:empty) ~ *': {
             // hide mask and rulers
             display: 'none'
         }
     },
-    render_screen: {},
-    content_screen: {
-        width: `${100 * reduction}vw`,
-        height: `${100 * reduction}vh`
+    render_screen: {
+        width: '100%',
+        height: `calc(${100 * reduction}vh + 2*${buffer})`,
+        overflow: 'hidden'
     },
     wrapper_screen: {
-        width: '100vw',
-        height: '100vh',
-        transform: `scale(${reduction},${reduction})`
-    },
-    background: {
         position: 'absolute',
         width: '100%',
         height: '100%',
         top: 0,
-        left: 0,
-        background: bg,
-        zIndex: -1
+        left: 0
+    },
+    content_screen: {
+        width: '100vw',
+        height: '100vh',
+        transform: `scale(${reduction},${reduction})`
     },
     mask: {
         position: 'absolute',

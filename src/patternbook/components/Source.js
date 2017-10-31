@@ -39,7 +39,7 @@ const classes = StyleSheet.create({
         gridColumn: 'start-source / end-source',
         position: 'relative',
         fontSize: '.875rem',
-        lineHeight: '1.2em',
+        lineHeight: 'inherit',
         opacity: 0.8,
         transition: 'opacity 500ms',
         ':hover': {
@@ -77,10 +77,12 @@ const classes = StyleSheet.create({
         lineHeight: 1
     },
     pre: {
+        maxHeight: '100%',
         // override PrismJS and theme
         margin: '0 !important',
         whiteSpace: 'pre !important',
-        maxHeight: '100%'
+        fontSize: 'inherit !important',
+        lineHeight: 'inherit !important'
     }
 })
 

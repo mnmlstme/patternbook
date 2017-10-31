@@ -69,7 +69,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "07406de2b604590fb3e3"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "070d007effd9913a69f5"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -10163,58 +10163,57 @@ var Render = function (_React$Component) {
                     className: (0, _noImportant.css)(classes.render, mods.map(function (m) {
                         return classes['render_' + m];
                     })) },
-                _react2.default.createElement('div', { className: (0, _noImportant.css)(classes.background) }),
                 _react2.default.createElement(
                     'div',
                     {
-                        className: (0, _noImportant.css)(classes.content, mods.map(function (m) {
-                            return classes['content_' + m];
-                        })),
-                        ref: function ref(node) {
-                            return _this2._content = node;
-                        } },
+                        className: (0, _noImportant.css)(classes.wrapper, mods.map(function (m) {
+                            return classes['wrapper_' + m];
+                        })) },
                     _react2.default.createElement(
                         'div',
                         {
-                            className: (0, _noImportant.css)(classes.wrapper, mods.map(function (m) {
-                                return classes['wrapper_' + m];
-                            })) },
+                            className: (0, _noImportant.css)(classes.content, mods.map(function (m) {
+                                return classes['content_' + m];
+                            })),
+                            ref: function ref(node) {
+                                return _this2._content = node;
+                            } },
                         _react2.default.createElement(
                             Theme,
                             { className: themeClass },
                             children
                         )
-                    )
-                ),
-                _react2.default.createElement('div', { className: (0, _noImportant.css)(classes.mask) }),
-                _react2.default.createElement('div', {
-                    className: (0, _noImportant.css)(classes.ruler, classes.ruler_top),
-                    style: { width: wpx, left: lpx }
-                }),
-                _react2.default.createElement('div', {
-                    className: (0, _noImportant.css)(classes.ruler, classes.ruler_left),
-                    style: { height: hpx, top: tpx }
-                }),
-                _react2.default.createElement(
-                    'div',
-                    {
-                        className: (0, _noImportant.css)(classes.ruler, classes.ruler_bottom),
-                        style: { width: wpx, left: lpx } },
+                    ),
+                    _react2.default.createElement('div', { className: (0, _noImportant.css)(classes.mask) }),
+                    _react2.default.createElement('div', {
+                        className: (0, _noImportant.css)(classes.ruler, classes.ruler_top),
+                        style: { width: wpx, left: lpx }
+                    }),
+                    _react2.default.createElement('div', {
+                        className: (0, _noImportant.css)(classes.ruler, classes.ruler_left),
+                        style: { height: hpx, top: tpx }
+                    }),
                     _react2.default.createElement(
-                        'span',
-                        { className: (0, _noImportant.css)(classes.dim, classes.dim_bottom) },
-                        swpx
-                    )
-                ),
-                _react2.default.createElement(
-                    'div',
-                    {
-                        className: (0, _noImportant.css)(classes.ruler, classes.ruler_right),
-                        style: { height: hpx, top: tpx } },
+                        'div',
+                        {
+                            className: (0, _noImportant.css)(classes.ruler, classes.ruler_bottom),
+                            style: { width: wpx, left: lpx } },
+                        _react2.default.createElement(
+                            'span',
+                            { className: (0, _noImportant.css)(classes.dim, classes.dim_bottom) },
+                            swpx
+                        )
+                    ),
                     _react2.default.createElement(
-                        'span',
-                        { className: (0, _noImportant.css)(classes.dim, classes.dim_right) },
-                        shpx
+                        'div',
+                        {
+                            className: (0, _noImportant.css)(classes.ruler, classes.ruler_right),
+                            style: { height: hpx, top: tpx } },
+                        _react2.default.createElement(
+                            'span',
+                            { className: (0, _noImportant.css)(classes.dim, classes.dim_right) },
+                            shpx
+                        )
                     )
                 )
             );
@@ -10286,23 +10285,25 @@ var classes = _noImportant.StyleSheet.create({
         height: 'auto',
         overflow: 'auto',
         alignSelf: 'start',
-        textAlign: 'center',
         maxWidth: '100%',
         position: 'relative',
-        padding: buffer
+        background: bg
+    },
+    wrapper: {
+        display: 'inline-block',
+        textAlign: 'center',
+        padding: buffer,
+        position: 'relative',
+        minWidth: '100%'
     },
     content: {
         display: 'inline-block',
-        position: 'relative',
         margin: 0,
         textAlign: 'left',
-        maxWidth: '100%',
         color: '#333',
         fontFamily: 'Helvetica,Arial,sans-serif',
         fontSize: '16px',
-        fontStyle: 'normal'
-    },
-    wrapper: {
+        fontStyle: 'normal',
         transformOrigin: '0 0'
     },
     render_default: {},
@@ -10311,63 +10312,73 @@ var classes = _noImportant.StyleSheet.create({
         gridColumn: 'start-aside / end-aside'
     },
     content_aside: {},
-    render_pane: {},
-    content_pane: {
+    render_pane: {
         width: '100%',
         height: 0,
-        paddingBottom: '75%'
+        paddingBottom: '75%',
+        overflow: 'hidden'
     },
     wrapper_pane: {
-        display: 'block',
         position: 'absolute',
         top: 0,
         left: 0,
         width: '100%',
         height: '100%'
     },
+    content_pane: {
+        display: 'block'
+    },
     render_wide: {
         gridColumn: 'start-row / end-row'
     },
-    content_wide: {
+    wrapper_wide: {
         display: 'block',
         width: '100%',
         height: 'auto'
+    },
+    content_wide: {
+        display: 'block'
     },
     render_hero: {
         gridColumn: 'start-left / end-right',
         width: '100%',
         height: 0,
-        paddingBottom: '20%'
+        paddingBottom: '20%',
+        overflow: 'hidden'
     },
-    content_hero: {
+    wrapper_hero: {
         position: 'absolute',
         width: '100%',
         height: '100%',
         top: 0,
         left: 0,
+        padding: 0
+    },
+    content_hero: {
+        display: 'block',
+        height: '100%',
+        width: '100%',
         ':not(:empty) ~ *': {
             // hide mask and rulers
             display: 'none'
         }
     },
-    render_screen: {},
-    content_screen: {
-        width: 100 * reduction + 'vw',
-        height: 100 * reduction + 'vh'
+    render_screen: {
+        width: '100%',
+        height: 'calc(' + 100 * reduction + 'vh + 2*' + buffer + ')',
+        overflow: 'hidden'
     },
     wrapper_screen: {
-        width: '100vw',
-        height: '100vh',
-        transform: 'scale(' + reduction + ',' + reduction + ')'
-    },
-    background: {
         position: 'absolute',
         width: '100%',
         height: '100%',
         top: 0,
-        left: 0,
-        background: bg,
-        zIndex: -1
+        left: 0
+    },
+    content_screen: {
+        width: '100vw',
+        height: '100vh',
+        transform: 'scale(' + reduction + ',' + reduction + ')'
     },
     mask: {
         position: 'absolute',
@@ -10495,7 +10506,7 @@ var classes = _noImportant.StyleSheet.create({
         gridColumn: 'start-source / end-source',
         position: 'relative',
         fontSize: '.875rem',
-        lineHeight: '1.2em',
+        lineHeight: 'inherit',
         opacity: 0.8,
         transition: 'opacity 500ms',
         ':hover': {
@@ -10533,10 +10544,12 @@ var classes = _noImportant.StyleSheet.create({
         lineHeight: 1
     },
     pre: {
+        maxHeight: '100%',
         // override PrismJS and theme
         margin: '0 !important',
         whiteSpace: 'pre !important',
-        maxHeight: '100%'
+        fontSize: 'inherit !important',
+        lineHeight: 'inherit !important'
     }
 });
 

@@ -19,7 +19,7 @@ Example
 
 This is a typical block context example:
 
-```jsx demo
+```html demo
 <p>
     One morning, when
     <a href="/">Gregor Samsa</a>
@@ -48,9 +48,19 @@ This demo expands to fill the width but has its own height:
     style={{maxWidth: '100%'}}/>
 ```
 
+This is what happens when you put wide content into a default demo:
+
+```jsx demo
+<div style={{width: '60vw'}}>
+    <table width="100%">
+        <tr> <td>Vanilla</td> <td>Chocolate</td> <td>Strawberry</td> </tr>
+    </table>
+</div>
+```
+
 This demo is `wide`:
 
-```jsx demo wide
+```html demo wide
 <table width="100%">
     <tr> <td>Vanilla</td> <td>Chocolate</td> <td>Strawberry</td> </tr>
 </table>
