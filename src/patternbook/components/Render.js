@@ -148,7 +148,8 @@ const classes = StyleSheet.create({
         textAlign: 'center',
         padding: buffer,
         position: 'relative',
-        minWidth: '100%'
+        minWidth: '100%',
+        overflow: 'hidden'
     },
     content: {
         display: 'inline-block',

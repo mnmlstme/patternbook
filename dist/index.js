@@ -69,7 +69,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "7e5b9e502a73d0f5116b"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "24aae3b81f002dc0aa5b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -10294,7 +10294,8 @@ var classes = _noImportant.StyleSheet.create({
         textAlign: 'center',
         padding: buffer,
         position: 'relative',
-        minWidth: '100%'
+        minWidth: '100%',
+        overflow: 'hidden'
     },
     content: {
         display: 'inline-block',
@@ -10481,7 +10482,6 @@ function highlight(code, lang) {
     var language = Prism.languages[lang] || Prism.languages.markup;
     var markup = Prism.highlight(code, language);
 
-    debugger;
     markup = markup.replace(/class="([^"]*)"/g, function (match, className) {
         return 'class="' + prefixClassHtml(className) + '"';
     });
