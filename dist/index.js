@@ -69,7 +69,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "070d007effd9913a69f5"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "7e5b9e502a73d0f5116b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -10469,9 +10469,24 @@ var Prism = __webpack_require__(221);
 document.removeEventListener('DOMContentLoaded', Prism.highlightAll);
 __webpack_require__(220);
 
+var PREFIX = 'pb-';
+
+var prefixClassHtml = function prefixClassHtml(s) {
+    return s.split(/\s+/).map(function (cl) {
+        return PREFIX + cl;
+    }).join(' ');
+};
+
 function highlight(code, lang) {
     var language = Prism.languages[lang] || Prism.languages.markup;
-    return Prism.highlight(code, language);
+    var markup = Prism.highlight(code, language);
+
+    debugger;
+    markup = markup.replace(/class="([^"]*)"/g, function (match, className) {
+        return 'class="' + prefixClassHtml(className) + '"';
+    });
+
+    return markup;
 }
 
 function Source(props) {
@@ -10784,6 +10799,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var prismCSS = __webpack_require__(172).toString();
 
+var PREFIX = 'pb-';
+
+var prefixClassCss = function prefixClassCss(s) {
+    return s.replace(/\.([A-Za-z_]\w*)/g, '.' + PREFIX + '$1');
+};
+
 var Page = function (_React$Component) {
     _inherits(Page, _React$Component);
 
@@ -10817,7 +10838,7 @@ var Page = function (_React$Component) {
                 _react2.default.createElement(
                     'style',
                     null,
-                    prismCSS
+                    prefixClassCss(prismCSS)
                 ),
                 _react2.default.createElement('style', { dangerouslySetInnerHTML: stylesheet_html }),
                 _react2.default.createElement(

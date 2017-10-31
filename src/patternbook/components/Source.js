@@ -8,9 +8,24 @@ let Prism = require('prismjs')
 document.removeEventListener('DOMContentLoaded', Prism.highlightAll)
 require('prismjs/components/prism-jsx')
 
+const PREFIX = 'pb-'
+
+let prefixClassHtml = s =>
+    s
+        .split(/\s+/)
+        .map(cl => PREFIX + cl)
+        .join(' ')
+
 function highlight(code, lang) {
     const language = Prism.languages[lang] || Prism.languages.markup
-    return Prism.highlight(code, language)
+    let markup = Prism.highlight(code, language)
+
+    markup = markup.replace(
+        /class="([^"]*)"/g,
+        (match, className) => 'class="' + prefixClassHtml(className) + '"'
+    )
+
+    return markup
 }
 
 function Source(props) {

@@ -4,6 +4,10 @@ import { Link } from 'react-router'
 import { StyleSheet, css } from 'aphrodite/no-important'
 const prismCSS = require('prism-themes/themes/prism-hopscotch.css').toString()
 
+const PREFIX = 'pb-'
+
+let prefixClassCss = s => s.replace(/\.([A-Za-z_]\w*)/g, '.' + PREFIX + '$1')
+
 class Page extends React.Component {
     static childContextTypes = {
         entry: PropTypes.string,
@@ -24,7 +28,7 @@ class Page extends React.Component {
         return (
             <article className={css(classes.article)}>
                 <style>{'*{margin:0; box-sizing:border-box}'}</style>
-                <style>{prismCSS}</style>
+                <style>{prefixClassCss(prismCSS)}</style>
                 <style dangerouslySetInnerHTML={stylesheet_html} />
                 <header className={css(classes.header)}>
                     <Link className={css(classes.link)} to="/">
