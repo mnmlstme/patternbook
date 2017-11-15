@@ -69,7 +69,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "24aae3b81f002dc0aa5b"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "452cc43c714e4ab4638c"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -10122,8 +10122,7 @@ var Render = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (Render.__proto__ || Object.getPrototypeOf(Render)).call(this, props));
 
         _this.state = {
-            width: null,
-            height: null
+            initialized: null
         };
         return _this;
     }
@@ -10138,6 +10137,7 @@ var Render = function (_React$Component) {
                 mod = _props.mod,
                 theme = _props.theme;
             var _state = this.state,
+                initialized = _state.initialized,
                 top = _state.top,
                 left = _state.left,
                 width = _state.width,
@@ -10181,40 +10181,42 @@ var Render = function (_React$Component) {
                         _react2.default.createElement(
                             Theme,
                             { className: themeClass },
-                            children
+                            initialized && children
                         )
                     ),
-                    _react2.default.createElement('div', { className: (0, _noImportant.css)(classes.mask) }),
-                    _react2.default.createElement('div', {
+                    initialized && [_react2.default.createElement('div', { key: 'mask', className: (0, _noImportant.css)(classes.mask) }), _react2.default.createElement('div', {
+                        key: 'ruler_top',
                         className: (0, _noImportant.css)(classes.ruler, classes.ruler_top),
                         style: { width: wpx, left: lpx }
-                    }),
-                    _react2.default.createElement('div', {
+                    }), _react2.default.createElement('div', {
+                        key: 'ruler_left',
                         className: (0, _noImportant.css)(classes.ruler, classes.ruler_left),
                         style: { height: hpx, top: tpx }
-                    }),
-                    _react2.default.createElement(
+                    }), _react2.default.createElement(
                         'div',
                         {
+                            ley: 'ruler_bottom',
                             className: (0, _noImportant.css)(classes.ruler, classes.ruler_bottom),
                             style: { width: wpx, left: lpx } },
                         _react2.default.createElement(
                             'span',
-                            { className: (0, _noImportant.css)(classes.dim, classes.dim_bottom) },
+                            {
+                                className: (0, _noImportant.css)(classes.dim, classes.dim_bottom) },
                             swpx
                         )
-                    ),
-                    _react2.default.createElement(
+                    ), _react2.default.createElement(
                         'div',
                         {
+                            key: 'ruler_right',
                             className: (0, _noImportant.css)(classes.ruler, classes.ruler_right),
                             style: { height: hpx, top: tpx } },
                         _react2.default.createElement(
                             'span',
-                            { className: (0, _noImportant.css)(classes.dim, classes.dim_right) },
+                            {
+                                className: (0, _noImportant.css)(classes.dim, classes.dim_right) },
                             shpx
                         )
-                    )
+                    )]
                 )
             );
         }
@@ -10223,7 +10225,9 @@ var Render = function (_React$Component) {
         value: function componentDidMount() {
             window.addEventListener('resize', this.handleResize.bind(this));
             // TODO: add MutationObserver here
-            this.componentDidUpdate();
+
+            // Aphrodite does not apply styles until the next render
+            setTimeout(this.updateRulers.bind(this), 0);
         }
     }, {
         key: 'componentWillUnmount',
@@ -10233,13 +10237,7 @@ var Render = function (_React$Component) {
     }, {
         key: 'componentDidUpdate',
         value: function componentDidUpdate() {
-            this.afterApplyingStyles(this.updateRulers.bind(this));
-        }
-    }, {
-        key: 'afterApplyingStyles',
-        value: function afterApplyingStyles(fn) {
-            // Aphrodite does not apply styles until the next render
-            setTimeout(fn, 0);
+            this.updateRulers();
         }
     }, {
         key: 'handleResize',
@@ -10249,6 +10247,7 @@ var Render = function (_React$Component) {
     }, {
         key: 'updateRulers',
         value: function updateRulers() {
+            // We call this anytime we think the dimensions of the rendering area may change.
             var content = this._content;
             var s = this.state;
 
@@ -10261,12 +10260,18 @@ var Render = function (_React$Component) {
 
                 var parent = content.parentElement.getBoundingClientRect();
 
-                this.setState({
-                    top: top - parent.top,
-                    left: left - parent.left,
-                    width: width,
-                    height: height
-                });
+                top -= parent.top;
+                left -= parent.left;
+
+                if (!s.initialized || top !== s.top || left !== s.top || width !== s.width || height !== s.height) {
+                    this.setState({
+                        initialized: true,
+                        top: top,
+                        left: left,
+                        width: width,
+                        height: height
+                    });
+                }
             }
         }
     }]);

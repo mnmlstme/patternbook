@@ -25,14 +25,13 @@ class Render extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            width: null,
-            height: null
+            initialized: null
         }
     }
 
     render() {
         let { children, mod, theme } = this.props
-        let { top, left, width, height } = this.state
+        let { initialized, top, left, width, height } = this.state
         let themeClass = this.context.themeClass || 'pbReset'
         let mods = mod ? mod.split(' ') : ['default']
         let Theme = theme || DefaultTheme
@@ -62,31 +61,44 @@ class Render extends React.Component {
                             mods.map(m => classes['content_' + m])
                         )}
                         ref={node => (this._content = node)}>
-                        <Theme className={themeClass}>{children}</Theme>
+                        <Theme className={themeClass}>
+                            {initialized && children}
+                        </Theme>
                     </div>
-                    <div className={css(classes.mask)} />
-                    <div
-                        className={css(classes.ruler, classes.ruler_top)}
-                        style={{ width: wpx, left: lpx }}
-                    />
-                    <div
-                        className={css(classes.ruler, classes.ruler_left)}
-                        style={{ height: hpx, top: tpx }}
-                    />
-                    <div
-                        className={css(classes.ruler, classes.ruler_bottom)}
-                        style={{ width: wpx, left: lpx }}>
-                        <span className={css(classes.dim, classes.dim_bottom)}>
-                            {swpx}
-                        </span>
-                    </div>
-                    <div
-                        className={css(classes.ruler, classes.ruler_right)}
-                        style={{ height: hpx, top: tpx }}>
-                        <span className={css(classes.dim, classes.dim_right)}>
-                            {shpx}
-                        </span>
-                    </div>
+                    {initialized && [
+                        <div key="mask" className={css(classes.mask)} />,
+                        <div
+                            key="ruler_top"
+                            className={css(classes.ruler, classes.ruler_top)}
+                            style={{ width: wpx, left: lpx }}
+                        />,
+                        <div
+                            key="ruler_left"
+                            className={css(classes.ruler, classes.ruler_left)}
+                            style={{ height: hpx, top: tpx }}
+                        />,
+                        <div
+                            ley="ruler_bottom"
+                            className={css(classes.ruler, classes.ruler_bottom)}
+                            style={{ width: wpx, left: lpx }}>
+                            <span
+                                className={css(
+                                    classes.dim,
+                                    classes.dim_bottom
+                                )}>
+                                {swpx}
+                            </span>
+                        </div>,
+                        <div
+                            key="ruler_right"
+                            className={css(classes.ruler, classes.ruler_right)}
+                            style={{ height: hpx, top: tpx }}>
+                            <span
+                                className={css(classes.dim, classes.dim_right)}>
+                                {shpx}
+                            </span>
+                        </div>
+                    ]}
                 </div>
             </div>
         )
@@ -95,7 +107,9 @@ class Render extends React.Component {
     componentDidMount() {
         window.addEventListener('resize', this.handleResize.bind(this))
         // TODO: add MutationObserver here
-        this.componentDidUpdate()
+
+        // Aphrodite does not apply styles until the next render
+        setTimeout(this.updateRulers.bind(this), 0)
     }
 
     componentWillUnmount() {
@@ -103,12 +117,7 @@ class Render extends React.Component {
     }
 
     componentDidUpdate() {
-        this.afterApplyingStyles(this.updateRulers.bind(this))
-    }
-
-    afterApplyingStyles(fn) {
-        // Aphrodite does not apply styles until the next render
-        setTimeout(fn, 0)
+        this.updateRulers()
     }
 
     handleResize() {
@@ -116,6 +125,7 @@ class Render extends React.Component {
     }
 
     updateRulers() {
+        // We call this anytime we think the dimensions of the rendering area may change.
         let content = this._content
         let s = this.state
 
@@ -123,12 +133,24 @@ class Render extends React.Component {
             let { top, left, width, height } = content.getBoundingClientRect()
             let parent = content.parentElement.getBoundingClientRect()
 
-            this.setState({
-                top: top - parent.top,
-                left: left - parent.left,
-                width,
-                height
-            })
+            top -= parent.top
+            left -= parent.left
+
+            if (
+                !s.initialized ||
+                top !== s.top ||
+                left !== s.top ||
+                width !== s.width ||
+                height !== s.height
+            ) {
+                this.setState({
+                    initialized: true,
+                    top,
+                    left,
+                    width,
+                    height
+                })
+            }
         }
     }
 }
