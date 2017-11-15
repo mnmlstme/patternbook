@@ -69,7 +69,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "452cc43c714e4ab4638c"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "96275a4609766263523e"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -10195,7 +10195,7 @@ var Render = function (_React$Component) {
                     }), _react2.default.createElement(
                         'div',
                         {
-                            ley: 'ruler_bottom',
+                            key: 'ruler_bottom',
                             className: (0, _noImportant.css)(classes.ruler, classes.ruler_bottom),
                             style: { width: wpx, left: lpx } },
                         _react2.default.createElement(

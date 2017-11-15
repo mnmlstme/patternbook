@@ -78,7 +78,7 @@ class Render extends React.Component {
                             style={{ height: hpx, top: tpx }}
                         />,
                         <div
-                            ley="ruler_bottom"
+                            key="ruler_bottom"
                             className={css(classes.ruler, classes.ruler_bottom)}
                             style={{ width: wpx, left: lpx }}>
                             <span
