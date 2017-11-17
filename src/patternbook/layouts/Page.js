@@ -6,7 +6,16 @@ const prismCSS = require('prism-themes/themes/prism-hopscotch.css').toString()
 
 const PREFIX = 'pb-'
 
-let prefixClassCss = s => s.replace(/\.([A-Za-z_]\w*)/g, '.' + PREFIX + '$1')
+let prefixClassCss = css =>
+    css
+        .split('\n')
+        .map(
+            s =>
+                s.match(/^\s*[^@]/)
+                    ? s.replace(/(\.)([A-Za-z_]\w*)/gm, '$1' + PREFIX + '$2')
+                    : s
+        )
+        .join('\n')
 
 class Page extends React.Component {
     static childContextTypes = {
@@ -14,7 +23,8 @@ class Page extends React.Component {
         extension: PropTypes.string,
         themeClass: PropTypes.string,
         requireFromTarget: PropTypes.func,
-        stylesheet: PropTypes.string
+        stylesheet: PropTypes.string,
+        reducers: PropTypes.object
     }
 
     getChildContext() {

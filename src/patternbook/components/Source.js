@@ -72,8 +72,14 @@ const classes = StyleSheet.create({
         height: '3em',
         transform: 'translate(0,-2rem)',
         opacity: 0.2,
+        ':nth-child(1n) > pre': {
+            overflow: 'hidden'
+        },
         ':hover': {
             height: 'auto'
+        },
+        ':nth-child(1n):hover > pre': {
+            overflow: 'auto'
         }
     },
     label: {

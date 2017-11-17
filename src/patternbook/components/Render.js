@@ -139,7 +139,7 @@ class Render extends React.Component {
             if (
                 !s.initialized ||
                 top !== s.top ||
-                left !== s.top ||
+                left !== s.left ||
                 width !== s.width ||
                 height !== s.height
             ) {

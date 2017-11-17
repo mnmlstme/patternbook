@@ -17,7 +17,7 @@ import components from './components'
 
 import ErrorPage from './layouts/ErrorPage'
 
-import rootReducer from './reducers'
+import basicReducers from './reducers'
 
 function NotFound(props) {
     let path = props.params.splat
@@ -30,8 +30,9 @@ function NotFound(props) {
 }
 
 function Patternbook(props) {
-    let ConfiguredPage = p =>
+    let ConfiguredPage = p => (
         <Page configuration={props.configuration} {...p} />
+    )
 
     /* Routes:
         /
@@ -67,6 +68,10 @@ function config(object) {
             themeClass: 'no-theme'
         },
         object
+    )
+
+    let rootReducer = Redux.combineReducers(
+        Object.assign({}, basicReducers, configuration.reducers || {})
     )
 
     function render(el) {

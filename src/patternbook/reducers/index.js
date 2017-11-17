@@ -1,10 +1,7 @@
-const Redux = require('redux')
 const ReactRouterRedux = require('react-router-redux')
 import ScopeStore from './ScopeStore'
 
-var rootReducer = Redux.combineReducers({
+module.exports = {
     routing: ReactRouterRedux.routerReducer,
     scope: ScopeStore.scopeReducer
-})
-
-module.exports = rootReducer
+}
