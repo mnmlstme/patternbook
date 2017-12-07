@@ -82,3 +82,14 @@ This demo is a reduced copy of the entire `screen`:
 <Home>
 </Home>
 ```
+
+Typography can be **strong** or _emphasized_
+
+> This is a Blockquote
+> that should be inset
+
+This is a Markdown table:
+
+column A | column B | column C
+--- |:---:| ---:
+left | centered | right

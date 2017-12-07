@@ -113,12 +113,86 @@ remarkable.renderer.rules.ordered_list_close = function(
     return '</Patternbook.OList>'
 }
 
+remarkable.renderer.rules.table_open = function() {
+    return '<Patternbook.Table>'
+}
+
+remarkable.renderer.rules.table_close = function() {
+    return '</Patternbook.Table>'
+}
+
+remarkable.renderer.rules.thead_open = function() {
+    return '<Patternbook.THead>'
+}
+
+remarkable.renderer.rules.thead_close = function() {
+    return '</Patternbook.THead>'
+}
+
+remarkable.renderer.rules.tbody_open = function() {
+    return '<Patternbook.TBody>'
+}
+
+remarkable.renderer.rules.tbody_close = function() {
+    return '</Patternbook.TBody>'
+}
+
+remarkable.renderer.rules.tr_open = function() {
+    return '<Patternbook.TRow>'
+}
+
+remarkable.renderer.rules.tr_close = function() {
+    return '</Patternbook.TRow>'
+}
+
+remarkable.renderer.rules.td_open = function(tokens, idx) {
+    var token = tokens[idx]
+    return (
+        '<Patternbook.TData' +
+        (token.align ? ' align="' + token.align + '"' : '') +
+        '>'
+    )
+}
+
+remarkable.renderer.rules.td_close = function() {
+    return '</Patternbook.TData>'
+}
+
+remarkable.renderer.rules.th_open = function(tokens, idx) {
+    var token = tokens[idx]
+    return (
+        '<Patternbook.THeading' +
+        (token.align ? ' align="' + token.align + '"' : '') +
+        '>'
+    )
+}
+
+remarkable.renderer.rules.th_close = function() {
+    return '</Patternbook.THeading>'
+}
+
 remarkable.renderer.rules.blockquote_open = function() {
     return '<Patternbook.Blockquote>'
 }
 
 remarkable.renderer.rules.blockquote_close = function() {
     return '</Patternbook.Blockquote>'
+}
+
+remarkable.renderer.rules.strong_open = function() {
+    return '<Patternbook.Strong>'
+}
+
+remarkable.renderer.rules.strong_close = function() {
+    return '</Patternbook.Strong>'
+}
+
+remarkable.renderer.rules.em_open = function() {
+    return '<Patternbook.Emphasis>'
+}
+
+remarkable.renderer.rules.em_close = function() {
+    return '</Patternbook.Emphasis>'
 }
 
 remarkable.renderer.rules.fence = function(tokens, idx, options) {
@@ -271,7 +345,7 @@ function toModule(payload) {
         ]
     )
 
-    //console.log('\n====\n', output.join('\n'), '\n====\n')
+    // console.log('\n====\n', output.join('\n'), '\n====\n')
 
     return output.join('\n')
 }

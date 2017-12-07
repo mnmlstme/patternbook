@@ -49,6 +49,14 @@ function Blockquote({ children }) {
     )
 }
 
+function Strong({ children }) {
+    return <strong className={css(classes.strong)}>{children}</strong>
+}
+
+function Emphasis({ children }) {
+    return <em className={css(classes.emphasis)}>{children}</em>
+}
+
 function Link({ to, children }) {
     const ReactRouter = require('react-router')
 
@@ -67,13 +75,56 @@ function Code({ children }) {
     return <code className={css(classes.code)}>{text}</code>
 }
 
+function Table({ children }) {
+    return (
+        <table className={css(classes.block, classes.table)}>{children}</table>
+    )
+}
+
+function THead({ children }) {
+    return <thead className={css(classes.thead)}>{children}</thead>
+}
+
+function TBody({ children }) {
+    return <tbody className={css(classes.tbody)}>{children}</tbody>
+}
+
+function TRow({ children }) {
+    return <tr className={css(classes.trow)}>{children}</tr>
+}
+
+function TData({ children, align }) {
+    return (
+        <td
+            className={css(
+                classes.tdata,
+                classes['talign_' + (align || 'left')]
+            )}>
+            {children}
+        </td>
+    )
+}
+
+function THeading({ children, align }) {
+    return (
+        <th
+            className={css(
+                classes.theading,
+                classes['talign_' + (align || 'left')]
+            )}>
+            {children}
+        </th>
+    )
+}
+
 const classes = StyleSheet.create({
     block: {
         gridColumn: 'start-right / end-right',
         font: 'inherit',
-        lineHeight: '1.5',
+        lineHeight: '1.5rem',
         padding: 0,
-        margin: 0
+        margin: 0,
+        color: 'inherit'
     },
     h: {
         fontFamily: 'Futura, "Gill Sans", "Trebuchet MS", sans-serif'
@@ -108,10 +159,10 @@ const classes = StyleSheet.create({
     },
     blockquote: {
         padding: '1em 4rem',
-        fontSize: '120%',
-        fontWeight: 500,
-        letterSpacing: '0.05em',
-        border: '2px solid rgba(0,0,0,0.2)'
+        fontWeight: 600,
+        fontSize: '1.2rem',
+        fontStyle: 'italic',
+        borderLeft: '2px solid rgba(0,0,0,0.2)'
     },
     link: {
         fontFamily: 'Futura, "Gill Sans", "Trebuchet MS", sans-serif',
@@ -131,6 +182,44 @@ const classes = StyleSheet.create({
         color: '#905',
         fontSize: '85%',
         textShadow: '0 1px white'
+    },
+    strong: {
+        fontFamily: 'Futura, "Gill Sans", "Trebuchet MS", sans-serif',
+        fontWeight: 600
+    },
+    emphasis: {
+        fontWeight: 600,
+        fontStyle: 'italic'
+    },
+    table: {
+        fontFamily: 'Futura, "Gill Sans", "Trebuchet MS", sans-serif',
+        border: 'none',
+        borderSpacing: 0
+    },
+    thead: {
+        fontWeight: 800
+    },
+    tbody: {},
+    trow: {},
+    tdata: {
+        padding: '.25em .5em',
+        borderBottom: '1px solid #ccc'
+    },
+    theading: {
+        fontWeight: 600,
+        padding: '.25em .5em',
+        borderTop: '1px solid',
+        borderBottom: '1px solid',
+        backgroundColor: 'rgba(200, 200, 200, 0.5)'
+    },
+    talign_left: {
+        textAlign: 'left'
+    },
+    talign_right: {
+        textAlign: 'right'
+    },
+    talign_center: {
+        textAlign: 'center'
     }
 })
 
@@ -145,5 +234,13 @@ module.exports = {
     Paragraph,
     UList,
     OList,
-    Blockquote
+    Table,
+    THead,
+    TBody,
+    TRow,
+    TData,
+    THeading,
+    Blockquote,
+    Strong,
+    Emphasis
 }
