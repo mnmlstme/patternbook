@@ -69,7 +69,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "7104bc9f71181eb04feb"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "cf6ccbab4ab7560c53ef"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -10637,9 +10637,29 @@ function Blockquote(_ref5) {
     );
 }
 
-function Link(_ref6) {
-    var to = _ref6.to,
-        children = _ref6.children;
+function Strong(_ref6) {
+    var children = _ref6.children;
+
+    return _react2.default.createElement(
+        'strong',
+        { className: (0, _noImportant.css)(classes.strong) },
+        children
+    );
+}
+
+function Emphasis(_ref7) {
+    var children = _ref7.children;
+
+    return _react2.default.createElement(
+        'em',
+        { className: (0, _noImportant.css)(classes.emphasis) },
+        children
+    );
+}
+
+function Link(_ref8) {
+    var to = _ref8.to,
+        children = _ref8.children;
 
     var ReactRouter = __webpack_require__(55);
 
@@ -10652,8 +10672,8 @@ function Link(_ref6) {
     );
 }
 
-function Code(_ref7) {
-    var children = _ref7.children;
+function Code(_ref9) {
+    var children = _ref9.children;
 
     var text = (0, _reactAddonsTextContent2.default)(children);
 
@@ -10664,13 +10684,78 @@ function Code(_ref7) {
     );
 }
 
+function Table(_ref10) {
+    var children = _ref10.children;
+
+    return _react2.default.createElement(
+        'table',
+        { className: (0, _noImportant.css)(classes.block, classes.table) },
+        children
+    );
+}
+
+function THead(_ref11) {
+    var children = _ref11.children;
+
+    return _react2.default.createElement(
+        'thead',
+        { className: (0, _noImportant.css)(classes.thead) },
+        children
+    );
+}
+
+function TBody(_ref12) {
+    var children = _ref12.children;
+
+    return _react2.default.createElement(
+        'tbody',
+        { className: (0, _noImportant.css)(classes.tbody) },
+        children
+    );
+}
+
+function TRow(_ref13) {
+    var children = _ref13.children;
+
+    return _react2.default.createElement(
+        'tr',
+        { className: (0, _noImportant.css)(classes.trow) },
+        children
+    );
+}
+
+function TData(_ref14) {
+    var children = _ref14.children,
+        align = _ref14.align;
+
+    return _react2.default.createElement(
+        'td',
+        {
+            className: (0, _noImportant.css)(classes.tdata, classes['talign_' + (align || 'left')]) },
+        children
+    );
+}
+
+function THeading(_ref15) {
+    var children = _ref15.children,
+        align = _ref15.align;
+
+    return _react2.default.createElement(
+        'th',
+        {
+            className: (0, _noImportant.css)(classes.theading, classes['talign_' + (align || 'left')]) },
+        children
+    );
+}
+
 var classes = _noImportant.StyleSheet.create({
     block: {
         gridColumn: 'start-right / end-right',
         font: 'inherit',
-        lineHeight: '1.5',
+        lineHeight: '1.5rem',
         padding: 0,
-        margin: 0
+        margin: 0,
+        color: 'inherit'
     },
     h: {
         fontFamily: 'Futura, "Gill Sans", "Trebuchet MS", sans-serif'
@@ -10705,10 +10790,10 @@ var classes = _noImportant.StyleSheet.create({
     },
     blockquote: {
         padding: '1em 4rem',
-        fontSize: '120%',
-        fontWeight: 500,
-        letterSpacing: '0.05em',
-        border: '2px solid rgba(0,0,0,0.2)'
+        fontWeight: 600,
+        fontSize: '1.2rem',
+        fontStyle: 'italic',
+        borderLeft: '2px solid rgba(0,0,0,0.2)'
     },
     link: {
         fontFamily: 'Futura, "Gill Sans", "Trebuchet MS", sans-serif',
@@ -10727,6 +10812,44 @@ var classes = _noImportant.StyleSheet.create({
         color: '#905',
         fontSize: '85%',
         textShadow: '0 1px white'
+    },
+    strong: {
+        fontFamily: 'Futura, "Gill Sans", "Trebuchet MS", sans-serif',
+        fontWeight: 600
+    },
+    emphasis: {
+        fontWeight: 600,
+        fontStyle: 'italic'
+    },
+    table: {
+        fontFamily: 'Futura, "Gill Sans", "Trebuchet MS", sans-serif',
+        border: 'none',
+        borderSpacing: 0
+    },
+    thead: {
+        fontWeight: 800
+    },
+    tbody: {},
+    trow: {},
+    tdata: {
+        padding: '.25em .5em',
+        borderBottom: '1px solid #ccc'
+    },
+    theading: {
+        fontWeight: 600,
+        padding: '.25em .5em',
+        borderTop: '1px solid',
+        borderBottom: '1px solid',
+        backgroundColor: 'rgba(200, 200, 200, 0.5)'
+    },
+    talign_left: {
+        textAlign: 'left'
+    },
+    talign_right: {
+        textAlign: 'right'
+    },
+    talign_center: {
+        textAlign: 'center'
     }
 });
 
@@ -10741,7 +10864,15 @@ module.exports = {
     Paragraph: Paragraph,
     UList: UList,
     OList: OList,
-    Blockquote: Blockquote
+    Table: Table,
+    THead: THead,
+    TBody: TBody,
+    TRow: TRow,
+    TData: TData,
+    THeading: THeading,
+    Blockquote: Blockquote,
+    Strong: Strong,
+    Emphasis: Emphasis
 };
 
 /***/ }),
