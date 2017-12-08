@@ -69,7 +69,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "cf6ccbab4ab7560c53ef"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "ce6dbd81a829a655dcd0"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -10752,13 +10752,14 @@ var classes = _noImportant.StyleSheet.create({
     block: {
         gridColumn: 'start-right / end-right',
         font: 'inherit',
-        lineHeight: '1.5rem',
+        lineHeight: '1.5em',
         padding: 0,
         margin: 0,
         color: 'inherit'
     },
     h: {
-        fontFamily: 'Futura, "Gill Sans", "Trebuchet MS", sans-serif'
+        fontFamily: 'Futura, "Gill Sans", "Trebuchet MS", sans-serif',
+        lineHeight: '1.2em'
     },
     h_1: {
         gridColumn: 'start-left / end-right',
@@ -10766,7 +10767,7 @@ var classes = _noImportant.StyleSheet.create({
         marginBottom: '4rem'
     },
     h_2: {
-        gridColumn: 'start-left / end-left',
+        gridColumn: 'start-aside / end-aside',
         fontSize: '1.4rem',
         marginBottom: '2rem'
     },
@@ -10789,10 +10790,10 @@ var classes = _noImportant.StyleSheet.create({
         listStyleType: 'decimal'
     },
     blockquote: {
+        fontFamily: 'Futura, "Gill Sans", "Trebuchet MS", sans-serif',
+        fontStyle: 'oblique',
         padding: '1em 4rem',
-        fontWeight: 600,
         fontSize: '1.2rem',
-        fontStyle: 'italic',
         borderLeft: '2px solid rgba(0,0,0,0.2)'
     },
     link: {
@@ -10815,23 +10816,27 @@ var classes = _noImportant.StyleSheet.create({
     },
     strong: {
         fontFamily: 'Futura, "Gill Sans", "Trebuchet MS", sans-serif',
-        fontWeight: 600
+        fontWeight: 500
     },
     emphasis: {
-        fontWeight: 600,
-        fontStyle: 'italic'
+        fontFamily: 'Futura, "Gill Sans", "Trebuchet MS", sans-serif',
+        fontStyle: 'oblique'
     },
     table: {
         fontFamily: 'Futura, "Gill Sans", "Trebuchet MS", sans-serif',
+        fontSize: '85%',
         border: 'none',
         borderSpacing: 0
     },
     thead: {
-        fontWeight: 800
+        fontWeight: 500
     },
-    tbody: {},
+    tbody: {
+        fontWeight: 300
+    },
     trow: {},
     tdata: {
+        fontWeight: 300,
         padding: '.25em .5em',
         borderBottom: '1px solid #ccc'
     },
