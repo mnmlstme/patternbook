@@ -1,5 +1,11 @@
-A Pattern book for `patternbook`
+A Patternbook
 ====
+
+The concept of a **Design Pattern** originated in Christopher Alexander's
+[A Pattern Language](https://en.wikipedia.org/wiki/A_Pattern_Language),
+which made architectural design more accessible by distilling design
+expertise into a catalog of timeless design patterns and documenting
+when and how to use these patterns to achieve successful design.
 
 [Example](/example/Example)
 ----

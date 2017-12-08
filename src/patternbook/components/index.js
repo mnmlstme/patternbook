@@ -61,12 +61,19 @@ function Link({ to, children }) {
     const ReactRouter = require('react-router')
 
     // Note: Link does not properly handle relative paths in the `to` prop
-
-    return (
-        <ReactRouter.Link to={to} className={css(classes.link)}>
-            {children}
-        </ReactRouter.Link>
-    )
+    if (to.startsWith('/')) {
+        return (
+            <ReactRouter.Link to={to} className={css(classes.link)}>
+                {children}
+            </ReactRouter.Link>
+        )
+    } else {
+        return (
+            <a href={to} className={css(classes.link)}>
+                {children}
+            </a>
+        )
+    }
 }
 
 function Code({ children }) {

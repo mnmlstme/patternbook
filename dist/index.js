@@ -69,7 +69,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "ce6dbd81a829a655dcd0"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "8f52e5b44c6a4a84510b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -10664,12 +10664,19 @@ function Link(_ref8) {
     var ReactRouter = __webpack_require__(55);
 
     // Note: Link does not properly handle relative paths in the `to` prop
-
-    return _react2.default.createElement(
-        ReactRouter.Link,
-        { to: to, className: (0, _noImportant.css)(classes.link) },
-        children
-    );
+    if (to.startsWith('/')) {
+        return _react2.default.createElement(
+            ReactRouter.Link,
+            { to: to, className: (0, _noImportant.css)(classes.link) },
+            children
+        );
+    } else {
+        return _react2.default.createElement(
+            'a',
+            { href: to, className: (0, _noImportant.css)(classes.link) },
+            children
+        );
+    }
 }
 
 function Code(_ref9) {
