@@ -69,7 +69,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "37d5336f7d97e90d045f"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "ab9fed9367d32a52272e"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -10313,8 +10313,7 @@ var classes = _noImportant.StyleSheet.create({
     render_hero: {
         gridColumn: 'start-left / end-right',
         width: '100%',
-        height: 0,
-        paddingBottom: '20%',
+        height: '15rem',
         overflow: 'hidden'
     },
     wrapper_hero: {
@@ -10498,25 +10497,32 @@ var classes = _noImportant.StyleSheet.create({
             opacity: 1
         }
     },
+    source_demo: {},
     source_aside: {
         gridColumn: 'end-aside / end-right'
     },
     source_wide: {
-        gridColumn: 'start-left / end-right'
+        gridColumn: 'start-left / end-right',
+        ':nth-child(1n)[class*="source_demo"]': {
+            transform: 'translate(0px, -2rem)'
+        }
     },
     source_hero: {
         gridColumn: 'start-left / end-right',
-        height: '3em',
-        transform: 'translate(0,-2rem)',
-        opacity: 0.2,
-        ':nth-child(1n) > pre': {
-            overflow: 'hidden'
-        },
-        ':hover': {
-            height: 'auto'
-        },
-        ':nth-child(1n):hover > pre': {
-            overflow: 'auto'
+        height: '15rem',
+        ':nth-child(1n)[class*="source_demo"]': {
+            height: '3em',
+            transform: 'translate(0,-2rem)',
+            opacity: 0.2,
+            ':nth-child(1n) > pre': {
+                overflow: 'hidden'
+            },
+            ':hover': {
+                height: 'auto'
+            },
+            ':nth-child(1n):hover > pre': {
+                overflow: 'auto'
+            }
         }
     },
     label: {
@@ -10894,6 +10900,8 @@ module.exports = {
 "use strict";
 
 
+var _header;
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(3);
@@ -10909,6 +10917,8 @@ var _reactRouter = __webpack_require__(55);
 var _noImportant = __webpack_require__(34);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -10968,6 +10978,14 @@ var Page = function (_React$Component) {
                     _react2.default.createElement(
                         _reactRouter.Link,
                         { className: (0, _noImportant.css)(classes.link), to: '/' },
+                        '/'
+                    ),
+                    _react2.default.createElement(
+                        'a',
+                        {
+                            className: (0, _noImportant.css)(classes.link, classes.attribution),
+                            target: '_blank',
+                            href: 'https://github.com/mnmlstme/patternbook' },
                         'patternbook'
                     )
                 ),
@@ -10975,19 +10993,6 @@ var Page = function (_React$Component) {
                     'section',
                     { className: (0, _noImportant.css)(classes.body) },
                     this.props.children
-                ),
-                _react2.default.createElement(
-                    'footer',
-                    { className: (0, _noImportant.css)(classes.footer) },
-                    'presented by',
-                    ' ',
-                    _react2.default.createElement(
-                        'a',
-                        {
-                            className: (0, _noImportant.css)(classes.link),
-                            href: 'https://github.com/mnmlstme/patternbook' },
-                        'patternbook'
-                    )
                 )
             );
         }
@@ -11019,27 +11024,37 @@ var classes = _noImportant.StyleSheet.create({
         width: '100%',
         position: 'fixed',
         top: 0,
-        left: 0
+        left: 0,
+        paddingLeft: '3rem'
     },
-    header: {
+    header: (_header = {
         fontFamily: 'Monaco, Consolas, "Lucida Sans Typewriter", "Lucida Console", monospace',
         color: '#905',
         fontSize: '1.25rem',
-        height: '2rem'
-    },
+        height: '100%',
+        width: '3rem'
+    }, _defineProperty(_header, 'color', '#faf8fc'), _defineProperty(_header, 'backgroundColor', '#7b6073'), _defineProperty(_header, 'textAlign', 'center'), _defineProperty(_header, 'position', 'absolute'), _defineProperty(_header, 'top', 0), _defineProperty(_header, 'left', 0), _defineProperty(_header, 'padding', '0.25rem'), _header),
     body: {
         flexGrow: 1,
         overflow: 'auto'
     },
-    footer: {
-        fontSize: '.75rem',
-        height: '1rem'
+    attribution: {
+        position: 'absolute',
+        bottom: '0',
+        left: '50%',
+        transform: 'rotate(-90deg)',
+        transformOrigin: '0 50%'
     },
     link: {
         fontFamily: 'Monaco, Consolas, "Lucida Sans Typewriter", "Lucida Console"',
-        color: '#905',
+        color: 'inherit',
+        padding: '0 .25em',
+        backgroundColor: 'rgba(200, 200, 200, 0.5)',
+        border: '1px solid transparent',
+        borderRadius: '.25em',
+        textDecoration: 'none',
         ':hover': {
-            color: '#905'
+            borderColor: 'currentColor'
         }
     }
 });

@@ -219,8 +219,7 @@ const classes = StyleSheet.create({
     render_hero: {
         gridColumn: 'start-left / end-right',
         width: '100%',
-        height: 0,
-        paddingBottom: '20%',
+        height: '15rem',
         overflow: 'hidden'
     },
     wrapper_hero: {

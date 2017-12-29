@@ -61,25 +61,32 @@ const classes = StyleSheet.create({
             opacity: 1
         }
     },
+    source_demo: {},
     source_aside: {
         gridColumn: 'end-aside / end-right'
     },
     source_wide: {
-        gridColumn: 'start-left / end-right'
+        gridColumn: 'start-left / end-right',
+        ':nth-child(1n)[class*="source_demo"]': {
+            transform: 'translate(0px, -2rem)'
+        }
     },
     source_hero: {
         gridColumn: 'start-left / end-right',
-        height: '3em',
-        transform: 'translate(0,-2rem)',
-        opacity: 0.2,
-        ':nth-child(1n) > pre': {
-            overflow: 'hidden'
-        },
-        ':hover': {
-            height: 'auto'
-        },
-        ':nth-child(1n):hover > pre': {
-            overflow: 'auto'
+        height: '15rem',
+        ':nth-child(1n)[class*="source_demo"]': {
+            height: '3em',
+            transform: 'translate(0,-2rem)',
+            opacity: 0.2,
+            ':nth-child(1n) > pre': {
+                overflow: 'hidden'
+            },
+            ':hover': {
+                height: 'auto'
+            },
+            ':nth-child(1n):hover > pre': {
+                overflow: 'auto'
+            }
         }
     },
     label: {

@@ -42,8 +42,9 @@ const fences = {
     },
 
     demo: function(content, lang, attrs) {
-        return renderBlock(content, lang, attrs)
-            .concat(sourceBlock(content, lang, attrs))
+        let attrs2 = Object.assign({}, attrs, { demo: true })
+        return renderBlock(content, lang, attrs2)
+            .concat(sourceBlock(content, lang, attrs2))
             .join('')
     }
 }
