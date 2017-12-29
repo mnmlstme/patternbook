@@ -69,7 +69,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "8f52e5b44c6a4a84510b"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "37d5336f7d97e90d045f"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -10300,7 +10300,7 @@ var classes = _noImportant.StyleSheet.create({
         display: 'block'
     },
     render_wide: {
-        gridColumn: 'start-row / end-row'
+        gridColumn: 'start-left / end-right'
     },
     wrapper_wide: {
         display: 'block',

@@ -206,7 +206,7 @@ const classes = StyleSheet.create({
         display: 'block'
     },
     render_wide: {
-        gridColumn: 'start-row / end-row'
+        gridColumn: 'start-left / end-right'
     },
     wrapper_wide: {
         display: 'block',
