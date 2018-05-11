@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.2.2 (9983) - http://www.bohemiancoding.com/sketch -->
+    <title>fontsize</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="fontsize" sketch:type="MSArtboardGroup" fill="#000000">
+            <path d="M15.2,11.506 L15.2,9.906 L11.2,12.006 L15.2,14.106 L15.2,12.506 L26.8,12.506 L26.8,14.106 L30.8,12.006 L26.8,9.906 L26.8,11.506 L15.2,11.506 Z" id="dimension-arrow" sketch:type="MSShapeGroup" transform="translate(21.000000, 12.006000) rotate(-90.000000) translate(-21.000000, -12.006000) "></path>
+            <rect id="Rectangle-30" sketch:type="MSShapeGroup" x="12" y="1" width="11" height="1"></rect>
+            <rect id="Rectangle-31" sketch:type="MSShapeGroup" x="12" y="22.012" width="11" height="1"></rect>
+            <path d="M8.50364093,16.452 L5.41855856,10.486 L2.33347619,16.452 L0.737,16.452 L4.59874646,9.365 L1.12533205,3 L2.72180824,3 L5.46170656,8.32 L8.18003089,3 L9.73335907,3 L6.28151866,9.384 L10.1432651,16.452 L8.50364093,16.452 Z M14.1344556,18.447 C14.0193937,18.8523354 13.8863553,19.2133317 13.7353366,19.53 C13.5843178,19.8466682 13.4009406,20.1126656 13.1851995,20.328 C12.9694584,20.5433344 12.7213598,20.7111661 12.4408964,20.8315 C12.160433,20.9518339 11.8260393,21.012 11.4377053,21.012 C11.2363469,21.012 11.0349916,20.9961668 10.8336332,20.9645 C10.6322748,20.9328332 10.4668758,20.8980002 10.3374311,20.86 L10.5315972,19.739 C10.6322764,19.7643335 10.7545278,19.7896665 10.8983552,19.815 C11.0421826,19.8403335 11.1860079,19.853 11.3298353,19.853 C11.7469347,19.853 12.0597546,19.7263346 12.2683044,19.473 C12.4768541,19.2196654 12.6458488,18.8713355 12.7752934,18.428 L13.2499215,16.794 L10.1432651,7.028 L11.6534453,7.028 L13.9618636,14.989 L14.0050116,14.989 L16.0545418,7.028 L17.5,7.028 L14.1344556,18.447 Z" id="Xy" sketch:type="MSShapeGroup"></path>
+        </g>
+    </g>
+</svg>

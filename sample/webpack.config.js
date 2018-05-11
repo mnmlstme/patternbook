@@ -3,14 +3,13 @@ const webpack = require('webpack')
 
 module.exports = {
     entry: {
-        index: './src/patternbook/index.js',
         bundle: './book.js'
     },
 
     module: {
         rules: [
             {
-                test: /.js$/,
+                test: /\.jsx?$/,
                 exclude: /node_modules/,
                 use: {
                     loader: 'babel-loader',
@@ -21,8 +20,19 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                include: /prism(js|-\w+)/,
                 use: ['css-loader']
+            },
+            {
+                test: /\.svg$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'svg-inline-loader',
+                    query: {
+                        idPrefix: true,
+                        classPrefix: true,
+                        removingTagAttrs: ['xmlns', 'xmlns:xlink', 'version']
+                    }
+                }
             },
             {
                 test: /\.md$/,
@@ -35,7 +45,7 @@ module.exports = {
                         }
                     },
                     {
-                        loader: 'patternbook/markdown-loader'
+                        loader: 'patternbook'
                     }
                 ]
             }
@@ -44,23 +54,21 @@ module.exports = {
 
     resolve: {
         alias: {
-            TARGET: path.resolve(__dirname, 'src/patternbook')
+            TARGET: path.resolve(__dirname, 'patterns')
         },
-        modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+        modules: ['node_modules'],
         extensions: ['.js']
     },
 
     resolveLoader: {
-        modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+        modules: ['node_modules'],
         extensions: ['.js'],
         mainFields: ['loader', 'main']
     },
 
     output: {
         filename: '[name].js',
-        path: path.resolve(__dirname, 'dist'),
-        // libraryTarget: 'umd',
-        // library: 'Patternbook'
+        path: path.resolve(__dirname, 'dist')
     },
 
     plugins: [
@@ -68,7 +76,7 @@ module.exports = {
     ],
 
     devServer: {
-        port: 8080,
+        port: 3000,
         historyApiFallback: true,
         hot: true // Tell the dev-server we're using HMR
     }
