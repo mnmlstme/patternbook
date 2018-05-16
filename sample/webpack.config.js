@@ -14,7 +14,7 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     query: {
-                        presets: ['react', 'es2015', 'stage-0']
+                        presets: ['react', 'env']
                     }
                 }
             },
@@ -41,7 +41,7 @@ module.exports = {
                     {
                         loader: 'babel-loader',
                         query: {
-                            presets: ['react', 'es2015', 'stage-0']
+                            presets: ['react', 'env']
                         }
                     },
                     {
@@ -64,11 +64,6 @@ module.exports = {
         modules: ['node_modules'],
         extensions: ['.js'],
         mainFields: ['loader', 'main']
-    },
-
-    output: {
-        filename: '[name].js',
-        path: path.resolve(__dirname, 'dist')
     },
 
     plugins: [

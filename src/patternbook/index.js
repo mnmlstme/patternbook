@@ -112,12 +112,6 @@ function convertSvgToSymbol(id, string) {
         .replace('</svg>', '</symbol>')
 }
 
-Object.assign(
-    Patternbook,
-    Object.assign({}, components, {
-        config,
-        convertSvgToSymbol
-    })
-)
+Object.assign(Patternbook, components, {config, convertSvgToSymbol})
 
 module.exports = Patternbook
