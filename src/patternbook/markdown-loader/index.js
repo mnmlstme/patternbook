@@ -10,45 +10,6 @@ function loader(content) {
         .catch(callback)
 }
 
-function renderBlock(code, lang, attrs) {
-    let mod = Object.keys(attrs)
-        .filter(k => attrs[k] === true)
-        .join(' ')
-    let jsx = lang.toLowerCase() === 'jsx' ? code : htmlToJsx(code)
-
-    return [
-        `<Patternbook.Render theme={Theme} mod="${mod}">${jsx}</Patternbook.Render>`
-    ]
-}
-
-function sourceBlock(content, lang, attrs) {
-    let source = escapeJsx(content)
-    let mod = Object.keys(attrs)
-        .filter(k => attrs[k] === true)
-        .join(' ')
-
-    return [
-        `<Patternbook.Source lang="${lang}" mod="${mod}">${source}</Patternbook.Source>`
-    ]
-}
-
-const fences = {
-    render: function(content, lang, attrs) {
-        return renderBlock(content, lang, attrs).join('')
-    },
-
-    source: function(content, lang, attrs) {
-        return sourceBlock(content, lang, attrs).join('')
-    },
-
-    demo: function(content, lang, attrs) {
-        let attrs2 = Object.assign({}, attrs, { demo: true })
-        return renderBlock(content, lang, attrs2)
-            .concat(sourceBlock(content, lang, attrs2))
-            .join('')
-    }
-}
-
 let remarkable = new Remarkable({
     // allow HTML/JSX tags in Markdown:
     html: true,
@@ -59,157 +20,106 @@ let remarkable = new Remarkable({
     xhtmlOut: true
 })
 
-remarkable.renderer.rules.link_open = function(tokens, idx, options) {
-    return `<Patternbook.Link to="${tokens[idx].href}">`
-}
+Object.assign(remarkable.renderer.rules, {
+    link_open : (tokens, idx, options) =>
+        `<Patternbook.Link to="${tokens[idx].href}">`,
 
-remarkable.renderer.rules.link_close = function() {
-    return '</Patternbook.Link>'
-}
+    link_close: () => '</Patternbook.Link>',
 
-remarkable.renderer.rules.code = function(tokens, idx /*, options, env */) {
-    let code = escapeJsx(tokens[idx].content)
+    code: (tokens, idx) =>
+        `<Patternbook.Code>${escapeJsx(tokens[idx].content)}</Patternbook.Code>`,
 
-    return `<Patternbook.Code>${code}</Patternbook.Code>`
-}
+    heading_open: (tokens, idx) =>
+        `<Patternbook.Heading level="${tokens[idx].hLevel}">`,
 
-remarkable.renderer.rules.heading_open = function(tokens, idx) {
-    return `<Patternbook.Heading level="${tokens[idx].hLevel}">`
-}
+    heading_close: () => '</Patternbook.Heading>',
 
-remarkable.renderer.rules.heading_close = function() {
-    return '</Patternbook.Heading>'
-}
+    paragraph_open: (tokens, idx) =>
+        tokens[idx].tight ? '' : '<Patternbook.Paragraph>',
 
-remarkable.renderer.rules.paragraph_open = function(tokens, idx) {
-    return tokens[idx].tight ? '' : '<Patternbook.Paragraph>'
-}
+    paragraph_close: (tokens, idx) =>
+        tokens[idx].tight ? '' : '</Patternbook.Paragraph>',
 
-remarkable.renderer.rules.paragraph_close = function(tokens, idx) {
-    return tokens[idx].tight ? '' : '</Patternbook.Paragraph>'
-}
+    bullet_list_open: () => '<Patternbook.UList>',
 
-remarkable.renderer.rules.bullet_list_open = function(/* tokens, idx, options, env */) {
-    return '<Patternbook.UList>'
-}
-remarkable.renderer.rules.bullet_list_close = function(
-    tokens,
-    idx /*, options, env */
-) {
-    return '</Patternbook.UList>'
-}
+    bullet_list_close: (tokens, idx) => '</Patternbook.UList>',
 
-remarkable.renderer.rules.ordered_list_open = function(
-    tokens,
-    idx /*, options, env */
-) {
-    var token = tokens[idx]
-    var order = token.order > 1 ? ' start="' + token.order + '"' : ''
-    return `<Patternbook.OList ${order}>`
-}
-remarkable.renderer.rules.ordered_list_close = function(
-    tokens,
-    idx /*, options, env */
-) {
-    return '</Patternbook.OList>'
-}
+    ordered_list_open: (tokens, idx) => {
+        var token = tokens[idx]
+        var order = token.order > 1 ? ' start="' + token.order + '"' : ''
+        return `<Patternbook.OList ${order}>`
+    },
 
-remarkable.renderer.rules.table_open = function() {
-    return '<Patternbook.Table>'
-}
+    ordered_list_close: (tokens, idx) => '</Patternbook.OList>',
 
-remarkable.renderer.rules.table_close = function() {
-    return '</Patternbook.Table>'
-}
+    table_open: () => '<Patternbook.Table>',
 
-remarkable.renderer.rules.thead_open = function() {
-    return '<Patternbook.THead>'
-}
+    table_close: () => '</Patternbook.Table>',
 
-remarkable.renderer.rules.thead_close = function() {
-    return '</Patternbook.THead>'
-}
+    thead_open: () => '<Patternbook.THead>',
 
-remarkable.renderer.rules.tbody_open = function() {
-    return '<Patternbook.TBody>'
-}
+    thead_close: () => '</Patternbook.THead>',
 
-remarkable.renderer.rules.tbody_close = function() {
-    return '</Patternbook.TBody>'
-}
+    tbody_open: () => '<Patternbook.TBody>',
 
-remarkable.renderer.rules.tr_open = function() {
-    return '<Patternbook.TRow>'
-}
+    tbody_close: () => '</Patternbook.TBody>',
 
-remarkable.renderer.rules.tr_close = function() {
-    return '</Patternbook.TRow>'
-}
+    tr_open: () => '<Patternbook.TRow>',
 
-remarkable.renderer.rules.td_open = function(tokens, idx) {
-    var token = tokens[idx]
-    return (
-        '<Patternbook.TData' +
-        (token.align ? ' align="' + token.align + '"' : '') +
-        '>'
-    )
-}
+    tr_close: () =>'</Patternbook.TRow>',
 
-remarkable.renderer.rules.td_close = function() {
-    return '</Patternbook.TData>'
-}
+    td_open: (tokens, idx) => {
+        var token = tokens[idx]
+        return (
+            '<Patternbook.TData' +
+            (token.align ? ' align="' + token.align + '"' : '') +
+            '>'
+        )
+    },
 
-remarkable.renderer.rules.th_open = function(tokens, idx) {
-    var token = tokens[idx]
-    return (
-        '<Patternbook.THeading' +
-        (token.align ? ' align="' + token.align + '"' : '') +
-        '>'
-    )
-}
+    td_close: () =>'</Patternbook.TData>',
 
-remarkable.renderer.rules.th_close = function() {
-    return '</Patternbook.THeading>'
-}
+    th_open: (tokens, idx) => {
+        var token = tokens[idx]
+        return (
+            '<Patternbook.THeading' +
+            (token.align ? ' align="' + token.align + '"' : '') +
+            '>'
+        )
+    },
 
-remarkable.renderer.rules.blockquote_open = function() {
-    return '<Patternbook.Blockquote>'
-}
+    th_close: () => '</Patternbook.THeading>',
 
-remarkable.renderer.rules.blockquote_close = function() {
-    return '</Patternbook.Blockquote>'
-}
+    blockquote_open: () => '<Patternbook.Blockquote>',
 
-remarkable.renderer.rules.strong_open = function() {
-    return '<Patternbook.Strong>'
-}
+    blockquote_close: () => '</Patternbook.Blockquote>',
 
-remarkable.renderer.rules.strong_close = function() {
-    return '</Patternbook.Strong>'
-}
+    strong_open: () => '<Patternbook.Strong>',
 
-remarkable.renderer.rules.em_open = function() {
-    return '<Patternbook.Emphasis>'
-}
+    strong_close: () => '</Patternbook.Strong>',
 
-remarkable.renderer.rules.em_close = function() {
-    return '</Patternbook.Emphasis>'
-}
+    em_open: () => '<Patternbook.Emphasis>',
 
-remarkable.renderer.rules.fence = function(tokens, idx, options) {
-    let tags = tokens[idx].params.split(/\s+/g)
-    let lang = tags.shift()
-    let type = tags.shift()
-    let render = fences[type] || fences.source
-    let attrs = tags.map(s => s.split('=')).reduce((o, pair) => {
-        let [key, value] = pair.length > 1 ? pair : [pair[0], true]
-        o[key] = value
-        return o
-    }, {})
-    let content = tokens[idx].content
+    em_close: () => '</Patternbook.Emphasis>',
 
-    return render(content, lang, attrs)
-}
+    fence: (tokens, idx, options) => {
+        let tags = tokens[idx].params.split(/\s+/g)
+        let lang = tags.shift()
+        let type = tags.shift()
+        let attrs = tags.map(s => s.split('=')).reduce((o, pair) => {
+            let [key, value] = pair.length > 1 ? pair : [pair[0], true]
+            o[key] = value
+            return o
+        }, {})
+        let content = tokens[idx].content
+        let source = escapeJsx(content)
+        let mod = Object.keys(attrs)
+          .filter(k => attrs[k] === true)
+          .join(' ')
+
+        return `<Patternbook.Source lang="${lang}" mod="${mod}">${source}</Patternbook.Source>`
+    }
+})
 
 function parse(content) {
     return new Promise((resolve, reject) => {
@@ -238,10 +148,6 @@ function escapeJsx(jsx) {
         /\n/g,
         '{"\\n"}'
     )
-}
-
-function htmlToJsx(html) {
-    return html.replace(/[{}]+/g, '{"$&"}').replace(/class=/g, 'className=')
 }
 
 function generateImports(imports) {

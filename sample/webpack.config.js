@@ -56,13 +56,11 @@ module.exports = {
         alias: {
             TARGET: path.resolve(__dirname, 'patterns')
         },
-        modules: ['node_modules'],
-        extensions: ['.js']
+        modules: ['../..', 'node_modules']
     },
 
     resolveLoader: {
-        modules: ['node_modules'],
-        extensions: ['.js'],
+        modules: ['../..', 'node_modules'],
         mainFields: ['loader', 'main']
     },
 
