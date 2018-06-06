@@ -13,7 +13,12 @@
         "start": "webpack-dev-server --hot --progress --colors",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
-    "keywords": ["pattern", "styleguide", "component", "design system"],
+    "keywords": [
+        "pattern",
+        "styleguide",
+        "component",
+        "design system"
+    ],
     "author": "ken@mnmlst.me",
     "license": "BSD-3-Clause",
     "dependencies": {
