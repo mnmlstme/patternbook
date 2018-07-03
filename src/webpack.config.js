@@ -28,6 +28,11 @@ module.exports = {
         ]
     },
 
+    resolve: {
+        modules: ['node_modules'],
+        extensions: ['.js']
+    },
+
     output: {
         filename: '[name].js',
         path: path.resolve(__dirname, '../dist'),
