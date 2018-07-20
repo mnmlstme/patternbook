@@ -6,6 +6,8 @@ module.exports = {
         bundle: './book.js'
     },
 
+    mode: "development",
+
     module: {
         rules: [
             {
@@ -14,7 +16,8 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     query: {
-                        presets: ['react', 'env']
+                        presets: ['react', 'env'],
+                        plugins: ['syntax-dynamic-import']
                     }
                 }
             },
@@ -69,6 +72,12 @@ module.exports = {
     plugins: [
         new webpack.HotModuleReplacementPlugin() // Enable HMR
     ],
+
+    output: {
+      filename: '[name].bundle.js',
+      chunkFilename: 'sample.[name].bundle.js',
+      path: path.resolve(__dirname, '../dist')
+    },
 
     devServer: {
         port: 3000,
