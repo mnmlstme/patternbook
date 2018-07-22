@@ -75,8 +75,8 @@ module.exports = {
 
     output: {
       filename: '[name].bundle.js',
-      chunkFilename: 'sample.[name].bundle.js',
-      path: path.resolve(__dirname, '../dist')
+      chunkFilename: 'chunk.[id].js',
+      publicPath: '/'
     },
 
     devServer: {

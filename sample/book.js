@@ -1,17 +1,13 @@
 import Patternbook from 'patternbook'
 
-console.log('import Patternbook:', Patternbook)
-
-function requireFromTarget (path) {
+function importFromTarget (path) {
   // Dynamic import
-  const chunkName = path.replace(/[^a-zA-Z_0-9]/, '_' )
-  const fullPath = 'TARGET/' + path
-
-  return import( /* webpackChunkName: chunkName*/ fullPath )
-    .then( content => content )
-    .catch( error => 'Error while loading "' + fullPath + '":' + error )
+  return import(
+    /* webpackInclude: /\.md$/ */
+    /* webpackMode: "lazy" */
+    `TARGET/${path}` )
 }
 
 Patternbook.config({
-    requireFromTarget
+    importFromTarget
 }).render(document.getElementById('patternbook-mountpoint'))

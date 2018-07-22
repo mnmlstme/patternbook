@@ -1,30 +1,17 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
+import LazyLoadPage from './LazyLoadPage';
 
 class Home extends React.Component {
     static contextTypes = {
-        entry: PropTypes.string,
-        extension: PropTypes.string,
-        requireFromTarget: PropTypes.func
-    }
+        entry: PropTypes.string
+    };
 
     render() {
-        let { requireFromTarget, entry, extension } = this.context
-        let content
-        let error
+        let { entry } = this.context
 
-        try {
-            content = requireFromTarget(entry + extension)()
-        } catch (error) {
-            content = (
-                <ErrorPage title={entry}>
-                    {error.message}
-                </ErrorPage>
-            )
-        }
-
-        return content
+        return <LazyLoadPage path={entry}/>
     }
 }
 
-module.exports = Home
+module.exports = Home;
