@@ -1,7 +1,8 @@
 import React from 'react'
 import { StyleSheet, css } from 'aphrodite/no-important'
-import { article } from './layout'
 import textContent from 'react-addons-text-content'
+
+import { article } from './layout'
 
 let Prism = require('prismjs')
 if ( typeof document !== 'undefined' ) {

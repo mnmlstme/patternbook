@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import debounce from 'debounce'
 import { StyleSheet, css } from 'aphrodite/no-important'
+import textContent from 'react-addons-text-content'
 
 import { wrapper } from './layout'
 
@@ -19,7 +20,8 @@ const bg = 'white' // should be themed
 
 class Render extends React.Component {
     static contextTypes = {
-        themeClass: PropTypes.string
+        themeClass: PropTypes.string,
+        plugins: PropTypes.object
     }
 
     constructor(props) {
@@ -30,8 +32,11 @@ class Render extends React.Component {
     }
 
     render() {
-        let { children, mod, theme } = this.props
+        let { children, mod, lang, theme } = this.props
         let { initialized, top, left, width, height } = this.state
+        let source = textContent(children)
+        let plugin = this.context.plugins[lang] || this.context.plugins.html
+        let Renderer = plugin.renderer
         let themeClass = this.context.themeClass || 'pbReset'
         let mods = mod ? mod.split(' ') : ['default']
         let Theme = theme || DefaultTheme
@@ -62,7 +67,7 @@ class Render extends React.Component {
                         )}
                         ref={node => (this._content = node)}>
                         <Theme className={themeClass}>
-                            {initialized && children}
+                            {initialized && <Renderer source={source}/>}
                         </Theme>
                     </div>
                     {initialized && [

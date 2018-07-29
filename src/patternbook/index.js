@@ -16,6 +16,8 @@ import ErrorPage from './layouts/ErrorPage'
 
 import basicReducers from './reducers'
 
+import HtmlPlugin from '../plugins/html'
+
 function NotFound(props) {
     let path = props.match.params[0]
 
@@ -54,6 +56,14 @@ function Patternbook(props) {
 }
 
 function config(object) {
+    object = object || {}
+    let plugins = Object.assign(
+        {},
+        {
+            html: HtmlPlugin
+        },
+        object
+    )
     let configuration = Object.assign(
         {},
         {
@@ -61,7 +71,10 @@ function config(object) {
             extension: '.md',
             themeClass: 'no-theme'
         },
-        object
+        object,
+        {
+            plugins
+        }
     )
 
     let rootReducer = combineReducers(

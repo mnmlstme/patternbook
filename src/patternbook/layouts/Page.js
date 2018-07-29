@@ -22,7 +22,8 @@ class Page extends React.Component {
         entry: PropTypes.string,
         extension: PropTypes.string,
         themeClass: PropTypes.string,
-        importFromTarget: PropTypes.func,
+        importFromTarget: PropTypes.func.isRequired,
+        plugins: PropTypes.object,
         stylesheet: PropTypes.string,
         reducers: PropTypes.object
     }
