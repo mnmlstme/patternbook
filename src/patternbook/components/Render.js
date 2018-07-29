@@ -35,7 +35,7 @@ class Render extends React.Component {
         let { children, mod, lang, theme } = this.props
         let { initialized, top, left, width, height } = this.state
         let source = textContent(children)
-        let plugin = this.context.plugins[lang] || this.context.plugins.html
+        let plugin = this.context.plugins[lang] || this.context.plugins.default
         let Renderer = plugin.renderer
         let themeClass = this.context.themeClass || 'pbReset'
         let mods = mod ? mod.split(' ') : ['default']

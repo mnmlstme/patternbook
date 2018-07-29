@@ -17,6 +17,7 @@ import ErrorPage from './layouts/ErrorPage'
 import basicReducers from './reducers'
 
 import HtmlPlugin from '../plugins/html'
+import DefaultPlugin from '../plugins/default'
 
 function NotFound(props) {
     let path = props.match.params[0]
@@ -60,7 +61,8 @@ function config(object) {
     let plugins = Object.assign(
         {},
         {
-            html: HtmlPlugin
+            html: HtmlPlugin,
+            'default': DefaultPlugin
         },
         object
     )
