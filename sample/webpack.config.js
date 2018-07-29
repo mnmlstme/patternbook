@@ -3,7 +3,7 @@ const webpack = require('webpack')
 
 module.exports = {
     entry: {
-        bundle: './book.js'
+        book: './book.js'
     },
 
     mode: "development",
