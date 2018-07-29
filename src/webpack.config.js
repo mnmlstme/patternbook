@@ -7,8 +7,8 @@ module.exports = {
         loader: './patternbook/markdown-loader/index.js'
     },
 
-    mode: "production",
-    
+    mode: "development",
+
     module: {
         rules: [
             {

@@ -4,8 +4,10 @@ import { article } from './layout'
 import textContent from 'react-addons-text-content'
 
 let Prism = require('prismjs')
-// disable Prism's auto-highlighting, thank you.
-document.removeEventListener('DOMContentLoaded', Prism.highlightAll)
+if ( typeof document !== 'undefined' ) {
+    // disable Prism's auto-highlighting, thank you.
+    document.removeEventListener('DOMContentLoaded', Prism.highlightAll)
+}
 require('prismjs/components/prism-jsx')
 
 const PREFIX = 'pb-'

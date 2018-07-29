@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import debounce from 'debounce'
 import { StyleSheet, css } from 'aphrodite/no-important'
 
-import { article, wrapper } from './layout'
+import { wrapper } from './layout'
 
 const RESIZE_DEBOUNCE_TIME = 200 // milliseconds
 

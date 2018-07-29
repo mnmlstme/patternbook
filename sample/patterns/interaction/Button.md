@@ -13,9 +13,7 @@ messages:
 
 # Button
 
-The button component creates buttons.
-
-```jsx render
+```jsx render hero
 <Button onClick={() => dispatch(Reset())}>
     Reset
 </Button>

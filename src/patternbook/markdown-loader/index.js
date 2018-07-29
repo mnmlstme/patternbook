@@ -10,38 +10,26 @@ function loader(content) {
     .catch(callback);
 }
 
-function renderBlock(code, lang, attrs) {
-  let mod = Object.keys(attrs)
-    .filter(k => attrs[k] === true)
-    .join(' ');
-  let jsx = lang.toLowerCase() === 'jsx' ? code : htmlToJsx(code);
-
-  return [`<Patternbook.Render theme={Theme} mod="${mod}">${jsx}</Patternbook.Render>`];
-}
-
-function sourceBlock(content, lang, attrs) {
+function codeBlock(componentName, content, lang, attrs) {
   let source = escapeJsx(content);
   let mod = Object.keys(attrs)
     .filter(k => attrs[k] === true)
     .join(' ');
 
-  return [`<Patternbook.Source lang="${lang}" mod="${mod}">${source}</Patternbook.Source>`];
+  return `<Patternbook.${componentName} lang="${lang}" mod="${mod}">${source}</Patternbook.${componentName}>`;
 }
 
 const fences = {
   render: function(content, lang, attrs) {
-    return renderBlock(content, lang, attrs).join('');
+    return codeBlock('Render', content, lang, attrs);
   },
 
   source: function(content, lang, attrs) {
-    return sourceBlock(content, lang, attrs).join('');
+    return codeBlock('Source', content, lang, attrs);
   },
 
   demo: function(content, lang, attrs) {
-    let attrs2 = Object.assign({}, attrs, { demo: true });
-    return renderBlock(content, lang, attrs2)
-      .concat(sourceBlock(content, lang, attrs2))
-      .join('');
+    return codeBlock('Demo', content, lang, attrs);
   }
 };
 
@@ -216,10 +204,6 @@ function escapeJsx(jsx) {
   return (rx.test(jsx) ? jsx.replace(rx, ch => entity[ch]) : jsx).replace(/\n/g, '{"\\n"}');
 }
 
-function htmlToJsx(html) {
-  return html.replace(/[{}]+/g, '{"$&"}').replace(/class=/g, 'className=');
-}
-
 function generateImports(imports) {
   return Object.keys(imports).map(module => `import ${module} from '${imports[module]}';`);
 }
@@ -307,7 +291,7 @@ function toModule(payload) {
     ]
   );
 
-  // console.log('\n====\n', output.join('\n'), '\n====\n')
+  console.log('\n====\n', output.join('\n'), '\n====\n')
 
   return output.join('\n');
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 import { StyleSheet, css } from 'aphrodite/no-important'
 const prismCSS = require('prism-themes/themes/prism-hopscotch.css').toString()
 

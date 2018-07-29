@@ -1,10 +1,12 @@
 import React from 'react'
 import { StyleSheet, css } from 'aphrodite/no-important'
 import textContent from 'react-addons-text-content'
+import { Link as RRLink } from 'react-router-dom'
 
 import Article from './Article'
 import Source from './Source'
 import Render from './Render'
+import Demo from './Demo'
 import Scope from './Scope'
 
 import { article } from './layout'
@@ -60,12 +62,12 @@ function Emphasis({ children }) {
 function Link({ to, children }) {
     const ReactRouter = require('react-router')
 
-    // Note: Link does not properly handle relative paths in the `to` prop
+    // Note: ReactRouter Link does not properly handle relative paths in the `to` prop
     if (to.startsWith('/')) {
         return (
-            <ReactRouter.Link to={to} className={css(classes.link)}>
+            <RRLink to={to} className={css(classes.link)}>
                 {children}
-            </ReactRouter.Link>
+            </RRLink>
         )
     } else {
         return (
@@ -240,6 +242,7 @@ module.exports = {
     Source,
     Render,
     Scope,
+    Demo,
     Link,
     Code,
     Heading,

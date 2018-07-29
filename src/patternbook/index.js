@@ -1,11 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-let ReactRouter = require('react-router')
-let { Router, Route, IndexRoute, browserHistory } = ReactRouter
-let Redux = require('redux')
-let ReactRedux = require('react-redux')
-let { Provider } = ReactRedux
-let ReactRouterRedux = require('react-router-redux')
+import { BrowserRouter, Route } from 'react-router-dom'
+import { combineReducers, compose, createStore, applyMiddleware } from 'redux'
+import { Provider } from 'react-redux'
 import thunkMiddleware from 'redux-thunk'
 
 import Page from './layouts/Page'
@@ -20,7 +17,7 @@ import ErrorPage from './layouts/ErrorPage'
 import basicReducers from './reducers'
 
 function NotFound(props) {
-    let path = props.params.splat
+    let path = props.match.params[0]
 
     return (
         <ErrorPage title="Invalid Route">
@@ -45,16 +42,13 @@ function Patternbook(props) {
 
     return (
         <Provider store={props.store}>
-            <Router history={browserHistory}>
-                <Route path="/" component={ConfiguredPage}>
-                    <IndexRoute component={Home} />
-                    <Route path="**/">
-                        <IndexRoute component={Category} />
-                        <Route path=":pattern" component={Pattern} />
-                    </Route>
-                    <Route path="**" component={NotFound} />
-                </Route>
-            </Router>
+            <BrowserRouter>
+                <ConfiguredPage emptyPage={NotFound}>
+                    <Route exact path="/" component={Home} />
+                    <Route exact strict path="/**/" component={Category}/>
+                    <Route exact strict path="/**/:pattern" component={Pattern} />
+                </ConfiguredPage>
+            </BrowserRouter>
         </Provider>
     )
 }
@@ -70,24 +64,18 @@ function config(object) {
         object
     )
 
-    let rootReducer = Redux.combineReducers(
+    let rootReducer = combineReducers(
         Object.assign({}, basicReducers, configuration.reducers || {})
     )
 
     function render(el) {
         // Create flux store
-        let store = Redux.createStore(
+        let store = createStore(
             rootReducer,
-            Redux.compose(
-                Redux.applyMiddleware(thunkMiddleware),
+            compose(
+                applyMiddleware(thunkMiddleware),
                 window.devToolsExtension ? window.devToolsExtension() : f => f
             )
-        )
-
-        // Connect browser history to Flux store
-        let history = ReactRouterRedux.syncHistoryWithStore(
-            ReactRouter.browserHistory,
-            store
         )
 
         ReactDOM.render(
