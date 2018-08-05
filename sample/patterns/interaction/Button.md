@@ -4,7 +4,7 @@ imports:
 
 scope:
     label: Hit me
-    count: 0
+    count: 5
 
 messages:
     Set: scope.Set
@@ -22,7 +22,7 @@ messages:
 The button component creates buttons.
 
 ```jsx demo
-<Button onClick={() => dispatch(Set({count: count + 1}))}>
+<Button onClick={() => dispatch(Set({count: count - 1}))}>
     {label}
 </Button>
 <p>{count}</p>

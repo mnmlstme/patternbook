@@ -18,6 +18,7 @@ import basicReducers from './reducers'
 
 import HtmlPlugin from '../plugins/html'
 import DefaultPlugin from '../plugins/default'
+import JsxPlugin from '../plugins/jsx'
 
 function NotFound(props) {
     let path = props.match.params[0]
@@ -62,6 +63,7 @@ function config(object) {
         {},
         {
             html: HtmlPlugin,
+            jsx: JsxPlugin,
             'default': DefaultPlugin
         },
         object

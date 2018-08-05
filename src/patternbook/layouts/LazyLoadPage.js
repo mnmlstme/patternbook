@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import ErrorPage from './ErrorPage';
+import ScopeStore from '../reducers/ScopeStore'
 
 class LazyLoadPage extends React.Component {
     static contextTypes = {
@@ -17,11 +19,19 @@ class LazyLoadPage extends React.Component {
         };
     }
 
+    componentDidCatch(error, info) {
+        let { path } = this.props
+
+        this.setState({
+            error,
+            errorPath: path
+        })
+    }
+
     render() {
         let { extension, importFromTarget } = this.context
         let { path } = this.props
         let { module, error, errorPath } = this.state
-        let content;
 
         if ( error && errorPath === path ) {
             return <ErrorPage title="Error">
@@ -29,6 +39,7 @@ class LazyLoadPage extends React.Component {
             </ErrorPage>
         }
 
+        let content
         if (!module) {
             content = <h1>Loading Content&hellip;</h1>;
             console.log(`Requesting "${path}"`)
@@ -38,22 +49,20 @@ class LazyLoadPage extends React.Component {
                     this.setState({ module, error: null, errorPath: '' })
                 })
                 .catch(error => {
-                    debugger
                     console.log(`Error loading "${path}": ${error}`);
                     this.setState({ module: null, error, errorPath: path })
                 });
         } else {
-            try {
-                if (typeof module === 'function') {
-                    content = module()
-                } else if (typeof module === 'object' && typeof module.default === 'function') {
-                    content = module.default()
-                } else {
-                    throw `Cannot execute module loaded for ${path}`
-                }
-            } catch (e) {
-                error = e
-                this.setState({ error, errorPath: path })
+            let messages = {
+                // TODO: make this configurable
+                scope: ScopeStore.msgTypes
+            }
+            if (typeof module === 'function') {
+                content = module({messages})
+            } else if (typeof module === 'object' && typeof module.default === 'function') {
+                content = module.default({messages})
+            } else {
+                throw `Cannot execute module loaded for ${path}`
             }
         }
 

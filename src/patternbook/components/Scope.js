@@ -12,19 +12,15 @@ class Scope extends React.Component {
     }
 
     render() {
-        let { component } = this.props
+        let { children } = this.props
 
-        return React.createElement(component, this.props, [])
+        return <div>{children}</div>
     }
 }
 
 const mapStateToProps = (state, ownProps) => {
     return {
         scope: ScopeStore.getAll(state.scope),
-        messages: {
-            scope: ScopeStore.msgTypes
-            // TODO: inject method types for other reducers here
-        }
     }
 }
 

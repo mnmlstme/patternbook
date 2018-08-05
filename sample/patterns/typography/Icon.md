@@ -18,7 +18,7 @@ into the page.
 They are referenced via the `<Icon>` component,
 which generates an SVG `<use>` element.
 
-```jsx demo aside
+```jsx demo wide
 <Icon symbol="circle"/>
 <Icon symbol="opencircle"/>
 <Icon symbol="content"/>

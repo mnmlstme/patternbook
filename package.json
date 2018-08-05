@@ -22,12 +22,8 @@
     "author": "ken@mnmlst.me",
     "license": "BSD-3-Clause",
     "dependencies": {
+        "@babel/standalone": "^7.0.0-beta.55",
         "aphrodite": "^1.2.1",
-        "babel-core": "^6.26.3",
-        "babel-loader": "^7.1.4",
-        "babel-preset-env": "^1.7.0",
-        "babel-preset-react": "^6.24.1",
-        "css-loader": "^0.28.4",
         "debounce": "^1.0.2",
         "front-matter": "^2.1.2",
         "history": "^3.3.0",
@@ -43,13 +39,18 @@
         "react-router-redux": "^4.0.8",
         "redux": "^3.7.2",
         "redux-thunk": "^2.2.0",
-        "remarkable": "^1.7.1",
-        "svg-inline-loader": "^0.7.1",
-        "to-string-loader": "^1.1.5"
+        "remarkable": "^1.7.1"
     },
     "devDependencies": {
+        "babel-core": "^6.26.3",
+        "babel-loader": "^7.1.4",
+        "babel-preset-env": "^1.7.0",
+        "babel-preset-react": "^6.24.1",
         "babel-plugin-syntax-dynamic-import": "^6.18.0",
         "babel-plugin-transform-class-properties": "^6.24.1",
+        "css-loader": "^0.28.4",
+        "svg-inline-loader": "^0.7.1",
+        "to-string-loader": "^1.1.5",
         "webpack": "^4.16.1",
         "webpack-cli": "^3.1.0",
         "webpack-dev-server": "^3.1.4"

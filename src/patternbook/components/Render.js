@@ -1,8 +1,11 @@
 import React from 'react'
+import { connect }  from 'react-redux'
 import PropTypes from 'prop-types'
 import debounce from 'debounce'
 import { StyleSheet, css } from 'aphrodite/no-important'
 import textContent from 'react-addons-text-content'
+
+import { getAll } from '../reducers/ScopeStore'
 
 import { wrapper } from './layout'
 
@@ -32,7 +35,7 @@ class Render extends React.Component {
     }
 
     render() {
-        let { children, mod, lang, theme } = this.props
+        let { children, scope, dispatch, mod, lang, theme } = this.props
         let { initialized, top, left, width, height } = this.state
         let source = textContent(children)
         let plugin = this.context.plugins[lang] || this.context.plugins.default
@@ -67,7 +70,12 @@ class Render extends React.Component {
                         )}
                         ref={node => (this._content = node)}>
                         <Theme className={themeClass}>
-                            {initialized && <Renderer source={source}/>}
+                            {initialized &&
+                                <Renderer
+                                    source={source}
+                                    scope={scope}
+                                    dispatch={dispatch}
+                                />}
                         </Theme>
                     </div>
                     {initialized && [
@@ -323,4 +331,10 @@ const classes = StyleSheet.create({
     }
 })
 
-module.exports = Render
+const mapStateToProps = (state, ownProps) => {
+    return {
+        scope: getAll(state.scope)
+    }
+}
+
+module.exports = connect(mapStateToProps)(Render)
