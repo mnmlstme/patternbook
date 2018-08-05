@@ -1,9 +1,14 @@
 import React from 'react'
 
-function DefaultRenderer (props) {
-    let { source } = props
+const pluginName = 'Patternbook Default'
 
-    return <div>{source}</div>
+function compile (source) {
+    return {
+        component: () => (<div>{htmlSource}</div>)
+    }
 }
 
-module.exports = { renderer: DefaultRenderer };
+module.exports = {
+    pluginName,
+    compile
+};

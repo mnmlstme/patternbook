@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component, PureComponent} from 'react'
 import { connect }  from 'react-redux'
 import PropTypes from 'prop-types'
 import debounce from 'debounce'
@@ -21,7 +21,85 @@ const fringe = `${wrapper.fringe}px` // fringing effect on mask
 const rulerWidth = `${wrapper.tickLength}rem`
 const bg = 'white' // should be themed
 
-class Render extends React.Component {
+class Renderer extends PureComponent {
+
+    static propTypes = {
+        source: PropTypes.string.isRequired,
+        scope: PropTypes.object.isRequired,
+        dispatch: PropTypes.func.isRequired,
+        plugin: PropTypes.object.isRequired
+    }
+
+    constructor (props) {
+        super(props)
+        this.state = {
+            error: null,
+            component: null,
+            sourceForComponent: null,
+            signatureForComponent: null
+        }
+    }
+
+    static getDerivedStateFromProps (props, state) {
+        let { source, scope, plugin } = props;
+        let { sourceForComponent, signatureForComponent } = state;
+        let signature = Object.keys(scope || {})
+
+        if ( source !== sourceForComponent ||
+            signature !== signatureForComponent ) {
+
+            let pluginState = plugin.compile(source, signature)
+
+            if ( pluginState.component ) {
+                return Object.assign({
+                    sourceForComponent: source,
+                    signatureForComponent: signature
+                }, pluginState)
+            } else {
+                return pluginState
+            }
+        }
+
+        return {}
+    }
+
+    componentDidCatch(error, info) {
+        this.setState({
+            error,
+            errorType: 'Component Rendering Error'
+        })
+    }
+
+    render () {
+        let { dispatch, scope } = this.props
+        let { component, moduleCode, error, errorType } = this.state
+
+        if ( error ) {
+            return ( <div>
+                {errorType && (<h2>{errorType}</h2>)}
+                <pre>{error.toString()}</pre>
+                <pre>{moduleCode}</pre>
+            </div> )
+        } else if ( component ) {
+            return React.createElement(
+                component,
+                Object.assign({}, {dispatch, scope}),
+                [])
+        } else {
+            return null
+        }
+    }
+}
+
+const mapStateToProps = (state, ownProps) => {
+    return {
+        scope: getAll(state.scope)
+    }
+}
+
+const ScopedRenderer = connect(mapStateToProps)(Renderer)
+
+class Render extends Component {
     static contextTypes = {
         themeClass: PropTypes.string,
         plugins: PropTypes.object
@@ -37,9 +115,8 @@ class Render extends React.Component {
     render() {
         let { children, scope, dispatch, mod, lang, theme } = this.props
         let { initialized, top, left, width, height } = this.state
-        let source = textContent(children)
         let plugin = this.context.plugins[lang] || this.context.plugins.default
-        let Renderer = plugin.renderer
+        let source = textContent(children)
         let themeClass = this.context.themeClass || 'pbReset'
         let mods = mod ? mod.split(' ') : ['default']
         let Theme = theme || DefaultTheme
@@ -71,10 +148,9 @@ class Render extends React.Component {
                         ref={node => (this._content = node)}>
                         <Theme className={themeClass}>
                             {initialized &&
-                                <Renderer
+                                <ScopedRenderer
+                                    plugin={plugin}
                                     source={source}
-                                    scope={scope}
-                                    dispatch={dispatch}
                                 />}
                         </Theme>
                     </div>
@@ -331,10 +407,4 @@ const classes = StyleSheet.create({
     }
 })
 
-const mapStateToProps = (state, ownProps) => {
-    return {
-        scope: getAll(state.scope)
-    }
-}
-
-module.exports = connect(mapStateToProps)(Render)
+module.exports = Render

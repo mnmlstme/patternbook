@@ -1,10 +1,16 @@
 import React from 'react'
 
-function HtmlRenderer (props) {
-    let { source } = props
+const pluginName = 'Patternbook HTML'
+
+function compile (source) {
     let htmlSource = { __html: source }
 
-    return <div dangerouslySetInnerHTML={htmlSource}/>
+    return {
+        component: props => (<div dangerouslySetInnerHTML={htmlSource}/>)
+    }
 }
 
-module.exports = { renderer: HtmlRenderer };
+module.exports = {
+    pluginName,
+    compile
+};

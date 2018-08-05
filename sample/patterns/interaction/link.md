@@ -16,7 +16,7 @@ This is a link to <a class="link" href="./">the current folder</a>.
 ```
 
 Even when writing plain HTML, you can use JSX as a templating engine
-Just remember to use `className` to `class`.
+Just remember to use `className` in place of `class`.
 
 ```jsx demo aside
 This is a link to <a className="link" href="./">{linktext}</a>.

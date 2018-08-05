@@ -1,97 +1,48 @@
-import React, { PureComponent } from 'react'
-import { transform } from "@babel/standalone";
-import PropTypes from 'prop-types';
+import { transform } from "@babel/standalone"
+import React from 'react'
+
+const pluginName = 'Patternbook JSX'
 
 const defaultConfig = { presets: ['react', 'es2015'] };
 
-class JsxRenderer extends PureComponent {
+function compile (source, signature, globals) {
 
-    static propTypes = {
-        source: PropTypes.string.isRequired,
-        scope: PropTypes.object.isRequired,
-        dispatch: PropTypes.func.isRequired,
-        config: PropTypes.object
-    }
+    globals = Object.assign({React}, globals)
+    let globalSignature = Object.keys(globals)
+    let config = defaultConfig // TODO: configuration from book.js
 
-    constructor (props) {
-        super(props)
-        this.state = {
-            error: null,
-            component: null,
-            sourceForComponent: null
-        }
-    }
-
-    static getDerivedStateFromProps (props, state) {
-        let { source, config, scope } = props;
-        let { sourceForComponent } = state;
-        let nextState = {};
-        const listkeys = dict => Object.keys(dict || {}).join(',')
-        let moduleScope = Object.assign({},{ React }, scope)
-        config = config || defaultConfig
-
-        if ( source !== sourceForComponent ) {
-            let moduleCode = `
-({ ${ listkeys(moduleScope) } }) => (({dispatch, ${ listkeys(scope) } }) => (
+    let moduleCode = `
+({ ${ globalSignature.join(',') } }) =>
+(({ dispatch, scope }) =>
+(({ ${ signature.join(',') } }) => (
 <React.Fragment>
-
 ${source}
-
-</React.Fragment>))
+</React.Fragment>))(scope))
 `
 
-            nextState = {
-                sourceForComponent: source,
-                moduleCode,
-                component: null,
-                errorType: null,
-                error: null,
-            }
-
-            try {
-                nextState.errorType = 'Babel Error'
-                let compiled = transform(moduleCode, config)
-
-                nextState.errorType = 'Module Load Error'
-                let module = eval(compiled.code)
-
-                nextState.errorType = 'Runtime Error'
-                nextState.component = module( moduleScope || {} )
-            } catch (err) {
-                nextState.error = err.toString()
-            }
-
-        }
-
-        return nextState
+    let result = {
+        moduleCode
     }
 
-    componentDidCatch(error, info) {
-        this.setState({
-            error,
-            errorType: 'Component Rendering Error'
-        })
+    try {
+        result.errorType = 'Babel Error'
+        let compiled = transform(moduleCode, config)
+
+        result.errorType = 'Module Load Error'
+        let module = eval(compiled.code)
+
+        result.errorType = 'Runtime Error'
+        result.component = module( globals || {} )
+    } catch (err) {
+        result.error = err.toString()
     }
 
-    render () {
-        let { dispatch, scope } = this.props
-        let { component, moduleCode, error, errorType } = this.state
-
-        if ( error ) {
-            return ( <div>
-                {errorType && (<h2>{errorType}</h2>)}
-                <pre>{error.toString()}</pre>
-                <pre>{moduleCode}</pre>
-            </div> )
-        } else if ( component ) {
-            return React.createElement(
-                component,
-                Object.assign({}, {dispatch}, scope),
-                [])
-        } else {
-            return null
-        }
-    }
+    return result
 }
 
-module.exports = { renderer: JsxRenderer };
+
+module.exports = {
+    pluginName,
+    defaultConfig,
+    compile
+};
