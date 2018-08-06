@@ -7,15 +7,15 @@ const types = {
 }
 
 function getSignature(state) {
-    return state ? state.get('signature') : Im.List()
+    return state ? state.get('signature', Im.List()) : Im.List()
 }
 
 function getLocal(state) {
-    return state ? state.get('local') : Im.Map()
+    return state ? state.get('local', Im.Map()) : Im.Map()
 }
 
 function getGlobal(state) {
-    return state ? state.get('global') : Im.Map()
+    return state ? state.get('global', Im.Map()) : Im.Map()
 }
 
 function scopeReducer(state, action) {
@@ -27,9 +27,9 @@ function scopeReducer(state, action) {
         case types.INIT:
             state = state.merge(action.scopes)
             state = state
-                .set('signature', state.get('initial').keys())
-                .set('global', state.get('imports')
-                    .merge(state.get('messages')))
+                .set('signature', Im.List(state.get('initial', Im.Map()).keys()))
+                .set('global', state.get('imports', Im.Map())
+                    .merge(state.get('messages', Im.Map())))
             // and RESET...
         case types.RESET:
             return state.set('local', state.get('initial'))
@@ -54,6 +54,7 @@ module.exports = {
     types,
     getLocal,
     getGlobal,
+    getSignature,
     scopeReducer,
     msgTypes
 }

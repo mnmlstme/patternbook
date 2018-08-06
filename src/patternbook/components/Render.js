@@ -5,7 +5,7 @@ import debounce from 'debounce'
 import { StyleSheet, css } from 'aphrodite/no-important'
 import textContent from 'react-addons-text-content'
 
-import { getLocal, getGlobal } from '../reducers/ScopeStore'
+import { getLocal, getGlobal, getSignature } from '../reducers/ScopeStore'
 
 import { wrapper } from './layout'
 
@@ -43,14 +43,14 @@ class Renderer extends PureComponent {
 
     static getDerivedStateFromProps (props, state) {
         let { source, signature, globals, plugin } = props;
-        let { sourceForComponent, signatureForComponent } = state;
+        let { sourceForComponent, signatureForComponent, globalsForComponent } = state;
 
         if ( source !== sourceForComponent ||
             signature !== signatureForComponent ||
             globals !== globalsForComponent) {
 
             let pluginState = plugin
-                .compile(source, signature.toJS(), globals.toJS())
+                .compile(source, signature.toArray(), globals.toJS())
 
             if ( pluginState.component ) {
                 return Object.assign({
