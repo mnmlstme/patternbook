@@ -6,9 +6,9 @@ const { Init } = ScopeStore.msgTypes
 
 class Scope extends React.Component {
     constructor(props) {
-        let { dispatch, initial } = props
+        let { dispatch, initial, imports, messages} = props
         super(props)
-        dispatch(Init(initial))
+        dispatch(Init({imports, messages, initial}))
     }
 
     render() {
@@ -19,9 +19,7 @@ class Scope extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    return {
-        scope: ScopeStore.getAll(state.scope),
-    }
+    return {}
 }
 
 module.exports = ReactRedux.connect(mapStateToProps)(Scope)

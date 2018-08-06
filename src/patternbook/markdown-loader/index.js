@@ -244,12 +244,12 @@ function toModule(payload) {
     let importStatements = Object.keys(imports || {})
       .map(module => `import ${module} from '${imports[module]}';`)
       .join('\n')
-    let importList = Object.keys(imports || {})
-    let scopeList = Object.keys(scope || {})
+    let importMap = Object.keys(imports || {}).join(',')
+    let scopeMap = Object.keys(scope || {})
         .map(key => [key, JSON.stringify(scope[key])].join(':'))
-    let messageList = Object.keys(messages || {})
+        .join(',')
+    let messageMap = Object.keys(messages || {})
         .map(key => [key, `props.messages.${messages[key]}`].join(':'))
-    let initialMap = importList.concat(messageList, scopeList)
         .join(',')
     let jsx = html
         // add whitespace where JSX ignores but HTML doesn't
@@ -268,7 +268,9 @@ export default function (props) {
 
     return (
         <Components.Scope
-            initial={ {${initialMap}} }
+            initial={ {${scopeMap}} }
+            imports={ {${importMap}} }
+            messages={ {${messageMap}} }
         >
             <Components.Article>
                 <svg
@@ -285,7 +287,6 @@ export default function (props) {
     );
 }
 `
-    console.log('\n====\n', module, '\n====\n')
 
     return module
 }

@@ -5,7 +5,7 @@ import debounce from 'debounce'
 import { StyleSheet, css } from 'aphrodite/no-important'
 import textContent from 'react-addons-text-content'
 
-import { getAll } from '../reducers/ScopeStore'
+import { getLocal, getGlobal } from '../reducers/ScopeStore'
 
 import { wrapper } from './layout'
 
@@ -36,24 +36,27 @@ class Renderer extends PureComponent {
             error: null,
             component: null,
             sourceForComponent: null,
-            signatureForComponent: null
+            signatureForComponent: null,
+            globalsForComponent: null
         }
     }
 
     static getDerivedStateFromProps (props, state) {
-        let { source, scope, plugin } = props;
+        let { source, signature, globals, plugin } = props;
         let { sourceForComponent, signatureForComponent } = state;
-        let signature = Object.keys(scope || {})
 
         if ( source !== sourceForComponent ||
-            signature !== signatureForComponent ) {
+            signature !== signatureForComponent ||
+            globals !== globalsForComponent) {
 
-            let pluginState = plugin.compile(source, signature)
+            let pluginState = plugin
+                .compile(source, signature.toJS(), globals.toJS())
 
             if ( pluginState.component ) {
                 return Object.assign({
                     sourceForComponent: source,
-                    signatureForComponent: signature
+                    signatureForComponent: signature,
+                    globalsForComponent: globals
                 }, pluginState)
             } else {
                 return pluginState
@@ -83,7 +86,7 @@ class Renderer extends PureComponent {
         } else if ( component ) {
             return React.createElement(
                 component,
-                Object.assign({}, {dispatch, scope}),
+                Object.assign({}, {dispatch, scope: scope.toJS()}),
                 [])
         } else {
             return null
@@ -93,7 +96,9 @@ class Renderer extends PureComponent {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        scope: getAll(state.scope)
+        scope: getLocal(state.scope),
+        globals: getGlobal(state.scope),
+        signature: getSignature(state.scope)
     }
 }
 
@@ -113,7 +118,7 @@ class Render extends Component {
     }
 
     render() {
-        let { children, scope, dispatch, mod, lang, theme } = this.props
+        let { children, mod, lang, theme } = this.props
         let { initialized, top, left, width, height } = this.state
         let plugin = this.context.plugins[lang] || this.context.plugins.default
         let source = textContent(children)

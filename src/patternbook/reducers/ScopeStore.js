@@ -1,30 +1,38 @@
 import Im from 'immutable'
 
-const store_context = 'patternbook.scope'
-
 const types = {
     SET: 'patternbook.set',
     RESET: 'patternbook.reset',
     INIT: 'patternbook.init'
 }
 
-function getAll(state) {
-    return state ? state.toJS() : {}
+function getSignature(state) {
+    return state ? state.get('signature') : Im.List()
 }
 
-// TODO: each page should have its own scope, not global
-var initState = Im.Map()
+function getLocal(state) {
+    return state ? state.get('local') : Im.Map()
+}
+
+function getGlobal(state) {
+    return state ? state.get('global') : Im.Map()
+}
 
 function scopeReducer(state, action) {
-    state = state || initState
+    state = state || Im.Map()
 
     switch (action.type) {
         case types.SET:
-            return state.merge(action.assignments)
-        case types.RESET:
-            return initState
+            return state.mergeIn(['local'], action.assignments)
         case types.INIT:
-            return state.merge((initState = Im.Map(action.assignments)))
+            state = state.merge(action.scopes)
+            state = state
+                .set('signature', state.get('initial').keys())
+                .set('global', state.get('imports')
+                    .merge(state.get('messages')))
+            // and RESET...
+        case types.RESET:
+            return state.set('local', state.get('initial'))
         default:
             return state
     }
@@ -37,14 +45,15 @@ const msgTypes = {
     Reset: function() {
         return { type: types.RESET }
     },
-    Init: function(assignments) {
-        return { type: types.INIT, assignments }
+    Init: function(scopes) {
+        return { type: types.INIT, scopes }
     }
 }
 
 module.exports = {
     types,
-    getAll,
+    getLocal,
+    getGlobal,
     scopeReducer,
     msgTypes
 }
