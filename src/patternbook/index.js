@@ -10,8 +10,6 @@ import Home from './layouts/Home'
 import Category from './layouts/Category'
 import Pattern from './layouts/Pattern'
 
-import components from './components'
-
 import ErrorPage from './layouts/ErrorPage'
 
 import basicReducers from './reducers'
@@ -111,12 +109,6 @@ function config(object) {
     }
 }
 
-function convertSvgToSymbol(id, string) {
-    return string
-        .replace('<svg', `<symbol id="${id}"`)
-        .replace('</svg>', '</symbol>')
-}
-
-Object.assign(Patternbook, components, {config, convertSvgToSymbol})
+Object.assign(Patternbook, {config})
 
 module.exports = Patternbook

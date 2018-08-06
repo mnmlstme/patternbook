@@ -1,10 +1,10 @@
 import React from 'react'
 
-const pluginName = 'Patternbook Default'
+const pluginName = 'Patternbook Plaintext'
 
 function compile (source) {
     return {
-        component: () => (<div>{htmlSource}</div>)
+        component: () => (<pre>{source}</pre>)
     }
 }
 

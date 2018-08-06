@@ -16,13 +16,13 @@ function codeBlock(componentName, content, lang, attrs) {
         .filter(k => attrs[k] === true)
         .join(' ')
 
-    return `<Patternbook.${componentName}
+    return `<Components.${componentName}
             lang="${lang}"
             mod="${mod}"
             theme={Theme}
         >
             ${source}
-        </Patternbook.${componentName}>
+        </Components.${componentName}>
     `
 }
 
@@ -51,123 +51,123 @@ let remarkable = new Remarkable({
 })
 
 remarkable.renderer.rules.link_open = function(tokens, idx, options) {
-    return `<Patternbook.Link to="${tokens[idx].href}">`
+    return `<Components.Link to="${tokens[idx].href}">`
 }
 
 remarkable.renderer.rules.link_close = function() {
-    return '</Patternbook.Link>'
+    return '</Components.Link>'
 }
 
 remarkable.renderer.rules.code = function(tokens, idx /*, options, env */) {
     let code = escapeJsx(tokens[idx].content)
 
-    return `<Patternbook.Code>${code}</Patternbook.Code>`
+    return `<Components.Code>${code}</Components.Code>`
 }
 
 remarkable.renderer.rules.heading_open = function(tokens, idx) {
-    return `<Patternbook.Heading level="${tokens[idx].hLevel}">`
+    return `<Components.Heading level="${tokens[idx].hLevel}">`
 }
 
 remarkable.renderer.rules.heading_close = function() {
-    return '</Patternbook.Heading>'
+    return '</Components.Heading>'
 }
 
 remarkable.renderer.rules.paragraph_open = function(tokens, idx) {
-    return tokens[idx].tight ? '' : '<Patternbook.Paragraph>'
+    return tokens[idx].tight ? '' : '<Components.Paragraph>'
 }
 
 remarkable.renderer.rules.paragraph_close = function(tokens, idx) {
-    return tokens[idx].tight ? '' : '</Patternbook.Paragraph>'
+    return tokens[idx].tight ? '' : '</Components.Paragraph>'
 }
 
 remarkable.renderer.rules.bullet_list_open = function(/* tokens, idx, options, env */) {
-    return '<Patternbook.UList>'
+    return '<Components.UList>'
 }
 remarkable.renderer.rules.bullet_list_close = function(tokens, idx /*, options, env */) {
-    return '</Patternbook.UList>'
+    return '</Components.UList>'
 }
 
 remarkable.renderer.rules.ordered_list_open = function(tokens, idx /*, options, env */) {
     var token = tokens[idx]
     var order = token.order > 1 ? ' start="' + token.order + '"' : ''
-    return `<Patternbook.OList ${order}>`
+    return `<Components.OList ${order}>`
 }
 remarkable.renderer.rules.ordered_list_close = function(tokens, idx /*, options, env */) {
-    return '</Patternbook.OList>'
+    return '</Components.OList>'
 }
 
 remarkable.renderer.rules.table_open = function() {
-    return '<Patternbook.Table>'
+    return '<Components.Table>'
 }
 
 remarkable.renderer.rules.table_close = function() {
-    return '</Patternbook.Table>'
+    return '</Components.Table>'
 }
 
 remarkable.renderer.rules.thead_open = function() {
-    return '<Patternbook.THead>'
+    return '<Components.THead>'
 }
 
 remarkable.renderer.rules.thead_close = function() {
-    return '</Patternbook.THead>'
+    return '</Components.THead>'
 }
 
 remarkable.renderer.rules.tbody_open = function() {
-    return '<Patternbook.TBody>'
+    return '<Components.TBody>'
 }
 
 remarkable.renderer.rules.tbody_close = function() {
-    return '</Patternbook.TBody>'
+    return '</Components.TBody>'
 }
 
 remarkable.renderer.rules.tr_open = function() {
-    return '<Patternbook.TRow>'
+    return '<Components.TRow>'
 }
 
 remarkable.renderer.rules.tr_close = function() {
-    return '</Patternbook.TRow>'
+    return '</Components.TRow>'
 }
 
 remarkable.renderer.rules.td_open = function(tokens, idx) {
     var token = tokens[idx]
-    return '<Patternbook.TData' + (token.align ? ' align="' + token.align + '"' : '') + '>'
+    return '<Components.TData' + (token.align ? ' align="' + token.align + '"' : '') + '>'
 }
 
 remarkable.renderer.rules.td_close = function() {
-    return '</Patternbook.TData>'
+    return '</Components.TData>'
 }
 
 remarkable.renderer.rules.th_open = function(tokens, idx) {
     var token = tokens[idx]
-    return '<Patternbook.THeading' + (token.align ? ' align="' + token.align + '"' : '') + '>'
+    return '<Components.THeading' + (token.align ? ' align="' + token.align + '"' : '') + '>'
 }
 
 remarkable.renderer.rules.th_close = function() {
-    return '</Patternbook.THeading>'
+    return '</Components.THeading>'
 }
 
 remarkable.renderer.rules.blockquote_open = function() {
-    return '<Patternbook.Blockquote>'
+    return '<Components.Blockquote>'
 }
 
 remarkable.renderer.rules.blockquote_close = function() {
-    return '</Patternbook.Blockquote>'
+    return '</Components.Blockquote>'
 }
 
 remarkable.renderer.rules.strong_open = function() {
-    return '<Patternbook.Strong>'
+    return '<Components.Strong>'
 }
 
 remarkable.renderer.rules.strong_close = function() {
-    return '</Patternbook.Strong>'
+    return '</Components.Strong>'
 }
 
 remarkable.renderer.rules.em_open = function() {
-    return '<Patternbook.Emphasis>'
+    return '<Components.Emphasis>'
 }
 
 remarkable.renderer.rules.em_close = function() {
-    return '</Patternbook.Emphasis>'
+    return '</Components.Emphasis>'
 }
 
 remarkable.renderer.rules.fence = function(tokens, idx, options) {
@@ -218,10 +218,20 @@ function generateStyles(styles) {
 
 function generateSymbols(symbols) {
     let list = Object.keys(symbols)
-        .map(k => `Patternbook.convertSvgToSymbol('${k}',require('${symbols[k]}')),`)
+        .map(k => `convertSvgToSymbol('${k}',require('${symbols[k]}')),`)
         .join(',')
+        function convertSvgToSymbol(id, string) {
+            return string
+                .replace('<svg', `<symbol id="${id}"`)
+                .replace('</svg>', '</symbol>')
+        }
 
-    return `let symbols = {__html: [ ${list} ].join('') }`
+    return `
+const convertSvgToSymbol = (id, string) => string
+    .replace('<svg', \`<symbol id="\${id}"\`)
+    .replace('</svg>', '</symbol>')
+let symbols = {__html: [ ${list} ].join('') }
+`
 }
 
 function generateTheme(theme) {
@@ -249,18 +259,18 @@ function toModule(payload) {
 
     let module = `
 import React from 'react';
-import Patternbook from 'patternbook';
 ${importStatements}
 export default function (props) {
+    let { Components } = props
     ${generateStyles(styles || [])}
     ${generateSymbols(symbols || {})}
     ${generateTheme(theme)}
 
     return (
-        <Patternbook.Scope
+        <Components.Scope
             initial={ {${initialMap}} }
         >
-            <Patternbook.Article>
+            <Components.Article>
                 <svg
                     width="0"
                     height="0"
@@ -270,8 +280,8 @@ export default function (props) {
                 </svg>'
                 <style>{styles}</style>
                 ${jsx}
-            </Patternbook.Article>
-        </Patternbook.Scope>
+            </Components.Article>
+        </Components.Scope>
     );
 }
 `

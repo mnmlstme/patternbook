@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import ErrorPage from './ErrorPage';
 import ScopeStore from '../reducers/ScopeStore'
+import Components from '../components';
 
 class LazyLoadPage extends React.Component {
     static contextTypes = {
@@ -58,9 +59,9 @@ class LazyLoadPage extends React.Component {
                 scope: ScopeStore.msgTypes
             }
             if (typeof module === 'function') {
-                content = module({messages})
+                content = module({Components, messages})
             } else if (typeof module === 'object' && typeof module.default === 'function') {
-                content = module.default({messages})
+                content = module.default({Components, messages})
             } else {
                 throw `Cannot execute module loaded for ${path}`
             }
