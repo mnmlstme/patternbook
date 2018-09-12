@@ -216,6 +216,29 @@ function generateStyles(styles) {
     return `let styles = [${list}]`
 }
 
+function importSymbols(key, spec) {
+  if (typeof spec !== 'object') {
+    spec = {from: spec, as: key }
+  }
+  const {as, exposing} = spec
+  return (as ? [as] : [])
+    .concat(exposing ? (Array.isArray(exposing) ? exposing : [exposing]) : [])
+}
+
+function generateImport(key, spec) {
+  if (typeof spec !== 'object') {
+    spec = {from: spec, as: key }
+  }
+  const {as, from, exposing} = spec
+  const exposingList = exposing && (Array.isArray(exposing) ? exposing : [exposing])
+  const targets = [
+      as,
+      exposingList && `{${exposingList.join(', ')}}`
+  ].filter(v => !!v)
+
+  return `import ${targets.join(',')} from '${from}';`
+}
+
 function generateSymbols(symbols) {
     let list = Object.keys(symbols)
         .map(k => `convertSvgToSymbol('${k}',require('${symbols[k]}')),`)
@@ -242,9 +265,11 @@ function toModule(payload) {
     let { html, attributes } = payload
     let { imports, scope, messages, styles, symbols, theme } = attributes || {}
     let importStatements = Object.keys(imports || {})
-      .map(module => `import ${module} from '${imports[module]}';`)
+      .map(module => generateImport(module, imports[module]))
       .join('\n')
-    let importMap = Object.keys(imports || {}).join(',')
+    let importMap = Object.keys(imports || {})
+      .map(module => importSymbols(module, imports[module]))
+      .join(',')
     let scopeMap = Object.keys(scope || {})
         .map(key => [key, JSON.stringify(scope[key])].join(':'))
         .join(',')
