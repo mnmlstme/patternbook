@@ -3,8 +3,8 @@ const webpack = require('webpack')
 
 module.exports = {
     entry: {
-        index: './patternbook/index.js',
-        loader: './patternbook/markdown-loader/index.js'
+        index: './src/index.js',
+        loader: './src/markdown-loader/index.js'
     },
 
     mode: "development",

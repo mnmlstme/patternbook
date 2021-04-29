@@ -14,9 +14,9 @@ import ErrorPage from './layouts/ErrorPage'
 
 import basicReducers from './reducers'
 
-import HtmlPlugin from '../plugins/html'
-import DefaultPlugin from '../plugins/default'
-import JsxPlugin from '../plugins/jsx'
+import HtmlPlugin from './plugins/html'
+import DefaultPlugin from './plugins/default'
+import JsxPlugin from './plugins/jsx'
 
 function NotFound(props) {
     let path = props.match.params[0]
